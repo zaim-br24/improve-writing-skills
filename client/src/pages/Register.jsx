@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Wrapper from "../styles/register";
-import { InputRow, ButtonRow, Alert } from "../components/";
+import { InputRow, ButtonRow, Alert } from "../components";
 import { useAppContext } from "../context/appContext";
 
 const initialState = {
@@ -13,7 +13,7 @@ const initialState = {
   isMember: false,
 };
 
-export default function Register() {
+export default function registerPage() {
   const [values, setValues] = useState(initialState);
   const navigate = useNavigate();
 
@@ -25,7 +25,6 @@ export default function Register() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values)
     const { firstname, lastname, password, email, isMember } = values;
     if (!email || !password || (!isMember && (!firstname || !lastname))) {
       displayAlert();

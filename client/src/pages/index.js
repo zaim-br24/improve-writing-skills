@@ -1,5 +1,6 @@
 import SharedLayout from "./SharedLayout";
 import WritingSkills from "./WritingSkills";
-import Register from "./Register";
+import Register from "./register";
+import UploadContent from "./uploadContent";
 
-export { SharedLayout, WritingSkills, Register };
+export { SharedLayout, WritingSkills, Register, UploadContent };

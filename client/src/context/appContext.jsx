@@ -7,9 +7,9 @@ import {
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
-  UPDATE_USER_BEGIN,
-  UPDATE_USER_SUCCESS,
-  UPDATE_USER_ERROR,
+  UPLOAD_CONTENT_BEGIN,
+  UPLOAD_CONTENT_SUCCESS,
+  UPLOAD_CONTENT_ERROR,
 } from "./action";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -20,6 +20,8 @@ const initialState = {
   alertType: "",
   user: user ? JSON.parse(user) : null,
   token: token,
+  category: "",
+  content: "",
 };
 
 const AppContext = React.createContext();
@@ -28,9 +30,9 @@ const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const authFetch = axios.create({
     baseURL: "/api/v1",
-    headers: {
-      Authorization: `Bearer ${state.token}`,
-    },
+    // headers: {
+    //   Authorization: `Bearer ${state.token}`,
+    // },
   });
   authFetch.interceptors.request.use(
     (config) => {
@@ -71,6 +73,31 @@ const AppProvider = ({ children }) => {
     localStorage.removeItem("token");
   };
 
+  // ------------ UPLOAD CONTENT ------
+  const uploadContent = async (currentPost) => {
+    dispatch({ type: UPLOAD_CONTENT_BEGIN });
+    try {
+      const { data } = await axios.post("/api/v1/content/addText", currentPost);
+      const { content, category } = data;
+      dispatch({
+        type: UPLOAD_CONTENT_SUCCESS,
+        payload: {
+          category,
+          content,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+      if (error.response.status === 401) return;
+      dispatch({
+        type: UPLOAD_CONTENT_ERROR,
+        payload: {
+          msg: error.response.data.msg,
+        },
+      });
+    }
+  };
+
   // ------- SINUP & SINGIN -------
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
@@ -82,7 +109,6 @@ const AppProvider = ({ children }) => {
       );
       const { user, token } = data;
 
-    
       dispatch({
         type: SETUP_USER_SUCCESS,
         payload: {
@@ -95,6 +121,7 @@ const AppProvider = ({ children }) => {
       addUserToLocalStorage({ user, token });
     } catch (error) {
       displayAlert();
+      console.log(error);
       dispatch({
         type: SETUP_USER_ERROR,
         payload: {
@@ -106,37 +133,37 @@ const AppProvider = ({ children }) => {
   };
 
   // -------- UPDATE USER -------
-  const updateUser = async (currentUser) => {
-    dispatch({ type: UPDATE_USER_BEGIN });
+  // const updateUser = async (currentUser) => {
+  //   dispatch({ type: UPDATE_USER_BEGIN });
 
-    try {
-      const { data } = await authFetch.patch("/auth/updateUser", currentUser);
+  //   try {
+  //     const { data } = await authFetch.patch("/auth/updateUser", currentUser);
 
-      // no token
-      const { user, token } = data;
+  //     // no token
+  //     const { user, token } = data;
 
-      dispatch({
-        type: UPDATE_USER_SUCCESS,
-        payload: { user, token },
-      });
+  //     dispatch({
+  //       type: UPDATE_USER_SUCCESS,
+  //       payload: { user, location, token },
+  //     });
 
-      addUserToLocalStorage({ user, token });
-    } catch (error) {
-      dispatch({
-        type: UPDATE_USER_ERROR,
-        payload: { msg: error.response.data.msg },
-      });
-    }
-    clearAlert();
-  };
+  //     addUserToLocalStorage({ user, location, token });
+  //   } catch (error) {
+  //     dispatch({
+  //       type: UPDATE_USER_ERROR,
+  //       payload: { msg: error.response.data.msg },
+  //     });
+  //   }
+  //   clearAlert();
+  // };
 
   return (
     <AppContext.Provider
       value={{
         ...state,
         setupUser,
-        updateUser,
-        displayAlert,   
+        displayAlert,
+        uploadContent,
       }}
     >
       {children}

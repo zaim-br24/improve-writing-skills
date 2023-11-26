@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { SharedLayout, WritingSkills, Register } from "./pages";
+import { SharedLayout, WritingSkills, Register, UploadContent } from "./pages";
 
 function App() {
   return (
@@ -10,6 +10,7 @@ function App() {
           <Route index element={<WritingSkills />} />
         </Route>
         <Route path="/register" element={<Register />} />
+        <Route path="/upload" element={<UploadContent />} />
       </Routes>
     </BrowserRouter>
   );

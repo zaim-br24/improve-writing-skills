@@ -11,10 +11,11 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again after 15 minutes",
 });
 // we can use app.use(limiter) in the server if want to use it globly
-// router.route("/register").post(limiter, register);
+router.route("/register").post(limiter, register);
+router.route("/login").post(limiter, login);
 
-router.route("/login").post(login);
-router.route("/register").post(register);
+// router.route("/login").post(login);
+// router.route("/register").post(register);
 
 // router.route("/login").post(limiter, login);
 router.route("/updateUser").patch(authenticateUser, updateUser);

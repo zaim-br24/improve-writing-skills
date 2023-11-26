@@ -36,7 +36,7 @@ const Label = styled.label`
 
   .input {
     width: 100%;
-    padding: 0.7rem;
+    padding: 0.8rem;
     outline: 0;
     border: 1px solid var(--grey-500);
     border-radius: var(--borderRadius-medium);
@@ -57,12 +57,12 @@ const Label = styled.label`
 
   .input:focus + span,
   .input:not(:placeholder-shown) + span {
-    top: 20px;
+    top: 22px;
     font-size: 0.7em;
   }
   @media (max-width: 990px) {
     .input {
-      padding: 0.5rem;
+      padding: 0.7rem;
       font-weight: 600;
     }
     .input + span {
@@ -70,7 +70,7 @@ const Label = styled.label`
     }
     .input:focus + span,
     .input:not(:placeholder-shown) + span {
-      top: 35px;
+      top: 22px;
       font-size: 0.6em;
     }
   }

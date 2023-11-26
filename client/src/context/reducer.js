@@ -4,9 +4,9 @@ import {
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
-  UPDATE_USER_BEGIN,
-  UPDATE_USER_SUCCESS,
-  UPDATE_USER_ERROR,
+  UPLOAD_CONTENT_BEGIN,
+  UPLOAD_CONTENT_SUCCESS,
+  UPLOAD_CONTENT_ERROR,
 } from "./action";
 import { initialState } from "./appContext";
 const reducer = (state, action) => {
@@ -50,31 +50,33 @@ const reducer = (state, action) => {
       alertType: "danger",
       alertText: action.payload.msg,
     };
-    }
-    if (action.type === UPDATE_USER_BEGIN) {
-      return { ...state, isLoading: true };
-    }
-
-    if (action.type === UPDATE_USER_SUCCESS) {
-      return {
-        ...state,
-        isLoading: false,
-        token: action.payload.token,
-        user: action.payload.user,
-        showAlert: true,
-        alertType: "success",
-        alertText: "User Profile Updated!",
-      };
-    }
-    if (action.type === UPDATE_USER_ERROR) {
-      return {
-        ...state,
-        isLoading: false,
-        showAlert: true,
-        alertType: "danger",
-        alertText: action.payload.msg,
-      };
-    }
+  }
+  if (action.type === UPLOAD_CONTENT_BEGIN) {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }
+  if (action.type === UPLOAD_CONTENT_SUCCESS) {
+    return {
+      ...state,
+      isLoading: true,
+      content: action.payload.content,
+      category: action.payload.category,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Post uploaded successfully!",
+    };
+  }
+  if (action.type === UPLOAD_CONTENT_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: "Something went wrong! please try again.",
+    };
+  }
 };
 
 export default reducer;

@@ -13,7 +13,19 @@ import helmet from "helmet";
 import xss from "xss-clean";
 import mongoSanitize from "express-mongo-sanitize";
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    optionsSuccessStatus: 200,
+  })
+);
+app.use(
+  session({
+    secret: "your-secret-key",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 // DB and authentication
 import connectDB from "./config/connectDB.js";
 
@@ -21,17 +33,16 @@ import notFoundMiddleware from "./middleware/not-found.js";
 import errorHandlerMiddleware from "./middleware/error-handler.js";
 import authenticateUser from "./middleware/auth.js";
 import authRouter from "./Routers/authRouter.js";
+import textRouter from "./Routers/textRouter.js";
 
 app.use(helmet()); //secure headers
 app.use(xss()); //Sanitize the inputs (prevent cross-site-scripting)
 app.use(mongoSanitize()); // prevent mongoDB injections
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-
 // app.get("*", function (request, response) {
 //   response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 // });
-
 
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
@@ -39,17 +50,16 @@ if (process.env.NODE_ENV !== "production") {
 app.use(express.json());
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/content", textRouter);
 
 app.get("*", (req, res) => {
   res.send("page not found");
 });
 
-
-
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 // server listening
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 5000;
 const start = async () => {
   try {
     await connectDB(process.env.DB_URL, process.env.DB_PASSWORD);
