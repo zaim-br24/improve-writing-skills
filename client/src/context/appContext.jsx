@@ -10,9 +10,18 @@ import {
   UPLOAD_CONTENT_BEGIN,
   UPLOAD_CONTENT_SUCCESS,
   UPLOAD_CONTENT_ERROR,
+  GET_CONTENT_BEGIN,
+  GET_CONTENT_SUCCESS,
+  GET_CONTENT_ERROR,
+  CHECK_VALUES_BEGIN,
+  CHECK_VALUES_SUCCESS,
+  CHECK_VALUES_ERROR,
+  TOGGLE_CATEGORY,
 } from "./action";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
+const level = localStorage.getItem("level");
+
 const initialState = {
   isLoading: false,
   showAlert: false,
@@ -22,6 +31,10 @@ const initialState = {
   token: token,
   category: "",
   content: "",
+  activeCategory: level || "beginner",
+  generatedText: "",
+  mistakes: null,
+  mistakesCount: 0,
 };
 
 const AppContext = React.createContext();
@@ -72,7 +85,55 @@ const AppProvider = ({ children }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
   };
+  // ------------ CHECK VALUES ------
+  const checkValues = async (values) => {
+    const {generatedText: originalSentence, userText: userSentence} = values
+    dispatch({ type: CHECK_VALUES_BEGIN });
+    try {
+      const { data } = await axios.post("/api/v1/content/checkValues", { originalSentence, userSentence });
+      dispatch({
+        type: CHECK_VALUES_SUCCESS,
+        payload: {
+          mistakes: data.mistakes,
+          count: data.count
+        },
+      });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: CHECK_VALUES_ERROR,
+        payload: {
+          msg: error.response.data.msg,
+        },
+      });
+    }
+  };
 
+  // ------------ GET CONTENT ---------
+  const getContent = async () => {
+    dispatch({ type: GET_CONTENT_BEGIN });
+    try {
+      const { data } = await axios.get(
+        `/api/v1/content/getText?category=${state.activeCategory}`
+      );
+      console.log(data);
+      dispatch({
+        type: GET_CONTENT_SUCCESS,
+        payload: {
+          activeCategory: data.category,
+          generatedText: data.generatedText,
+        },
+      });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: GET_CONTENT_ERROR,
+        payload: {
+          msg: error.response.data.msg,
+        },
+      });
+    }
+  };
   // ------------ UPLOAD CONTENT ------
   const uploadContent = async (currentPost) => {
     dispatch({ type: UPLOAD_CONTENT_BEGIN });
@@ -132,6 +193,14 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const toggleCategory = (activeCategory) => {
+    dispatch({
+      type: TOGGLE_CATEGORY,
+      payload: {
+        activeCategory: activeCategory,
+      },
+    });
+  };
   // -------- UPDATE USER -------
   // const updateUser = async (currentUser) => {
   //   dispatch({ type: UPDATE_USER_BEGIN });
@@ -164,6 +233,9 @@ const AppProvider = ({ children }) => {
         setupUser,
         displayAlert,
         uploadContent,
+        getContent,
+        toggleCategory,
+        checkValues,
       }}
     >
       {children}

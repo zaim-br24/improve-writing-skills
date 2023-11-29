@@ -9,7 +9,7 @@ const Wrapper = styled.section`
   .dashboard-page {
     margin: 2rem auto;
     width: 95vw;
-    background-color: var(--white);
+    background-color: var(--grey-50);
     border-radius: var(--borderRadius);
     box-shadow: var(--shadow-2);
   }

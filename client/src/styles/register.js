@@ -7,6 +7,12 @@ const Wrapper = styled.div`
   justify-content: center;
   background-size: cover;
   background-position: center;
+  .select{
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: var(--borderRadius-medium);
+
+  }
   .form {
     display: flex;
     flex-direction: column;

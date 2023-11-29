@@ -11,10 +11,7 @@ import AudioPlayer from "./audioPlayer";
 import Waves from "./waves";
 import InputRow from "./InputRow";
 import Alert from "./Alert";
-
-
-
-
+import Loader from "./Loader";
 
 export {
   AudioContainer,
@@ -30,4 +27,5 @@ export {
   Waves,
   InputRow,
   Alert,
+  Loader,
 };

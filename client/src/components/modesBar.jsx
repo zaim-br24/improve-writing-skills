@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Wrapper from "../styles/modesBar";
 import { levels } from "../constants";
+import { useAppContext } from "../context/appContext";
 export default function modesBar() {
-  const [activeMode, setActiveMode] = useState("beginner");
+  const { toggleCategory } = useAppContext();
+  const [activeCategory, setActiveCategory] = useState("beginner");
 
   const handleClick = (e) => {
-    // setActiveMode(active)
     const active = e.target.getAttribute("name");
-    setActiveMode(active);
+    setActiveCategory(active);
     console.log(active);
   };
+  useEffect(() => {
+    toggleCategory(activeCategory);
+  }, [activeCategory]);
   return (
     <Wrapper>
       <p className="title">level:</p>
@@ -17,7 +21,9 @@ export default function modesBar() {
         {levels.map((level, index) => {
           return (
             <div
-              className={`${activeMode === level.level ? "mode active" : "mode"}`}
+              className={`${
+                activeCategory === level.level ? "mode active" : "mode"
+              }`}
               key={index}
               name={level.level}
               onClick={handleClick}

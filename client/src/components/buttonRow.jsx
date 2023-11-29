@@ -1,9 +1,9 @@
 import React from "react";
 import Wrapper from "../styles/buttonRow";
-export default function buttonRow({ text, handleBtnClick }) {
+export default function buttonRow({ text, handleBtnClick, type }) {
   return (
     <Wrapper>
-      <button onClick={handleBtnClick}>{text}</button>
+      <button type={type} onClick={handleBtnClick}>{text}</button>
     </Wrapper>
   );
 }

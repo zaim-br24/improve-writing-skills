@@ -7,6 +7,13 @@ import {
   UPLOAD_CONTENT_BEGIN,
   UPLOAD_CONTENT_SUCCESS,
   UPLOAD_CONTENT_ERROR,
+  GET_CONTENT_BEGIN,
+  GET_CONTENT_SUCCESS,
+  GET_CONTENT_ERROR,
+  CHECK_VALUES_BEGIN,
+  CHECK_VALUES_SUCCESS,
+  CHECK_VALUES_ERROR,
+  TOGGLE_CATEGORY,
 } from "./action";
 import { initialState } from "./appContext";
 const reducer = (state, action) => {
@@ -28,13 +35,13 @@ const reducer = (state, action) => {
   if (action.type === SETUP_USER_BEGIN) {
     return {
       ...state,
-      isLoading: false,
+      isLoading: true,
     };
   }
   if (action.type === SETUP_USER_SUCCESS) {
     return {
       ...state,
-      isLoading: true,
+      isLoading: false,
       user: action.payload.user,
       token: action.payload.token,
       showAlert: true,
@@ -54,13 +61,13 @@ const reducer = (state, action) => {
   if (action.type === UPLOAD_CONTENT_BEGIN) {
     return {
       ...state,
-      isLoading: false,
+      isLoading: true,
     };
   }
   if (action.type === UPLOAD_CONTENT_SUCCESS) {
     return {
       ...state,
-      isLoading: true,
+      isLoading: false,
       content: action.payload.content,
       category: action.payload.category,
       showAlert: true,
@@ -75,6 +82,64 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "danger",
       alertText: "Something went wrong! please try again.",
+    };
+  }
+  if (action.type === GET_CONTENT_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === GET_CONTENT_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      generatedText: action.payload.generatedText,
+      activeCategory: action.payload.activeCategory,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Post uploaded successfully!",
+    };
+  }
+  if (action.type === GET_CONTENT_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: "Something went wrong! please try again.",
+    };
+  }
+  if (action.type === CHECK_VALUES_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === CHECK_VALUES_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      mistakes: action.payload.mistakes,
+      mistakesCount: action.payload.count,
+      showAlert: true,
+      alertType: "success",
+      alertText: "values ckecked successfully!",
+    };
+  }
+  if (action.type === CHECK_VALUES_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: "Something went wrong while checking! please try again.",
+    };
+  }
+  if (action.type === TOGGLE_CATEGORY) {
+    return {
+      ...state,
+      activeCategory: action.payload.activeCategory,
     };
   }
 };

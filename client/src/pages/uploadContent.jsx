@@ -30,8 +30,8 @@ export default function UploadContent() {
   return (
     <Wrapper>
       {showAlert && <Alert/>}
-      <form className="form" onSubmit={handleSubmit}>
-        <select onChange={handleCategoryChange}>
+      <form className="form" onSubmit={handleSubmit} >
+        <select className="select" onChange={handleCategoryChange}>
           <option value="beginner">beginner</option>
           <option value="intermediate">intermediate</option>
           <option value="advanced">advanced</option>
@@ -39,6 +39,7 @@ export default function UploadContent() {
         <UserTextContainer
           handleTextareaChnage={handleTextareaChnage}
           value={content}
+          placeholder="upload a text"
         />
         <button className="btn" type="submit">
           Submit

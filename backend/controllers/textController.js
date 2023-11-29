@@ -1,6 +1,7 @@
 import Texts from "../models/Text.js";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, NotFoundError } from "../errors/index.js";
+import findMistakes from "../utils/findMistakes.js";
 const addText = async (req, res) => {
   const { category, content } = req.body;
 
@@ -70,11 +71,11 @@ const getText = async (req, res) => {
     req.session.prevIndices = prevIndices;
 
     // Use the random number to retrieve a random content from the category
-    const randomContent = foundCategory[category][randomIndex];
+    const generatedText = foundCategory[category][randomIndex];
 
     res.status(StatusCodes.OK).json({
       category: category,
-      randomContent: randomContent.content,
+      generatedText: generatedText.content,
     });
   } catch (error) {
     console.error(error);
@@ -84,4 +85,50 @@ const getText = async (req, res) => {
   }
 };
 
-export { addText, getText };
+const checkValues = (req, res) => {
+  const { originalSentence, userSentence } = req.body;
+  if (!originalSentence || !userSentence) {
+    throw new BadRequestError("please provide both values.");
+  }
+  try {
+    let mistakes = findMistakes(originalSentence, userSentence);
+    console.log(mistakes)
+    let result = [];
+    for (let i = 0; i < mistakes.length; i++) {
+      const currentMistake = mistakes[i];
+      const nextMistake = mistakes[i + 1];
+
+      if (
+        currentMistake &&
+        currentMistake.length > 1 &&
+        nextMistake &&
+        nextMistake.length > 1
+      ) {
+        for (let y = 0; y < currentMistake.length; y++) {
+          result.push(currentMistake[y]);
+          result.push(nextMistake[y]);
+        }
+        i++; // Skip the next mistake since it has already been processed
+      } else if (
+        currentMistake &&
+        currentMistake.length > 1 &&
+        (!nextMistake || nextMistake.length <= 1)
+      ) {
+        result.push(currentMistake);
+      } else {
+        result.push(currentMistake && currentMistake[0]);
+      }
+    }
+
+    res.status(StatusCodes.OK).json({
+      mistakes: result,
+      count: result.length > 1 ? result.length / 2 : result.length,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      msg: "Something went wrong while retrieving random content.",
+    });
+  }
+};
+export { addText, getText, checkValues };

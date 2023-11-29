@@ -10,6 +10,7 @@ const Wrapper = styled.nav`
   background: var(--white);
   position: sticky;
   top: 0;
+  z-index: 999;
   @media (min-width: 992px) {
     /* position: sticky;
     top: 0; */
