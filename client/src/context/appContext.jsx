@@ -33,6 +33,7 @@ const initialState = {
   content: "",
   activeCategory: level || "beginner",
   generatedText: "",
+  audioUrl: "",
   mistakes: null,
   mistakesCount: 0,
 };
@@ -80,6 +81,7 @@ const AppProvider = ({ children }) => {
   const addUserToLocalStorage = ({ user, token }) => {
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("token", token);
+    // localStorage.setItem("level", level);
   };
   const removeUserFromLocalStorage = () => {
     localStorage.removeItem("user");
@@ -87,15 +89,18 @@ const AppProvider = ({ children }) => {
   };
   // ------------ CHECK VALUES ------
   const checkValues = async (values) => {
-    const {generatedText: originalSentence, userText: userSentence} = values
+    const { generatedText: originalSentence, userText: userSentence } = values;
     dispatch({ type: CHECK_VALUES_BEGIN });
     try {
-      const { data } = await axios.post("/api/v1/content/checkValues", { originalSentence, userSentence });
+      const { data } = await axios.post("/api/v1/content/checkValues", {
+        originalSentence,
+        userSentence,
+      });
       dispatch({
         type: CHECK_VALUES_SUCCESS,
         payload: {
           mistakes: data.mistakes,
-          count: data.count
+          count: data.count,
         },
       });
     } catch (error) {
@@ -122,6 +127,7 @@ const AppProvider = ({ children }) => {
         payload: {
           activeCategory: data.category,
           generatedText: data.generatedText,
+          audioUrl: data.audioUrl,
         },
       });
     } catch (error) {

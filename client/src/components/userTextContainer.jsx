@@ -52,7 +52,7 @@ export default function userTextContainer({
                   const isEven = index % 2 === 0;
                   return (
                     <div key={index}>
-                      <p className={isEven ? "correct" : "error"}>{mistake}</p>
+                      <p className={(isEven && mistakes.length > 1 )? "correct" : "error"}>{mistake}</p>
                     </div>
                   );
                 })}

@@ -96,6 +96,8 @@ const reducer = (state, action) => {
       isLoading: false,
       generatedText: action.payload.generatedText,
       activeCategory: action.payload.activeCategory,
+      audioUrl: action.payload.audioUrl,
+
       showAlert: true,
       alertType: "success",
       alertText: "Post uploaded successfully!",

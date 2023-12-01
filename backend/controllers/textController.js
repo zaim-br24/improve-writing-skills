@@ -2,20 +2,32 @@ import Texts from "../models/Text.js";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, NotFoundError } from "../errors/index.js";
 import findMistakes from "../utils/findMistakes.js";
+import { awsPolly, getObjectSignedUrl } from "../utils/awsPolly.js";
+import crypto from "crypto";
+
+const generateFileName = (bytes = 32) =>
+  crypto.randomBytes(bytes).toString("hex");
 const addText = async (req, res) => {
   const { category, content } = req.body;
 
   if (!category || !content) {
-    // Assuming BadRequestError is defined and imported
     throw new BadRequestError("Please provide all values!");
   }
 
   try {
+    const filename = generateFileName();
+    const pollyBucket = process.env.AWS_POLLY_BUCKET;
+
+    const result = await awsPolly(content, filename);
+    // const audioUrl = await getObjectSignedUrl(filename);
+    // console.log("Audio file uploaded to S3:", result);
+    // console.log("Audio url:", audioUrl);
+const audioUrl = `https://${pollyBucket}.s3.amazonaws.com/${filename}.mp3`;
     const updatedContent = await Texts.findOneAndUpdate(
       {},
       {
         $push: {
-          [category]: { content: content },
+          [category]: { content: content, audioUrl: audioUrl },
         },
       },
       { new: true, upsert: true }
@@ -32,7 +44,6 @@ const getText = async (req, res) => {
   const { category } = req.query;
 
   try {
-    // Find the category based on the query
     const foundCategory = await Texts.findOne({}, { [category]: 1 });
 
     if (!foundCategory || !foundCategory[category]) {
@@ -40,8 +51,6 @@ const getText = async (req, res) => {
         msg: `Category '${category}' not found or has no content.`,
       });
     }
-
-    // Get the count of content in that category
     const contentCount = foundCategory[category].length;
 
     if (contentCount === 0) {
@@ -50,7 +59,6 @@ const getText = async (req, res) => {
       });
     }
 
-    // Generate a random number within the count
     let randomIndex;
     const prevIndices = req.session.prevIndices || [];
 
@@ -58,24 +66,20 @@ const getText = async (req, res) => {
       randomIndex = Math.floor(Math.random() * contentCount);
     } while (prevIndices.includes(randomIndex));
 
-    // Limit the number of stored previous indices, adjust as needed
     const maxPrevIndices = 10;
     if (prevIndices.length >= maxPrevIndices) {
-      prevIndices.shift(); // Remove the oldest index
+      prevIndices.shift();
     }
-
-    // Add the new randomIndex to the array
     prevIndices.push(randomIndex);
 
-    // Store the updated array in the session
     req.session.prevIndices = prevIndices;
 
-    // Use the random number to retrieve a random content from the category
     const generatedText = foundCategory[category][randomIndex];
 
     res.status(StatusCodes.OK).json({
       category: category,
       generatedText: generatedText.content,
+      audioUrl: generatedText.audioUrl
     });
   } catch (error) {
     console.error(error);
@@ -92,7 +96,7 @@ const checkValues = (req, res) => {
   }
   try {
     let mistakes = findMistakes(originalSentence, userSentence);
-    console.log(mistakes)
+    console.log(mistakes);
     let result = [];
     for (let i = 0; i < mistakes.length; i++) {
       const currentMistake = mistakes[i];

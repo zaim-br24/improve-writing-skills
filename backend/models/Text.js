@@ -10,13 +10,20 @@ const textSchema = new Schema({
         type: String,
         required: true,
       },
+      audioUrl: {
+        type: String,
+      },
     },
   ],
   intermediate: [
     {
       content: {
         type: String,
+        
         required: true,
+      },
+      audioUrl: {
+        type: String,
       },
     },
   ],
@@ -25,6 +32,9 @@ const textSchema = new Schema({
       content: {
         type: String,
         required: true,
+      },
+      audioUrl: {
+        type: String,
       },
     },
   ],
