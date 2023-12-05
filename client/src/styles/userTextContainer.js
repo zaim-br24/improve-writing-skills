@@ -5,10 +5,11 @@ const Wrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  border-bottom: 1px solid var(--gery-50);
   textarea {
     resize: none;
     width: 100%;
-    height: 85%;
+    height: 100%;
     border: none;
     outline: none;
     font-size: 1rem;
@@ -24,7 +25,6 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 0.5rem 0.7rem;
-    /* background-color: red; */
   }
   .delete-icon {
     position: absolute;

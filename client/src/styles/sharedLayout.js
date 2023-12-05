@@ -9,9 +9,8 @@ const Wrapper = styled.section`
   .dashboard-page {
     margin: 2rem auto;
     width: 95vw;
-    background-color: var(--grey-50);
+    /* background-color: var(--grey-50); */
     border-radius: var(--borderRadius);
-    box-shadow: var(--shadow-2);
   }
   @media (min-width: 992px) {
     .dashboard {

@@ -1,7 +1,13 @@
 import React from 'react'
-import Wrapper from '../styles/navbar'
+import { Wrapper, WavyParagraph } from "../styles/navbar";
 export default function navbar() {
   return (
-    <Wrapper>navbar</Wrapper>
+    <Wrapper>
+      <WavyParagraph>
+         Vocabulary Builder coming soon!!
+      </WavyParagraph>
+     
+    </Wrapper>
   )
 }
+

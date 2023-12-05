@@ -4,13 +4,13 @@ const Wrapper = styled.div`
   height: 100%;
   width: 100%;
   border: 1px solid var(--grey-50);
-  padding: 10px;
   position: relative;
   display: flex;
   flex-direction: column;
 
   .original-text-container {
     height: 85%;
+    border-bottom: 1px solid var(--grey-50);
   }
   .original-text {
     font-size: 1rem;
@@ -18,6 +18,7 @@ const Wrapper = styled.div`
     color: var(--grey-500);
     display: flex;
     align-items: center;
+    padding: 10px;
   }
   .hidden-overlay-container {
     height: 85%;
@@ -41,7 +42,7 @@ const Wrapper = styled.div`
       p {
         font-size: 2rem;
         font-weight: 500;
-        color: var(--grey-500);
+        color: var(--text-grey);
       }
     }
   }
@@ -53,25 +54,43 @@ const Wrapper = styled.div`
     padding: 0.5rem 0.7rem;
     cursor: pointer;
     background-color: var(--grey-50);
-
-    border-radius: var(--borderRadius-larg);
+    font-weight: 500;
+    border-radius: var(--borderRadius-small);
     &:hover {
       background-color: var(--grey-200);
     }
   }
   .bottom-bar {
+    padding: 10px;
     position: relative;
     height: 15%;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
+  .generate-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0.5rem 1rem;
+    border-radius: var(--borderRadius-small);
+    background-color: var(--primary-900);
+    color: var(--text-grey);
+    &:hover {
+      opacity: 0.8;
+    }
+    .generate-icon {
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+  }
   @media (max-width: 680px) {
     p {
       font-size: 1.7rem;
     }
     .original-text {
-      font-size: .9rem;
+      font-size: 0.9rem;
       color: var(--primary-700);
     }
     .show-text {

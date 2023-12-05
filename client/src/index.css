@@ -45,14 +45,18 @@ html {
   /* rest of the colors */
   --black: #222;
   --white: #ffffff;
+  --text-grey:  #dadada;
+  --text-grey-dark:  #909090;
+
   --red-light: #f8d7da;
   --red-dark: #a4323b;
   --green-light: #d1e7dd;
   --green-dark: #228859;
-  --yellow-light: #fbf58db8;
+  --yellow-light: #f7f3a782;
   --yellow-dark: #dfdc31ce;
   --blue-dark: #1167f1;
   --blue-light: #5f9af890;
+
 
   --orange-200: #ff990029;
   --orange-500: #ff99007e;
@@ -299,7 +303,8 @@ button:disabled {
   color: #aaaaaa;
   font-weight: 700;
 }
-.special-btn:hover {
+/* .special-btn:hover //original*/
+.special-btn {
   background: linear-gradient(0deg, #a47cf3, #683fea);
   box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4),
     inset 0px -4px 0px 0px rgba(0, 0, 0, 0.2),

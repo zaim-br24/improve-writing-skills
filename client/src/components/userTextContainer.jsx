@@ -10,11 +10,10 @@ export default function userTextContainer({
   placeholder,
   handleDelete,
   handleCheckBtn,
-  showMistakes,
   handleCloseMistakes,
   handleFixErros
 }) {
-  const { mistakes, generatedText, mistakesCount } = useAppContext();
+  const { mistakes, generatedText, mistakesCount , showMistakes} = useAppContext();
   return (
     <Wrapper>
       {value.length > 5 && (
@@ -40,7 +39,7 @@ export default function userTextContainer({
         <MistakesContainer>
           <div className="mistakes">
             <div className="mistakes-text">
-              <p className={ mistakesCount >= 1 ? "error": "correct"}>
+              <p className={mistakesCount >= 1 ? "error" : "correct"}>
                 {mistakesCount} / {mistakesCount >= 1 ? "Errors" : "Error"}
               </p>
 
@@ -52,7 +51,13 @@ export default function userTextContainer({
                   const isEven = index % 2 === 0;
                   return (
                     <div key={index}>
-                      <p className={(isEven && mistakes.length > 1 )? "correct" : "error"}>{mistake}</p>
+                      <p
+                        className={
+                          isEven && mistakes.length > 1 ? "correct" : "error"
+                        }
+                      >
+                        {mistake}
+                      </p>
                     </div>
                   );
                 })}

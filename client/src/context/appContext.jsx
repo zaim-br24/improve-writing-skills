@@ -17,6 +17,8 @@ import {
   CHECK_VALUES_SUCCESS,
   CHECK_VALUES_ERROR,
   TOGGLE_CATEGORY,
+  TOGGLE_MISTAKES,
+  CLEAR_USER_TEXT,
 } from "./action";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -36,6 +38,8 @@ const initialState = {
   audioUrl: "",
   mistakes: null,
   mistakesCount: 0,
+  showMistakes: false,
+  userText: "",
 };
 
 const AppContext = React.createContext();
@@ -89,7 +93,7 @@ const AppProvider = ({ children }) => {
   };
   // ------------ CHECK VALUES ------
   const checkValues = async (values) => {
-    const { generatedText: originalSentence, userText: userSentence } = values;
+    const { generatedText: originalSentence, userValue: userSentence } = values;
     dispatch({ type: CHECK_VALUES_BEGIN });
     try {
       const { data } = await axios.post("/api/v1/content/checkValues", {
@@ -121,7 +125,6 @@ const AppProvider = ({ children }) => {
       const { data } = await axios.get(
         `/api/v1/content/getText?category=${state.activeCategory}`
       );
-      console.log(data);
       dispatch({
         type: GET_CONTENT_SUCCESS,
         payload: {
@@ -207,6 +210,22 @@ const AppProvider = ({ children }) => {
       },
     });
   };
+  const toggleMistakes = (mistake) => {
+    dispatch({
+      type: TOGGLE_MISTAKES,
+      payload: {
+        showMistakes: mistake,
+      },
+    });
+  };
+  const clearUserText = (text) => {
+    dispatch({
+      type: CLEAR_USER_TEXT,
+      payload: {
+        userText: text,
+      },
+    });
+  };
   // -------- UPDATE USER -------
   // const updateUser = async (currentUser) => {
   //   dispatch({ type: UPDATE_USER_BEGIN });
@@ -242,6 +261,8 @@ const AppProvider = ({ children }) => {
         getContent,
         toggleCategory,
         checkValues,
+        toggleMistakes,
+        clearUserText,
       }}
     >
       {children}

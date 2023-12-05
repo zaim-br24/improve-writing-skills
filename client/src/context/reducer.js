@@ -14,6 +14,8 @@ import {
   CHECK_VALUES_SUCCESS,
   CHECK_VALUES_ERROR,
   TOGGLE_CATEGORY,
+  TOGGLE_MISTAKES,
+  CLEAR_USER_TEXT,
 } from "./action";
 import { initialState } from "./appContext";
 const reducer = (state, action) => {
@@ -144,6 +146,18 @@ const reducer = (state, action) => {
       activeCategory: action.payload.activeCategory,
     };
   }
+    if (action.type === TOGGLE_MISTAKES) {
+      return {
+        ...state,
+        showMistakes: action.payload.showMistakes,
+      };
+  }
+     if (action.type === CLEAR_USER_TEXT) {
+       return {
+         ...state,
+         userText: action.payload.userText,
+       };
+     }
 };
 
 export default reducer;

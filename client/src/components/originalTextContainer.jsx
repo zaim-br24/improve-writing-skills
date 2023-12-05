@@ -3,14 +3,29 @@ import Wrapper from "../styles/originalTextContainer";
 import { ButtonRow, Loader } from "../components";
 import { useAppContext } from "../context/appContext";
 import { HiEyeOff, HiEye } from "react-icons/hi";
+import { IoReload } from "react-icons/io5";
 
 export default function originalTextContainer({ placeholder }) {
-  const { getContent, generatedText, activeCategory, isLoading } =
-    useAppContext();
+  const {
+    getContent,
+    generatedText,
+    activeCategory,
+    isLoading,
+    toggleMistakes,
+    clearUserText,
+  } = useAppContext();
   const [hide, setHide] = useState(false);
   useEffect(() => {
     getContent();
   }, [activeCategory]);
+
+  const handleGetContent = () => {
+    getContent();
+    setHide(false);
+    toggleMistakes(false);
+    clearUserText(false)
+
+  };
   return (
     <Wrapper>
       {isLoading && <Loader />}
@@ -33,7 +48,11 @@ export default function originalTextContainer({ placeholder }) {
       )}
 
       <div className="bottom-bar">
-        {<ButtonRow text="Generate a Text" handleBtnClick={getContent} />}
+        {/* {<ButtonRow text="Generate a Text" handleBtnClick={handleGetContent} />} */}
+        <div className="generate-text" onClick={handleGetContent}>
+          <IoReload className="generate-icon" /> <span>Generate</span> 
+        </div>
+
         {hide ? (
           <span className="show-text" onClick={() => setHide(false)}>
             Hide Text <HiEye />

@@ -96,7 +96,6 @@ const checkValues = (req, res) => {
   }
   try {
     let mistakes = findMistakes(originalSentence, userSentence);
-    console.log(mistakes);
     let result = [];
     for (let i = 0; i < mistakes.length; i++) {
       const currentMistake = mistakes[i];
@@ -112,7 +111,7 @@ const checkValues = (req, res) => {
           result.push(currentMistake[y]);
           result.push(nextMistake[y]);
         }
-        i++; // Skip the next mistake since it has already been processed
+        i++; // we Skip the next mistake since it has already been processed
       } else if (
         currentMistake &&
         currentMistake.length > 1 &&

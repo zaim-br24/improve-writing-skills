@@ -1,28 +1,24 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  @media (max-width: 522px) {
-    width: 100%;
-    border-top: 1px solid var(--grey-50);
-    border-left: 1px solid var(--grey-50);
-    display: flex;
-    flex-direction: column;
-  }
-  padding: 0.5rem ;
+  
+  padding: 0 10px;
   position: relative;
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; */
   gap: 10px;
   border-left: 1px solid var(--grey-50);
+  width: 100%;
   .container-audio {
     width: 100%;
-    height: 50px;
-    border-radius: 5px;
-    background-color: #eee;
+    height: 45px;
+    border-radius: 12px;
     color: #444;
     margin: 0px auto;
     overflow: hidden;
+    display: flex;
+    align-items: center;
   }
   .waves {
     display: flex;
@@ -33,6 +29,7 @@ const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     background-color: #eee;
+    display: none;
   }
 
   audio:nth-child(2),
@@ -61,7 +58,7 @@ const Wrapper = styled.div`
     animation: Rofa 10s infinite ease-in-out;
     bottom: 0;
   }
- 
+
   @-webkit-keyframes Rofa {
     0% {
       height: 30%;
@@ -207,7 +204,48 @@ const Wrapper = styled.div`
       background-color: black;
     }
   }
-
 `;
 
-export default Wrapper;
+const PlayBtn = styled.button`
+  font-size: 1rem;
+  color: rgb(218, 218, 218);
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--borderRadius-small);
+  min-width: 130px;
+
+  span {
+    width: 100%;
+    border-radius: var(--borderRadius-small);
+    padding: 0.5rem 1rem;
+    padding-right: 1.2em;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s;
+    background-color: var(--primary-900);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &:hover span {
+    opacity: 0.8;
+    box-shadow: var(--shadow-2);
+  }
+  .icon {
+    width: 15px;
+    height: 15px;
+  }
+  @media (max-width: 522px) {
+    width: 100%;
+    border-top: 1px solid var(--grey-50);
+    border-left: 1px solid var(--grey-50);
+  }
+`;
+
+export {Wrapper, PlayBtn};

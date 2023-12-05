@@ -1,24 +1,60 @@
-import React from "react";
-import Wrapper from "../styles/audio";
-import AudioPlayer from "./audioPlayer";
-import Waves from "./waves";
+import React, { useState, useRef, useEffect } from "react";
+import { Wrapper, PlayBtn } from "../styles/audio";
 import { useAppContext } from "../context/appContext";
-export default function audioContainer() {
+import { IoPlay } from "react-icons/io5";
+import { HiSpeakerWave } from "react-icons/hi2";
+
+export default function AudioContainer() {
   const { audioUrl, isLoading } = useAppContext();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+ 
+    const handleEnded = () => {
+      setIsPlaying(false);
+    };
+
+    audio.addEventListener("ended", handleEnded);
+
+    return () => {
+      audio.removeEventListener("ended", handleEnded);
+    };
+  }, [isPlaying]);
+  const togglePlay = () => {
+    const audio = audioRef.current;
+    if (audio.paused || audio.ended) {
+      setIsPlaying(true);
+      audio.play();
+    } else {
+      setIsPlaying(false);
+      audio.pause();
+    }
+  };
+
   return (
     <Wrapper>
       <div className="container-audio">
-        <audio controls key={ Math.floor(Math.random()* 200)}>
+        <audio ref={audioRef} key={audioUrl}>
           <source src={audioUrl} type="audio/ogg"></source>
-          Your browser dose not Support the audio Tag
         </audio>
-        {/* <AudioPlayer
-          audioSource={
-            "https://s3-us-west-2.amazonaws.com/s.cdpn.io/9473/new_year_dubstep_minimix.ogg"
-          }
-        /> */}
+        <PlayBtn onClick={togglePlay}>
+          <span className={isPlaying ? "special-btn": ""}>
+            {isPlaying ? (
+              <>
+                Stop
+                <HiSpeakerWave className="icon" />
+              </>
+            ) : (
+              <>
+                Listen
+                <IoPlay className="icon" />
+              </>
+            )}
+          </span>
+        </PlayBtn>
       </div>
-      <Waves />
     </Wrapper>
   );
 }

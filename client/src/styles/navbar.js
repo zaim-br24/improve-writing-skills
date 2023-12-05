@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const Wrapper = styled.nav`
   height: var(--nav-height);
@@ -16,4 +16,19 @@ const Wrapper = styled.nav`
     top: 0; */
   }
 `;
-export default Wrapper;
+
+const waveAnimation = keyframes`
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+
+`;
+
+const WavyParagraph = styled.p`
+  animation: ${waveAnimation} 3s ease-in-out infinite;
+  color: var(--yellow-dark);
+`;
+export  { Wrapper, WavyParagraph };

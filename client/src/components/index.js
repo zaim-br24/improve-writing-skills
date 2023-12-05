@@ -12,6 +12,8 @@ import Waves from "./waves";
 import InputRow from "./InputRow";
 import Alert from "./Alert";
 import Loader from "./Loader";
+import Footer from "./footer";
+
 
 export {
   AudioContainer,
@@ -28,4 +30,5 @@ export {
   InputRow,
   Alert,
   Loader,
+  Footer,
 };

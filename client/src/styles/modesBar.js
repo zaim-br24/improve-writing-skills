@@ -4,8 +4,8 @@ const Wrapper = styled.div`
   padding: 0.5em;
   display: flex;
   align-items: center;
-  border-top: 1px solid var(--grey-200);
-  border-bottom: 1px solid var(--grey-200);
+  border-top: 1px solid var(--grey-50);
+  border-bottom: 1px solid var(--grey-50);
   background-color: var(--white);
   .title {
     font-weight: 600;
@@ -24,19 +24,19 @@ const Wrapper = styled.div`
       border-radius: var(--borderRadius-small);
       transition: var(--transition);
       &:hover {
-        color: #008170;
+        color: var(--yellow-dark);
+        background-color: var(--yellow-light);
         cursor: pointer;
-        background-color: var(--green-light);
       }
     }
     .active {
-      color: #008170;
-      background-color: var(--green-light);
+      color: var(--yellow-dark);
+      background-color: var(--yellow-light);
     }
   }
   @media (max-width: 680px) {
     .mode {
-      padding: 5px ;
+      padding: 5px;
       font-size: 0.8rem;
     }
   }
