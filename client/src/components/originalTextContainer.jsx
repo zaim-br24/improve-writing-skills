@@ -50,7 +50,7 @@ export default function originalTextContainer({ placeholder }) {
       <div className="bottom-bar">
         {/* {<ButtonRow text="Generate a Text" handleBtnClick={handleGetContent} />} */}
         <div className="generate-text" onClick={handleGetContent}>
-          <IoReload className="generate-icon" /> <span>Generate</span> 
+          <span>Generate</span> <IoReload className="generate-icon" />
         </div>
 
         {hide ? (
