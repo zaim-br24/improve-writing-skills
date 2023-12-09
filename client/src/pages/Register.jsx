@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Wrapper from "../styles/register";
-import { InputRow, ButtonRow, Alert } from "../components";
+import { InputRow, ButtonRow, Alert, Logo } from "../components";
 import { useAppContext } from "../context/appContext";
 
 const initialState = {
@@ -9,7 +9,7 @@ const initialState = {
   lastname: "",
   email: "",
   password: "",
-  confirmPassword: "",
+  // confirmPassword: "",
   isMember: false,
 };
 
@@ -60,12 +60,14 @@ export default function registerPage() {
   return (
     <Wrapper>
       <form className="form" onSubmit={handleSubmit}>
-        <p className="title">{values.isMember ? "Sing in" : "Sign up"} </p>
+       <div className="logo"> <Logo  /></div> 
+
+        <p className="title">{values.isMember ? "Sign in" : "Sign up"} </p>
         {showAlert && <Alert />}
         <p className="message">
           {values.isMember
-            ? "Singin to your account."
-            : "Signup now and get full access to our tools."}
+            ? "Sign in to your account."
+            : "Sign up now and get full access to our tools."}
         </p>
         <div className="flex">
           {!values.isMember && (
@@ -112,7 +114,7 @@ export default function registerPage() {
           value={values.password}
           name="password"
         />
-        {!values.isMember && (
+        {/* {!values.isMember && (
           <InputRow
             placeholder=""
             required="true"
@@ -122,13 +124,13 @@ export default function registerPage() {
             value={values.confirmPassword}
             name="confirmPassword"
           />
-        )}
+        )} */}
         <button className="btn" type="submit">
           Submit
         </button>
         <p className="signin" onClick={toggelMember}>
           Already have an acount ?
-          <a href="#">{values.isMember ? "Sign up" : "Sing in"}</a>{" "}
+          <a href="#">{values.isMember ? "Sign up" : "Sign in"}</a>{" "}
         </p>
       </form>
     </Wrapper>

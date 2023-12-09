@@ -99,10 +99,7 @@ const reducer = (state, action) => {
       generatedText: action.payload.generatedText,
       activeCategory: action.payload.activeCategory,
       audioUrl: action.payload.audioUrl,
-
-      showAlert: true,
-      alertType: "success",
-      alertText: "Post uploaded successfully!",
+     
     };
   }
   if (action.type === GET_CONTENT_ERROR) {
@@ -111,7 +108,7 @@ const reducer = (state, action) => {
       isLoading: false,
       showAlert: true,
       alertType: "danger",
-      alertText: "Something went wrong! please try again.",
+      alertText: action.payload.msg,
     };
   }
   if (action.type === CHECK_VALUES_BEGIN) {

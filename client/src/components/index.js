@@ -13,6 +13,8 @@ import InputRow from "./InputRow";
 import Alert from "./Alert";
 import Loader from "./Loader";
 import Footer from "./footer";
+import Logo from "./Logo";
+
 
 
 export {
@@ -31,4 +33,5 @@ export {
   Alert,
   Loader,
   Footer,
+  Logo,
 };

@@ -7,11 +7,40 @@ const Wrapper = styled.div`
   justify-content: center;
   background-size: cover;
   background-position: center;
-  .select{
+  .logo {
+    width: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+
+    &::before,
+    &::after {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+      left: 0px;
+      background-color: var(--primary-800);
+    }
+
+    &::before {
+      width: 18px;
+      height: 18px;
+      background-color: var(--primary-800);
+    }
+
+    &::after {
+      width: 18px;
+      height: 18px;
+      animation: pulse 1s linear infinite;
+    }
+  }
+  .select {
     padding: 10px;
     font-size: 1rem;
     border-radius: var(--borderRadius-medium);
-
   }
   .form {
     display: flex;
@@ -27,33 +56,10 @@ const Wrapper = styled.div`
     position: relative;
     display: flex;
     align-items: center;
-    padding-left: 30px;
+    /* padding-left: 30px; */
   }
 
-  .title::before,
-  .title::after {
-    position: absolute;
-    content: "";
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    left: 0px;
-    background-color: var(--primary-800);
-  }
-
-  .title::before {
-    width: 18px;
-    height: 18px;
-    background-color: var(--primary-800);
-  }
-
-  .title::after {
-    width: 18px;
-    height: 18px;
-    animation: pulse 1s linear infinite;
-  }
-
-  .message,
+  * .message,
   .signin {
     color: var(--grey-800);
     font-size: 14px;

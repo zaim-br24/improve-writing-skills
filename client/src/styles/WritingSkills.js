@@ -8,7 +8,7 @@ const Editor = styled.div`
   @media (min-width: 680px) {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(50%, 1fr));
-    height: 400px;
+    height: 60vh;
     background-color: var(--white);
     position: relative;
     box-shadow: var(--shadow-2);
@@ -46,10 +46,10 @@ const Cards = styled.div`
   margin: 4rem 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 10px;
+  gap: 20px;
 `;
 const Card = styled.div`
-  /* background-color: var(--grey-50); */
+  background-color: whitesmoke;
   padding: 10px;
   border-radius: var(--borderRadius-small);
   .name {

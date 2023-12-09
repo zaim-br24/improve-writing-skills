@@ -1,6 +1,13 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { SharedLayout, WritingSkills, Register, UploadContent } from "./pages";
+import {
+  SharedLayout,
+  WritingSkills,
+  Register,
+  UploadContent,
+  ProtectedRoute,
+  Error
+} from "./pages";
 
 function App() {
   return (
@@ -10,7 +17,15 @@ function App() {
           <Route index element={<WritingSkills />} />
         </Route>
         <Route path="/register" element={<Register />} />
-        <Route path="/upload" element={<UploadContent />} />
+        <Route
+          path="/admin/upload"
+          element={
+            <ProtectedRoute>
+              <UploadContent />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<Error/>} />
       </Routes>
     </BrowserRouter>
   );

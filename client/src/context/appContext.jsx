@@ -48,9 +48,9 @@ const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const authFetch = axios.create({
     baseURL: "/api/v1",
-    // headers: {
-    //   Authorization: `Bearer ${state.token}`,
-    // },
+    headers: {
+      Authorization: `Bearer ${state.token}`,
+    },
   });
   authFetch.interceptors.request.use(
     (config) => {
@@ -187,8 +187,8 @@ const AppProvider = ({ children }) => {
           token,
         },
       });
-      //add {user, token} to localStorage
       addUserToLocalStorage({ user, token });
+      clearAlert();
     } catch (error) {
       displayAlert();
       console.log(error);
