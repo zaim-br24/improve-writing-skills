@@ -53,11 +53,20 @@ const Profile = styled.div`
   width: 40px;
   background-color: whitesmoke;
   border-radius: var(--borderRadius-small);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   img {
     height: 100%;
     width: 100%;
     border-radius: var(--borderRadius-small);
   }
+  .short-name{
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--primary-900);
+  }
+
 `;
 export { Wrapper, WavyParagraph, Main, Profile };

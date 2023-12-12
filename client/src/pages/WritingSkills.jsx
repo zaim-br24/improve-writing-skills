@@ -23,24 +23,32 @@ import {
 import { benefits } from "../constants/index";
 import { useAppContext } from "../context/appContext";
 export default function WritingSkills() {
-  const { checkValues, isLoading, mistakes, generatedText, toggleMistakes } =
-    useAppContext();
-  const [userValue, setUserValue] = useState("");
+  const {
+    checkValues,
+    isLoading,
+    mistakes,
+    generatedText,
+    toggleMistakes,
+    addUserText,
+    userText,
+    clearUserText,
+  } = useAppContext();
+  // const [userText, addUserText] = useState("");
   const [showMistakes, setShowMistakes] = useState(false);
 
   const handleTextareaChnage = (e) => {
-    setUserValue(e.target.value);
+    addUserText(e.target.value);
   };
   const handleCheckBtn = () => {
     toggleMistakes(true);
-    checkValues({ generatedText, userValue });
+    checkValues();
   };
   const handleCloseMistakes = () => {
     // setShowMistakes(false);
     toggleMistakes(false);
   };
   const handleFixErros = () => {
-    setUserValue(generatedText);
+    addUserText(generatedText);
     handleCloseMistakes();
   };
   return (
@@ -53,8 +61,8 @@ export default function WritingSkills() {
             <UserTextContainer
               handleTextareaChnage={handleTextareaChnage}
               placeholder={"Write what you hear."}
-              value={userValue}
-              handleDelete={() => setUserValue("")}
+              value={userText}
+              handleDelete={() => clearUserText("")}
               handleCheckBtn={handleCheckBtn}
               // showMistakes={showMistakes}
               handleCloseMistakes={handleCloseMistakes}

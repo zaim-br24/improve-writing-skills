@@ -16,6 +16,8 @@ import {
   TOGGLE_CATEGORY,
   TOGGLE_MISTAKES,
   CLEAR_USER_TEXT,
+  USER_TEXT,
+  LOGOUT_USER,
 } from "./action";
 import { initialState } from "./appContext";
 const reducer = (state, action) => {
@@ -60,6 +62,17 @@ const reducer = (state, action) => {
       alertText: action.payload.msg,
     };
   }
+    if (action.type === LOGOUT_USER) {
+      return {
+        ...initialState,
+        user: null,
+        token: null,
+        showAlert: true,
+        alertType: "success",
+        alertText: "Logged out! See you soon!",
+      };
+  }
+  
   if (action.type === UPLOAD_CONTENT_BEGIN) {
     return {
       ...state,
@@ -149,12 +162,18 @@ const reducer = (state, action) => {
         showMistakes: action.payload.showMistakes,
       };
   }
-     if (action.type === CLEAR_USER_TEXT) {
+     if (action.type === USER_TEXT) {
        return {
          ...state,
          userText: action.payload.userText,
        };
-     }
+  }
+   if (action.type === CLEAR_USER_TEXT) {
+     return {
+       ...state,
+       userText: "",
+     };
+   }
 };
 
 export default reducer;

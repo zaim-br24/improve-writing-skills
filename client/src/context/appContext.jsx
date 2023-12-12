@@ -19,6 +19,8 @@ import {
   TOGGLE_CATEGORY,
   TOGGLE_MISTAKES,
   CLEAR_USER_TEXT,
+  USER_TEXT,
+  LOGOUT_USER,
 } from "./action";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -92,8 +94,11 @@ const AppProvider = ({ children }) => {
     localStorage.removeItem("token");
   };
   // ------------ CHECK VALUES ------
-  const checkValues = async (values) => {
-    const { generatedText: originalSentence, userValue: userSentence } = values;
+  const checkValues = async () => {
+    // const { generatedText: originalSentence, userValue: userSentence } = values;
+    const originalSentence = state.generatedText;
+    const userSentence = state.userText;
+
     dispatch({ type: CHECK_VALUES_BEGIN });
     try {
       const { data } = await axios.post("/api/v1/content/checkValues", {
@@ -188,7 +193,6 @@ const AppProvider = ({ children }) => {
         },
       });
       addUserToLocalStorage({ user, token });
-      clearAlert();
     } catch (error) {
       displayAlert();
       console.log(error);
@@ -201,7 +205,11 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
-
+  const logoutUser = () => {
+    dispatch({ type: LOGOUT_USER });
+    removeUserFromLocalStorage();
+    clearAlert();
+  };
   const toggleCategory = (activeCategory) => {
     dispatch({
       type: TOGGLE_CATEGORY,
@@ -218,12 +226,18 @@ const AppProvider = ({ children }) => {
       },
     });
   };
-  const clearUserText = (text) => {
+  const addUserText = (text) => {
     dispatch({
-      type: CLEAR_USER_TEXT,
+      type: USER_TEXT,
       payload: {
         userText: text,
       },
+    });
+    console.log(state.userText)
+  };
+  const clearUserText = () => {
+    dispatch({
+      type: CLEAR_USER_TEXT,
     });
   };
   // -------- UPDATE USER -------
@@ -263,6 +277,9 @@ const AppProvider = ({ children }) => {
         checkValues,
         toggleMistakes,
         clearUserText,
+        addUserText,
+
+        logoutUser,
       }}
     >
       {children}

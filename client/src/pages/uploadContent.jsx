@@ -31,6 +31,7 @@ export default function UploadContent() {
     <Wrapper>
       {showAlert && <Alert/>}
       <form className="form" onSubmit={handleSubmit} >
+        <h3>Admin bashboard</h3>
         <select className="select" onChange={handleCategoryChange}>
           <option value="beginner">beginner</option>
           <option value="intermediate">intermediate</option>

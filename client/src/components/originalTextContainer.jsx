@@ -23,8 +23,7 @@ export default function originalTextContainer({ placeholder }) {
     getContent();
     setHide(false);
     toggleMistakes(false);
-    clearUserText(false)
-
+    clearUserText();
   };
   return (
     <Wrapper>

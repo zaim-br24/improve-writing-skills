@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 export default function ProtectedRoute({ children }) {
   const { user } = useAppContext();
   if (!user || user.email != "zaim@gmail.com") {
-    return <Navigate to="/" />;
+    return <Navigate to="*" />;
   } else {
     return children;
   }
