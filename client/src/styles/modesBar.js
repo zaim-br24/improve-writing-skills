@@ -4,7 +4,7 @@ const Wrapper = styled.div`
   padding: 0.5em;
   display: flex;
   align-items: center;
-  border-top: 1px solid var(--grey-50);
+  border: 1px solid var(--grey-50);
   border-bottom: 1px solid var(--grey-50);
   background-color: var(--white);
   .title {

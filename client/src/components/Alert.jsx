@@ -37,7 +37,7 @@ const Alert = () => {
           style={{ width: `${progressBarWidth}%` }}
         />
       </div> */}
-      <span className="close-btn">x</span>
+      {/* <span className="close-btn">x</span> */}
     </div>
   );
 };

@@ -64,17 +64,15 @@ const login = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { name, email, lastname } = req.body;
-  if (!email || !name || !lastname || !firstname) {
+  const { firstname, email, lastname } = req.body;
+  if (!email || !firstname || !lastname) {
     throw new BadRequestError("Please provide all values");
   }
   const user = await Users.findOne({ _id: req.user.userId });
 
-  user.name = name;
   user.email = email;
   user.lastname = lastname;
   user.firstname = firstname;
-
 
   await user.save();
 
@@ -88,5 +86,41 @@ const updateUser = async (req, res) => {
     token,
   });
 };
+const updatePassword = async (req, res) => {
+    console.log(req.body)
 
-export { register, login, updateUser };
+  const { oldPassword, newPassword, confirmPassword } = req.body;
+  if (!oldPassword || !newPassword || !confirmPassword) {
+    throw new BadRequestError("Please provide all values");
+  }
+  const user = await Users.findOne({ _id: req.user.userId }).select(
+    "+password"
+  );
+
+  if (!user) {
+    throw new UnauthenticatedError("user not found!");
+  }
+  //check password is correct
+  const isPasswordCorrect = await user.comparePassword(oldPassword);
+  if (!isPasswordCorrect) {
+    throw new BadRequestError("Old password is wrong!");
+  }
+  if (newPassword !== confirmPassword) {
+    throw new BadRequestError(" New passwords are not matched !");
+  }
+  user.password = newPassword;
+
+  const token = user.createJWT();
+  await user.save();
+
+  res.status(StatusCodes.OK).json({
+    user: {
+      firstname: user.firstname,
+      lastname: user.lastname,
+      email: user.email,
+    },
+    token,
+  });
+};
+
+export { register, login, updateUser, updatePassword };

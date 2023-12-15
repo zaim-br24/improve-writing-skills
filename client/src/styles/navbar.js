@@ -5,16 +5,11 @@ const Wrapper = styled.nav`
   max-width: 100vw;
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
   box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.1);
   background: var(--white);
   position: sticky;
   top: 0;
   z-index: 999;
-  @media (min-width: 992px) {
-    /* position: sticky;
-    top: 0; */
-  }
   .logo {
     display: flex;
     align-items: center;

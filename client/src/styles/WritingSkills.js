@@ -8,7 +8,7 @@ const Editor = styled.div`
   @media (min-width: 680px) {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(50%, 1fr));
-    height: 60vh;
+    height: 58vh;
     background-color: var(--white);
     position: relative;
     box-shadow: var(--shadow-2);
@@ -23,11 +23,16 @@ const Left = styled.aside`
   @media (max-width: 680px) {
     display: flex;
     flex-direction: column-reverse;
-    height: 320px;
+    height: 40vh;
   }
 `;
 const Right = styled.aside`
   background-color: var(--white);
+  @media (max-width: 680px) {
+    display: flex;
+    flex-direction: column-reverse;
+    height: 30vh;
+  }
 `;
 const Benefits = styled.div`
   margin: 4rem 0;

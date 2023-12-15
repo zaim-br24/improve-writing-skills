@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Wrapper, PlayBtn } from "../styles/audio";
+import { Wrapper, PlayBtn,AddText } from "../styles/audio";
 import { useAppContext } from "../context/appContext";
 import { IoPlay } from "react-icons/io5";
 import { HiSpeakerWave } from "react-icons/hi2";
+import {ButtonRow} from '../components'
 
 export default function AudioContainer() {
   const { audioUrl, isLoading } = useAppContext();
@@ -40,7 +41,7 @@ export default function AudioContainer() {
           <source src={audioUrl} type="audio/ogg"></source>
         </audio>
         <PlayBtn onClick={togglePlay}>
-          <span className={isPlaying ? "special-btn": ""}>
+          <span className={isPlaying ? "special-btn" : ""}>
             {isPlaying ? (
               <>
                 Stop
@@ -54,6 +55,13 @@ export default function AudioContainer() {
             )}
           </span>
         </PlayBtn>
+        {/* <AddText >+</AddText> */}
+        {/* <ButtonRow
+          backgroundColor
+          className="addTextBtn"
+          text="+"
+          type="click"
+        /> */}
       </div>
     </Wrapper>
   );

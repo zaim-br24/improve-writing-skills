@@ -32,31 +32,31 @@ html {
   --primary-900: #0a091b;
 
   /* grey */
-  --grey-50: #f0f4f8;
-  --grey-100: #d9e2ec;
-  --grey-200: #bcccdc;
-  --grey-300: #9fb3c8;
-  --grey-400: #829ab1;
-  --grey-500: #627d98;
+  --grey-50: #f7f7f7;
+  --grey-100: #e4e6e7;
+  --grey-200: #d0d2d5;
+  --grey-300: #a4aeb8;
+  --grey-400: #87939e;
+  --grey-500: #65707a;
   --grey-600: #aaaaaa;
-  --grey-700: #334e68;
-  --grey-800: #243b53;
-  --grey-900: #102a43;
+  --grey-700: #424a51;
+  --grey-800: #343739;
+  --grey-900: #353636;
   /* rest of the colors */
   --black: #222;
   --white: #ffffff;
-  --text-grey:  #dadada;
-  --text-grey-dark:  #909090;
+  --text-grey: #dadada;
+  --text-grey-dark: #909090;
 
   --red-light: #f8d7da;
-  --red-dark: #a4323b;
-  --green-light: #d1e7dd;
-  --green-dark: #228859;
+  --red-dark: #d9534f;
+  --green-light: #dff2bf;
+  --green-dark: #4f8a10;
   --yellow-light: #f7f3a782;
+  --yellow-light-alpha: #f7f3a74d;
   --yellow-dark: #dfdc31ce;
   --blue-dark: #1167f1;
   --blue-light: #5f9af890;
-
 
   --orange-200: #ff990029;
   --orange-500: #ff99007e;
@@ -196,8 +196,8 @@ button:disabled {
   padding: 0;
 } */
 .close-overlay {
-    display: none;
-  }
+  display: none;
+}
 .header {
   font-weight: 900;
 }
@@ -233,6 +233,7 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
 }
 /* buttons */
 .btn {
@@ -247,6 +248,7 @@ button:disabled {
   padding: 0.9rem;
   text-transform: capitalize;
   display: inline-block;
+
 }
 .btn:hover {
   background: var(--primary-700);
@@ -315,10 +317,10 @@ button:disabled {
 
 /* alerts */
 .alert {
-  position: absolute;
+  /* position: absolute;
   top: 0;
   right: 0;
-  left: 0;
+  left: 0; */
   padding: 0.9rem;
   margin-bottom: 1rem;
   border-color: transparent;

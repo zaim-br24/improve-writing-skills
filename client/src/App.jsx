@@ -6,8 +6,16 @@ import {
   Register,
   UploadContent,
   ProtectedRoute,
-  Error
+  Error,
+  Settings,
 } from "./pages";
+import {
+  ProfilePage,
+  Level,
+  Password,
+  Practice,
+  General,
+} from "./pages/Account";
 
 function App() {
   return (
@@ -15,6 +23,20 @@ function App() {
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<WritingSkills />} />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<General />} />
+            <Route path="level" element={<Level />} />
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="password" element={<Password />} />
+            <Route path="practice" element={<Practice />} />
+          </Route>
         </Route>
         <Route path="/register" element={<Register />} />
         <Route
@@ -25,7 +47,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="*" element={<Error/>} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>
   );

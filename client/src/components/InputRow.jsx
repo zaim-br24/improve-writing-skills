@@ -33,12 +33,13 @@ const Label = styled.label`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 
   .input {
     width: 100%;
     padding: 0.8rem;
     outline: 0;
-    border: 1px solid var(--grey-500);
+    border: 1px solid var(--grey-200);
     border-radius: var(--borderRadius-medium);
     font-weight: 600;
   }
@@ -54,7 +55,7 @@ const Label = styled.label`
     pointer-events: none;
     /* font-weight: 400; */
   }
-
+  
   .input:focus + span,
   .input:not(:placeholder-shown) + span {
     top: 22px;

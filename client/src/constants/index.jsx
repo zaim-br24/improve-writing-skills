@@ -31,5 +31,28 @@ const benefits = [
   },
 ];
 
+const sidebarLinks = [
+  {
+    name: "general",
+    link: "/settings",
+  },
+  {
+    name: "edit profile",
+    link: "profile",
+  },
+  {
+    name: "practice",
+    link: "practice",
+  },
+  {
+    name: "level",
+    link: "level",
+  },
+  {
+    name: "password",
+    link: "password",
+  },
+];
 
-export { levels, languages, benefits };
+
+export { levels, languages, benefits, sidebarLinks };

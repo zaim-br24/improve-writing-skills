@@ -4,6 +4,8 @@ import WritingSkills from "./WritingSkills";
 import Register from "./register";
 import UploadContent from "./uploadContent";
 import Error from "./Error";
+import Settings from "./Settings";
+
 
 export {
   SharedLayout,
@@ -12,5 +14,6 @@ export {
   UploadContent,
   ProtectedRoute,
   Error,
+  Settings,
 };
 

@@ -4,9 +4,15 @@ import {
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
   UPLOAD_CONTENT_BEGIN,
   UPLOAD_CONTENT_SUCCESS,
   UPLOAD_CONTENT_ERROR,
+  UPDATE_PASSWORD_BEGIN,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_ERROR,
   GET_CONTENT_BEGIN,
   GET_CONTENT_SUCCESS,
   GET_CONTENT_ERROR,
@@ -62,6 +68,32 @@ const reducer = (state, action) => {
       alertText: action.payload.msg,
     };
   }
+    if (action.type === UPDATE_USER_BEGIN) {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+    if (action.type === UPDATE_USER_SUCCESS) {
+      return {
+        ...state,
+        isLoading: false,
+        user: action.payload.user,
+        token: action.payload.token,
+        showAlert: true,
+        alertType: "success",
+        alertText: "User Updated Successfully!",
+      };
+    }
+    if (action.type === UPDATE_USER_ERROR) {
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertType: "danger",
+        alertText: "Update User Failed! Please try again.",
+      };
+    }
     if (action.type === LOGOUT_USER) {
       return {
         ...initialState,
@@ -69,7 +101,7 @@ const reducer = (state, action) => {
         token: null,
         showAlert: true,
         alertType: "success",
-        alertText: "Logged out! See you soon!",
+        alertText: "Logged Out Successfully! See you soon!",
       };
   }
   
@@ -136,18 +168,12 @@ const reducer = (state, action) => {
       isLoading: false,
       mistakes: action.payload.mistakes,
       mistakesCount: action.payload.count,
-      showAlert: true,
-      alertType: "success",
-      alertText: "values ckecked successfully!",
     };
   }
   if (action.type === CHECK_VALUES_ERROR) {
     return {
       ...state,
       isLoading: false,
-      showAlert: true,
-      alertType: "danger",
-      alertText: "Something went wrong while checking! please try again.",
     };
   }
   if (action.type === TOGGLE_CATEGORY) {
@@ -172,6 +198,32 @@ const reducer = (state, action) => {
      return {
        ...state,
        userText: "",
+     };
+  }
+   if (action.type === UPDATE_PASSWORD_BEGIN) {
+     return {
+       ...state,
+       isLoading: true,
+     };
+   }
+   if (action.type === UPDATE_PASSWORD_SUCCESS) {
+     return {
+       ...state,
+       isLoading: false,
+       user: action.payload.user,
+       token: action.payload.token,
+       showAlert: true,
+       alertType: "success",
+       alertText: "Password Updated Successfully!",
+     };
+   }
+   if (action.type === UPDATE_PASSWORD_ERROR) {
+     return {
+       ...state,
+       isLoading: false,
+       showAlert: true,
+       alertType: "danger",
+       alertText: "Update Password Failed! Please try again.",
      };
    }
 };

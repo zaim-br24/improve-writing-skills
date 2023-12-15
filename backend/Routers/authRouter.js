@@ -1,4 +1,9 @@
-import { login, register, updateUser } from "../controllers/authController.js";
+import {
+  login,
+  register,
+  updateUser,
+  updatePassword,
+} from "../controllers/authController.js";
 import express, { Router } from "express";
 const router = express.Router();
 import authenticateUser from "../middleware/auth.js";
@@ -19,6 +24,8 @@ router.route("/login").post(limiter, login);
 
 // router.route("/login").post(limiter, login);
 router.route("/updateUser").patch(authenticateUser, updateUser);
+router.route("/updatePassword").patch(authenticateUser, updatePassword);
+
 
 
 export default router;

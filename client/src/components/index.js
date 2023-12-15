@@ -14,6 +14,7 @@ import Alert from "./Alert";
 import Loader from "./Loader";
 import Footer from "./footer";
 import Logo from "./Logo";
+import Checkbox from "./checkbox";
 
 
 
@@ -34,4 +35,5 @@ export {
   Loader,
   Footer,
   Logo,
+  Checkbox,
 };

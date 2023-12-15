@@ -23,7 +23,7 @@ export default function navbar() {
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
     if (!user) {
-      setIsOpen(false)
+      setIsOpen(false);
     }
 
     return () => {
@@ -36,7 +36,9 @@ export default function navbar() {
          Vocabulary Builder coming soon!!
       </WavyParagraph> */}
       <Main>
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
 
         <div>
           {!user ? (
@@ -67,10 +69,14 @@ export default function navbar() {
               <DropdownItem href="#" className="profile">
                 {/* <img className="img" src={profilePic} /> */}
 
-                {user && `${user.lastname} ${user.firstname
-                  .slice(0, 2)
-                  .toUpperCase()} ` }
-                
+                {user && (
+                  <p className="short-name">
+                    {`${user.lastname
+                      .toUpperCase()} ${user.firstname
+                      .slice(0, 2)
+                      .toUpperCase()} `}
+                  </p>
+                )}
               </DropdownItem>
               <DropdownItem href="/settings">
                 <IoMdSettings className="icon" /> Settings
@@ -106,9 +112,9 @@ const DropdownContent = styled.div`
   border-radius: var(--borderRadius-small);
   box-shadow: var(--shadow-2);
 
-
   .logout {
     border-top: 1px solid var(--grey-50);
+    margin-top: 1rem;
   }
   .img {
     width: 2.5rem;

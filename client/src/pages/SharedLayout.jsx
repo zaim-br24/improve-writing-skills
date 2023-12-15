@@ -4,16 +4,13 @@ import { SidebarSmall, Sidebar, Navbar, Alert } from "../components";
 import { useAppContext } from "../context/appContext";
 
 export default function SharedLayout() {
-  const { showAlert } = useAppContext();
   return (
     <Wrapper>
       <main className="dashboard">
         {/* <Sidebar /> */}
-
-        {/* {showSidebar && <SmallSidebar />} */}
         <div>
           <Navbar />
-          {showAlert && <Alert />}
+          {/* {showAlert && <Alert />} */}
           <div className="dashboard-page">
             <Outlet />
           </div>

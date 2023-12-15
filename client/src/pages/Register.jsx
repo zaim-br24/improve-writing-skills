@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Wrapper from "../styles/register";
-import { InputRow, ButtonRow, Alert, Logo } from "../components";
+import { InputRow, ButtonRow, Alert, Logo, Checkbox } from "../components";
 import { useAppContext } from "../context/appContext";
 
 const initialState = {
@@ -16,6 +16,7 @@ const initialState = {
 export default function registerPage() {
   const [values, setValues] = useState(initialState);
   const navigate = useNavigate();
+  const [isChecked, setIsChecked] = useState(false);
 
   const { user, showAlert, displayAlert, setupUser, isLoading } =
     useAppContext();
@@ -48,9 +49,24 @@ export default function registerPage() {
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
-
+  const handleChecked = () => {
+    setIsChecked(!isChecked);
+    if (!isChecked) {
+      console.log("Checkbox is checked");
+    } else {
+      console.log("Checkbox is unchecked");
+    }
+  };
+   useEffect(() => {
+     if (values.password.length <= 0) {
+       setIsChecked(false);
+     }
+   }, [values.password]);
   // ckeck if user exist
   useEffect(() => {
+    if (values.password.length <= 0) {
+      setIsChecked(false)
+    }
     if (user) {
       setTimeout(() => {
         navigate("/");
@@ -60,7 +76,10 @@ export default function registerPage() {
   return (
     <Wrapper>
       <form className="form" onSubmit={handleSubmit}>
-       <div className="logo"> <Logo  /></div> 
+        <div className="logo">
+          {" "}
+          <Logo />
+        </div>
 
         <p className="title">{values.isMember ? "Sign in" : "Sign up"} </p>
         {showAlert && <Alert />}
@@ -108,11 +127,16 @@ export default function registerPage() {
         <InputRow
           placeholder=""
           required="true"
-          type="password"
+          type={isChecked ? "text" : "password"}
           handleChange={handleChange}
           text="Password"
           value={values.password}
           name="password"
+        />
+        <Checkbox
+          text={isChecked ? "Hide" : "show"}
+          handleChecked={handleChecked}
+          isChecked={isChecked}
         />
         {/* {!values.isMember && (
           <InputRow

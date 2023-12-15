@@ -9,7 +9,6 @@ const Wrapper = styled.section`
   .dashboard-page {
     margin: 2rem auto;
     width: 95vw;
-    /* background-color: var(--grey-50); */
     border-radius: var(--borderRadius);
   }
   @media (min-width: 992px) {
@@ -18,7 +17,7 @@ const Wrapper = styled.section`
     }
     .dashboard-page {
       margin: 0rem auto;
-      width: 85vw;
+      width: 80vw;
       margin-top: 2rem;
     }
   }

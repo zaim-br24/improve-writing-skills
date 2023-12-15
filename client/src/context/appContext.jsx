@@ -1,4 +1,5 @@
 import React, { useReducer, useContext } from "react";
+import { Navigate } from "react-router-dom";
 import reducer from "./reducer";
 import axios from "axios";
 import {
@@ -7,9 +8,15 @@ import {
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SETUP_USER_ERROR,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
   UPLOAD_CONTENT_BEGIN,
   UPLOAD_CONTENT_SUCCESS,
   UPLOAD_CONTENT_ERROR,
+  UPDATE_PASSWORD_BEGIN,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_ERROR,
   GET_CONTENT_BEGIN,
   GET_CONTENT_SUCCESS,
   GET_CONTENT_ERROR,
@@ -207,6 +214,8 @@ const AppProvider = ({ children }) => {
   };
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER });
+    <Navigate to="/register" />;
+
     removeUserFromLocalStorage();
     clearAlert();
   };
@@ -233,7 +242,7 @@ const AppProvider = ({ children }) => {
         userText: text,
       },
     });
-    console.log(state.userText)
+    console.log(state.userText);
   };
   const clearUserText = () => {
     dispatch({
@@ -241,35 +250,59 @@ const AppProvider = ({ children }) => {
     });
   };
   // -------- UPDATE USER -------
-  // const updateUser = async (currentUser) => {
-  //   dispatch({ type: UPDATE_USER_BEGIN });
+  const updateUser = async (currentUser) => {
+    dispatch({ type: UPDATE_USER_BEGIN });
 
-  //   try {
-  //     const { data } = await authFetch.patch("/auth/updateUser", currentUser);
+    try {
+      const { data } = await authFetch.patch("/auth/updateUser", currentUser);
+      // no token
+      const { user, token } = data;
+      dispatch({
+        type: UPDATE_USER_SUCCESS,
+        payload: { user, token },
+      });
 
-  //     // no token
-  //     const { user, token } = data;
+      addUserToLocalStorage({ user, token });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+ const updatePassword = async (userPassword) => {
+   dispatch({ type: UPDATE_PASSWORD_BEGIN });
 
-  //     dispatch({
-  //       type: UPDATE_USER_SUCCESS,
-  //       payload: { user, location, token },
-  //     });
+   try {
+     const { data } = await authFetch.patch(
+       "/auth/updatePassword",
+       userPassword
+     );
+     // no token
+     const { user, token } = data;
+     dispatch({
+       type: UPDATE_PASSWORD_SUCCESS,
+       payload: { user, token },
+     });
 
-  //     addUserToLocalStorage({ user, location, token });
-  //   } catch (error) {
-  //     dispatch({
-  //       type: UPDATE_USER_ERROR,
-  //       payload: { msg: error.response.data.msg },
-  //     });
-  //   }
-  //   clearAlert();
-  // };
+     addUserToLocalStorage({ user, token });
+   } catch (error) {
+     dispatch({
+       type: UPDATE_PASSWORD_ERROR,
+       payload: { msg: error.response.data.msg },
+     });
+   }
+   logoutUser()
+    clearAlert();
 
+ };
   return (
     <AppContext.Provider
       value={{
         ...state,
         setupUser,
+        updateUser,
         displayAlert,
         uploadContent,
         getContent,
@@ -278,8 +311,8 @@ const AppProvider = ({ children }) => {
         toggleMistakes,
         clearUserText,
         addUserText,
-
         logoutUser,
+        updatePassword
       }}
     >
       {children}

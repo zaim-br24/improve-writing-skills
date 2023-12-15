@@ -9,7 +9,6 @@ import {
   Card,
   Cards,
 } from "../styles/WritingSkills";
-import { Alert } from "../components";
 import styled from "styled-components";
 import {
   AudioContainer,
@@ -19,6 +18,7 @@ import {
   UserTextContainer,
   OriginalTextContainer,
   Footer,
+  Alert,
 } from "../components";
 import { benefits } from "../constants/index";
 import { useAppContext } from "../context/appContext";
@@ -32,10 +32,13 @@ export default function WritingSkills() {
     addUserText,
     userText,
     clearUserText,
+    showAlert
   } = useAppContext();
   // const [userText, addUserText] = useState("");
   const [showMistakes, setShowMistakes] = useState(false);
-
+  useEffect(() => {
+    document.title = "Improve Your Writing skills";
+  }, []);
   const handleTextareaChnage = (e) => {
     addUserText(e.target.value);
   };
@@ -53,6 +56,7 @@ export default function WritingSkills() {
   };
   return (
     <Wrapper>
+      {showAlert && <Alert/>}
       <>
         <LanguageBar />
         <ModesBar />
@@ -73,7 +77,6 @@ export default function WritingSkills() {
             <AudioContainer />
             <OriginalTextContainer
               placeholder={generatedText}
-              // showMistakes={showMistakes}
             />
           </Left>
         </Editor>
