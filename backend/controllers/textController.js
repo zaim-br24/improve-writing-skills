@@ -22,7 +22,7 @@ const addText = async (req, res) => {
     // const audioUrl = await getObjectSignedUrl(filename);
     // console.log("Audio file uploaded to S3:", result);
     // console.log("Audio url:", audioUrl);
-const audioUrl = `https://${pollyBucket}.s3.amazonaws.com/${filename}.mp3`;
+    const audioUrl = `https://${pollyBucket}.s3.amazonaws.com/${filename}.mp3`;
     const updatedContent = await Texts.findOneAndUpdate(
       {},
       {
@@ -79,7 +79,7 @@ const getText = async (req, res) => {
     res.status(StatusCodes.OK).json({
       category: category,
       generatedText: generatedText.content,
-      audioUrl: generatedText.audioUrl
+      audioUrl: generatedText.audioUrl,
     });
   } catch (error) {
     console.error(error);
@@ -134,4 +134,11 @@ const checkValues = (req, res) => {
     });
   }
 };
-export { addText, getText, checkValues };
+const addTextToPractice = async (req, res) => {
+  const { myText } = req.body;
+  if (!myText) {
+    throw new BadRequestError("Please add a text to practice!")
+  }
+
+};
+export { addText, getText, checkValues, addTextToPractice };

@@ -51,7 +51,7 @@ const Content = styled.div`
 const Header = styled.div`
   width: 100%;
   padding: 10px;
-  margin: 1.2rem 0;
+  /* margin: 1.2rem 0; */
 `;
 
 export { Wrapper, Content, Sidebar, Header };

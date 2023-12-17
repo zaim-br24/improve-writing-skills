@@ -29,7 +29,6 @@ const UserProfileContainer = styled.div`
   align-items: center;
   background-color: var(--grey-50);
   padding: 20px;
-  margin-bottom: 2rem;
   border-radius: var(--borderRadius-small);
   @media (max-width: 680px) {
     h1 {

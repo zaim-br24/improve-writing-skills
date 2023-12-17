@@ -7,6 +7,23 @@ import { Link, Outlet } from "react-router-dom";
 
 export default function Settings() {
   const [active, setActive] = useState("general");
+    useEffect(() => {
+      const url = window.location.href;
+
+      const settingsIndex = url.indexOf("/settings/");
+
+      if (settingsIndex !== -1) {
+          const extractedPart = url.substring(settingsIndex + "/settings/".length);
+          console.log(extractedPart)
+          if (extractedPart == "profile") {
+            setActive("edit profile");
+          } else {
+              setActive(extractedPart);
+          }
+          
+        }
+        
+    }, [active]);
   useEffect(() => {
     document.title = `${
       active.charAt(0).toUpperCase() + active.slice(1)
@@ -14,7 +31,10 @@ export default function Settings() {
   }, [active]);
   return (
     <Wrapper>
-      <Header>header</Header>
+      <Header>
+    
+        <UserProfile />
+      </Header>
       <div className="full-container">
         <Sidebar>
           {sidebarLinks.map((item, index) => {
@@ -31,8 +51,6 @@ export default function Settings() {
           })}
         </Sidebar>
         <Content>
-          <UserProfile />
-
           <Outlet />
         </Content>
       </div>

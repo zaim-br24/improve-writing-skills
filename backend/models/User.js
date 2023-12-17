@@ -32,10 +32,32 @@ const UserSchema = new mongoose.Schema({
     type: String,
     // required: [true, "please provide a password"],
     minlength: 8,
-    maxlength: 30,
+    maxlength: 20,
     select: false, // the SELET key === false means can't be accessed if you return it from the DB using 'find' or 'findOne'
   },
   picture: { type: String },
+  practice: {
+    sentences: [
+      {
+        type: String,
+        minlength: 8,
+        maxlength: 300,
+      },
+    ],
+    words: [
+      {
+        type: String,
+      },
+    ],
+    mistakes: [
+      {
+        type: String,
+      },
+    ],
+  },
+  level: {
+    type: String,
+  },
 });
 
 // hashing the password

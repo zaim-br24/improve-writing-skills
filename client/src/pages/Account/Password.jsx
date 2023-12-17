@@ -95,7 +95,7 @@ const Form = styled.form`
   .input {
     width: 100%;
     border-radius: var(--borderRadius-small);
-    padding: 1.1rem 1rem;
+    padding: .9rem 1rem;
     font-size: 1rem;
     &:hover {
       outline: 3.5px solid var(--yellow-light-alpha);

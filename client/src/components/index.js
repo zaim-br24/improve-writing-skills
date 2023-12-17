@@ -15,7 +15,8 @@ import Loader from "./Loader";
 import Footer from "./footer";
 import Logo from "./Logo";
 import Checkbox from "./checkbox";
-
+import SpecialBtn from "./specialBtn";
+import TextareaRow from "./textareaRow";
 
 
 export {
@@ -36,4 +37,6 @@ export {
   Footer,
   Logo,
   Checkbox,
+  SpecialBtn,
+  TextareaRow,
 };
