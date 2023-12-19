@@ -61,40 +61,39 @@ const getObjectSignedUrl = async (filename) => {
     Bucket: pollyBucket,
     Key: filename,
   };
-
-  // https://aws.amazon.com/blogs/developer/generate-presigned-url-modular-aws-sdk-javascript/
   const command = new GetObjectCommand(params);
   const seconds = 3600;
   const url = await getSignedUrl(s3Client, command, { expiresIn: seconds });
 
   return url;
 };
-// const filename = generateFileName();
-//  console.log(filename)
-//  const result = await awsPolly(
-//    "This tool help students improve their writing skills",
-//    filename
-// );
-//   console.log(filename);
+const getAudioUrl = async (content) => {
+  const filename = generateFileName();
+  const pollyBucket = process.env.AWS_POLLY_BUCKET;
 
-//  const audioUrl = await getObjectSignedUrl(filename);
+  const result = await awsPolly(content, filename);
+  const audioUrl = `https://${pollyBucket}.s3.amazonaws.com/${filename}.mp3`;
+  return audioUrl;
+};
 
-//  console.log("Audio file uploaded to S3:", result);
-//  console.log("Audio url", audioUrl);
-// (async () => {
-//   try {
-//     const filename = generateFileName();
+const deleteObject = async (filename) => {
+  const params = {
+    Bucket: pollyBucket,
+    Key: filename,
+  };
 
-//     const result = await awsPolly(
-//       "This tool hepl students improve their writing skills",
-//       filename
-//     );
-//     const audioUrl = await getObjectSignedUrl(filename);
+  const command = new DeleteObjectCommand(params);
 
-//     console.log("Audio file uploaded to S3:", result);
-//     console.log("Audio url", audioUrl);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// })();
-export { awsPolly, getObjectSignedUrl };
+  try {
+    await s3Client.send(command);
+    console.log(`File ${filename} deleted successfully.`);
+  } catch (error) {
+    console.error(`Error deleting file ${filename}:`, error);
+  }
+};
+
+// Usage
+// const filenameToDelete = "your-file-name.mp3";
+// deleteObject(filenameToDelete);
+
+export { awsPolly, getObjectSignedUrl, getAudioUrl, deleteObject };

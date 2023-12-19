@@ -34,8 +34,6 @@ export default function WritingSkills() {
     clearUserText,
     showAlert
   } = useAppContext();
-  // const [userText, addUserText] = useState("");
-  const [showMistakes, setShowMistakes] = useState(false);
   useEffect(() => {
     document.title = "Improve Your Writing skills";
   }, []);

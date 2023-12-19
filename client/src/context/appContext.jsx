@@ -20,6 +20,18 @@ import {
   GET_CONTENT_BEGIN,
   GET_CONTENT_SUCCESS,
   GET_CONTENT_ERROR,
+  GET_CUSTOM_TEXT_BEGIN,
+  GET_CUSTOM_TEXT_SUCCESS,
+  GET_CUSTOM_TEXT_ERROR,
+  POST_CUSTOM_TEXT_BEGIN,
+  POST_CUSTOM_TEXT_SUCCESS,
+  POST_CUSTOM_TEXT_ERROR,
+  DELETE_CUSTOM_TEXT_BEGIN,
+  DELETE_CUSTOM_TEXT_SUCCESS,
+  DELETE_CUSTOM_TEXT_ERROR,
+  UPDATE_CUSTOM_TEXT_BEGIN,
+  UPDATE_CUSTOM_TEXT_SUCCESS,
+  UPDATE_CUSTOM_TEXT_ERROR,
   CHECK_VALUES_BEGIN,
   CHECK_VALUES_SUCCESS,
   CHECK_VALUES_ERROR,
@@ -39,7 +51,7 @@ const initialState = {
   alertText: "",
   alertType: "",
   user: user ? JSON.parse(user) : null,
-  token: token,
+  token: token ? token : null,
   category: "",
   content: "",
   activeCategory: level || "beginner",
@@ -49,6 +61,8 @@ const initialState = {
   mistakesCount: 0,
   showMistakes: false,
   userText: "",
+  customTexts: null,
+  showCustomTexts: false,
 };
 
 const AppContext = React.createContext();
@@ -108,7 +122,7 @@ const AppProvider = ({ children }) => {
 
     dispatch({ type: CHECK_VALUES_BEGIN });
     try {
-      const { data } = await axios.post("/api/v1/content/checkValues", {
+      const { data } = await authFetch.post("/content/checkValues", {
         originalSentence,
         userSentence,
       });
@@ -128,14 +142,15 @@ const AppProvider = ({ children }) => {
         },
       });
     }
+    clearAlert();
   };
 
   // ------------ GET CONTENT ---------
   const getContent = async () => {
     dispatch({ type: GET_CONTENT_BEGIN });
     try {
-      const { data } = await axios.get(
-        `/api/v1/content/getText?category=${state.activeCategory}`
+      const { data } = await authFetch.get(
+        `/content/getText?category=${state.activeCategory}`
       );
       dispatch({
         type: GET_CONTENT_SUCCESS,
@@ -154,12 +169,93 @@ const AppProvider = ({ children }) => {
         },
       });
     }
+    clearAlert();
+  };
+  const getCustomTexts = async () => {
+    dispatch({ type: GET_CUSTOM_TEXT_BEGIN });
+    try {
+      const { data } = await authFetch.get(`/content/getCustomTexts`);
+      dispatch({
+        type: GET_CUSTOM_TEXT_SUCCESS,
+        payload: {
+          customTexts: data.customTexts,
+        },
+      });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: GET_CUSTOM_TEXT_ERROR,
+        payload: {
+          msg: error.response.data.msg,
+        },
+      });
+    }
+    clearAlert();
+  };
+  const addCustomText = async (userCustomText) => {
+    dispatch({ type: POST_CUSTOM_TEXT_BEGIN });
+    const customText = userCustomText;
+    try {
+      const { data } = await authFetch.post(
+        `/content/addCustomText`,
+        {customText}
+      );
+      dispatch({
+        type: POST_CUSTOM_TEXT_SUCCESS,
+      });
+    } catch (error) {
+      dispatch({
+        type: POST_CUSTOM_TEXT_ERROR,
+        payload: {
+          msg: error.response.data.msg,
+        },
+      });
+    }
+    clearAlert();
+  };
+  const deleteCustomText = async (id) => {
+    dispatch({ type: DELETE_CUSTOM_TEXT_BEGIN });
+    try {
+      const { data } = await authFetch.delete(`/content/${id}`);
+      dispatch({
+        type: DELETE_CUSTOM_TEXT_SUCCESS,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELETE_CUSTOM_TEXT_ERROR,
+        payload: {
+          msg: error.response.data.msg,
+        },
+      });
+    }
+    clearAlert();
+  };
+  const updateCustomText = async ({ userCustomText, targetedId }) => {
+    const customText = userCustomText;
+    const id = targetedId;
+
+
+    dispatch({ type: UPDATE_CUSTOM_TEXT_BEGIN });
+    try {
+      const { data } = await authFetch.patch(`/content/${id}`, { customText });
+      dispatch({
+        type: UPDATE_CUSTOM_TEXT_SUCCESS,
+      });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_CUSTOM_TEXT_ERROR,
+        payload: {
+          msg: error.response.data.msg,
+        },
+      });
+    }
+    clearAlert();
   };
   // ------------ UPLOAD CONTENT ------
   const uploadContent = async (currentPost) => {
     dispatch({ type: UPLOAD_CONTENT_BEGIN });
     try {
-      const { data } = await axios.post("/api/v1/content/addText", currentPost);
+      const { data } = await authFetch.post("/content/addText", currentPost);
       const { content, category } = data;
       dispatch({
         type: UPLOAD_CONTENT_SUCCESS,
@@ -178,6 +274,7 @@ const AppProvider = ({ children }) => {
         },
       });
     }
+    clearAlert();
   };
 
   // ------- SINUP & SINGIN -------
@@ -271,32 +368,31 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
- const updatePassword = async (userPassword) => {
-   dispatch({ type: UPDATE_PASSWORD_BEGIN });
+  const updatePassword = async (userPassword) => {
+    dispatch({ type: UPDATE_PASSWORD_BEGIN });
 
-   try {
-     const { data } = await authFetch.patch(
-       "/auth/updatePassword",
-       userPassword
-     );
-     // no token
-     const { user, token } = data;
-     dispatch({
-       type: UPDATE_PASSWORD_SUCCESS,
-       payload: { user, token },
-     });
+    try {
+      const { data } = await authFetch.patch(
+        "/auth/updatePassword",
+        userPassword
+      );
+      // no token
+      const { user, token } = data;
+      dispatch({
+        type: UPDATE_PASSWORD_SUCCESS,
+        payload: { user, token },
+      });
 
-     addUserToLocalStorage({ user, token });
-   } catch (error) {
-     dispatch({
-       type: UPDATE_PASSWORD_ERROR,
-       payload: { msg: error.response.data.msg },
-     });
-   }
-   logoutUser()
+      addUserToLocalStorage({ user, token });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_PASSWORD_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    logoutUser();
     clearAlert();
-
- };
+  };
   return (
     <AppContext.Provider
       value={{
@@ -312,7 +408,11 @@ const AppProvider = ({ children }) => {
         clearUserText,
         addUserText,
         logoutUser,
-        updatePassword
+        updatePassword,
+        getCustomTexts,
+        addCustomText,
+        deleteCustomText,
+        updateCustomText,
       }}
     >
       {children}

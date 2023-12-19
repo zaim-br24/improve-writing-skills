@@ -1,15 +1,24 @@
-import React from 'react'
-import styled from 'styled-components';
-export default function specialBtn({text, handleClick, className, icon}) {
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+export default function specialBtn({
+  text,
+  handleClick,
+  className,
+  icon,
+  link,
+}) {
   return (
-    <PlayBtn>
-      <span className={className} onClick={handleClick}>
-        <>
-         {text}
-          {icon}
-        </>
-      </span>
-    </PlayBtn>
+    <Link to={link}>
+      <PlayBtn>
+        <span className={className} onClick={handleClick}>
+          <>
+            {text}
+            {icon}
+          </>
+        </span>
+      </PlayBtn>{" "}
+    </Link>
   );
 }
 
@@ -23,7 +32,7 @@ const PlayBtn = styled.button`
   overflow: hidden;
   border-radius: var(--borderRadius-small);
   min-width: 130px;
-  margin: 1rem 0;
+  margin-bottom: 1rem;
 
   span {
     width: 100%;
@@ -45,11 +54,7 @@ const PlayBtn = styled.button`
     opacity: 0.8;
     box-shadow: var(--shadow-2);
   }
-  .icon {
-    width: 20px;
-    height: 20px;
-    font-weight: 500;
-  }
+ 
   @media (max-width: 600px) {
     width: 100%;
     border-top: 1px solid var(--grey-50);

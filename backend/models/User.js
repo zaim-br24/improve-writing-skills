@@ -36,25 +36,16 @@ const UserSchema = new mongoose.Schema({
     select: false, // the SELET key === false means can't be accessed if you return it from the DB using 'find' or 'findOne'
   },
   picture: { type: String },
-  practice: {
-    sentences: [
-      {
-        type: String,
-        minlength: 8,
-        maxlength: 300,
+  customTexts: [
+    {
+      content: {
+        type: String
       },
-    ],
-    words: [
-      {
-        type: String,
-      },
-    ],
-    mistakes: [
-      {
-        type: String,
-      },
-    ],
-  },
+      audioUrl: {
+        type:String
+      }
+    }
+  ],
   level: {
     type: String,
   },

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ButtonRow, InputRow, Alert } from "../../components";
 import { useAppContext } from "../../context/appContext";
+import { Title } from "../../styles/settings";
 
 const ProfilePage = () => {
   const { user, updateUser, displayAlert, showAlert } = useAppContext();
@@ -32,6 +33,7 @@ const ProfilePage = () => {
 
   return (
     <Wrapper>
+      <Title>Edit profile</Title>
       <Form onSubmit={handleSubmit}>
         {showAlert && <Alert />}
 

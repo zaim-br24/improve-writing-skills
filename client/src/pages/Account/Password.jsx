@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { InputRow, ButtonRow, Alert, Checkbox } from "../../components";
 import { useAppContext } from "../../context/appContext";
+import { Title } from "../../styles/settings";
+
 export default function Password() {
   const { user, displayAlert, showAlert, updatePassword } = useAppContext();
   const [state, setState] = useState({
@@ -45,6 +47,7 @@ export default function Password() {
 
   return (
     <Wrapper>
+      <Title>Change Password</Title>
       <Form onSubmit={handleSubmit}>
         {showAlert && <Alert />}
         <InputRow
@@ -78,7 +81,7 @@ export default function Password() {
             placeholder="Confirm New Passsword"
           />
         </div>
-        <ButtonRow text="Change password" type="submit" />
+        <ButtonRow text="save changes" type="submit" />
       </Form>
     </Wrapper>
   );

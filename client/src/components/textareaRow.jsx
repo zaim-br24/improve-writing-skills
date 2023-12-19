@@ -11,7 +11,7 @@ export default function TextareaRow({
     <Wrapper>
       {label && <Label>{label}</Label>}
       <Textarea
-        rows="5"
+        rows="3"
         cols="50"
         placeholder={placeholder}
         onChange={handleTextareaChange}
@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px; 
-  margin-top: 1rem;
+  margin: 1rem 0;
 `;
 
 const Label = styled.label`

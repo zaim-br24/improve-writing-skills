@@ -1,8 +1,10 @@
 import Texts from "../models/Text.js";
+import Users from "../models/User.js";
+
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, NotFoundError } from "../errors/index.js";
 import findMistakes from "../utils/findMistakes.js";
-import { awsPolly, getObjectSignedUrl } from "../utils/awsPolly.js";
+import { awsPolly, getAudioUrl, deleteObject } from "../utils/awsPolly.js";
 import crypto from "crypto";
 
 const generateFileName = (bytes = 32) =>
@@ -15,14 +17,8 @@ const addText = async (req, res) => {
   }
 
   try {
-    const filename = generateFileName();
-    const pollyBucket = process.env.AWS_POLLY_BUCKET;
+    const audioUrl = await getAudioUrl(content);
 
-    const result = await awsPolly(content, filename);
-    // const audioUrl = await getObjectSignedUrl(filename);
-    // console.log("Audio file uploaded to S3:", result);
-    // console.log("Audio url:", audioUrl);
-    const audioUrl = `https://${pollyBucket}.s3.amazonaws.com/${filename}.mp3`;
     const updatedContent = await Texts.findOneAndUpdate(
       {},
       {
@@ -32,7 +28,11 @@ const addText = async (req, res) => {
       },
       { new: true, upsert: true }
     );
-    !!res.status(StatusCodes.CREATED).json(updatedContent);
+    // !!
+    res.status(StatusCodes.CREATED).json({
+      content,
+      audioUrl,
+    });
   } catch (error) {
     console.error(error);
     res.status(StatusCodes.BAD_REQUEST).json({
@@ -42,7 +42,6 @@ const addText = async (req, res) => {
 };
 const getText = async (req, res) => {
   const { category } = req.query;
-
   try {
     const foundCategory = await Texts.findOne({}, { [category]: 1 });
 
@@ -52,13 +51,11 @@ const getText = async (req, res) => {
       });
     }
     const contentCount = foundCategory[category].length;
-
     if (contentCount === 0) {
       return res.status(StatusCodes.NOT_FOUND).json({
         msg: `No content found in the '${category}' category.`,
       });
     }
-
     let randomIndex;
     const prevIndices = req.session.prevIndices || [];
 
@@ -71,11 +68,8 @@ const getText = async (req, res) => {
       prevIndices.shift();
     }
     prevIndices.push(randomIndex);
-
     req.session.prevIndices = prevIndices;
-
     const generatedText = foundCategory[category][randomIndex];
-
     res.status(StatusCodes.OK).json({
       category: category,
       generatedText: generatedText.content,
@@ -134,11 +128,121 @@ const checkValues = (req, res) => {
     });
   }
 };
-const addTextToPractice = async (req, res) => {
-  const { myText } = req.body;
-  if (!myText) {
-    throw new BadRequestError("Please add a text to practice!")
+const addCustomText = async (req, res) => {
+  const { customText } = req.body;
+
+  if (!customText) {
+    throw new BadRequestError("Add your text!");
   }
 
+  try {
+    const audioUrl = await getAudioUrl(customText);
+
+    const user = await Users.findByIdAndUpdate(
+      req.user.userId,
+      {
+        $push: {
+          ["customTexts"]: { content: customText, audioUrl: audioUrl },
+        },
+      },
+      { new: true, upsert: true }
+    );
+    // const newCustomText =  user.customTexts.find(
+    //   (item) => item.audioUrl === audioUrl
+    // );
+
+    res.status(StatusCodes.OK).json({ msg: "custom text added Successfully" });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ msg: "Internal Server Error" });
+  }
 };
-export { addText, getText, checkValues, addTextToPractice };
+
+const getCustomTexts = async (req, res) => {
+  try {
+    const user = await Users.findById(req.user.userId);
+      if (!user) {
+        throw new NotFoundError("User not found when trying to fetch custom texts");
+      }
+    res.status(StatusCodes.OK).json({ customTexts: user.customTexts });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ msg: "Internal Server Error" });
+  }
+};
+const deleteCustomText = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await Users.findOne({ _id: req.user.userId });
+    if (!user) {
+      throw new NotFoundError("User not found");
+    }
+    const filteredCustomTexts = user.customTexts.filter(
+      (text) => text._id.toString() !== id
+    );
+
+    if (user.customTexts.length === filteredCustomTexts.length) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ msg: "Custom text not found" });
+    }
+    const filenameToDelete = user.customTexts.id(id)?.audioUrl.split("/").pop();
+    user.customTexts = filteredCustomTexts;
+    await user.save();
+    if (filenameToDelete) {
+      deleteObject(filenameToDelete);
+    }
+    res
+      .status(StatusCodes.OK)
+      .json({ msg: "Custom text deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ msg: "Internal Server Error" });
+  }
+};
+
+const updateCustomText = async (req, res) => {
+  const { id } = req.params;
+  const { customText } = req.body;
+
+  try {
+    const user = await Users.findOne({ _id: req.user.userId });
+
+    if (!user) {
+      return res.status(StatusCodes.NOT_FOUND).json({ msg: "User not found" });
+    }
+    const existingCustomText = user.customTexts.id(id);
+    if (!existingCustomText) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ msg: "Custom text not found" });
+    }
+    existingCustomText.content = customText;
+    await user.save();
+
+    res
+      .status(StatusCodes.OK)
+      .json({ msg: "Custom text updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ msg: "Internal Server Error" });
+  }
+};
+
+export {
+  addText,
+  getText,
+  checkValues,
+  addCustomText,
+  getCustomTexts,
+  deleteCustomText,
+  updateCustomText,
+};

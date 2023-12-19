@@ -24,6 +24,18 @@ import {
   CLEAR_USER_TEXT,
   USER_TEXT,
   LOGOUT_USER,
+  GET_CUSTOM_TEXT_BEGIN,
+  GET_CUSTOM_TEXT_SUCCESS,
+  GET_CUSTOM_TEXT_ERROR,
+  POST_CUSTOM_TEXT_BEGIN,
+  POST_CUSTOM_TEXT_SUCCESS,
+  POST_CUSTOM_TEXT_ERROR,
+  DELETE_CUSTOM_TEXT_BEGIN,
+  DELETE_CUSTOM_TEXT_SUCCESS,
+  DELETE_CUSTOM_TEXT_ERROR,
+  UPDATE_CUSTOM_TEXT_BEGIN,
+  UPDATE_CUSTOM_TEXT_SUCCESS,
+  UPDATE_CUSTOM_TEXT_ERROR,
 } from "./action";
 import { initialState } from "./appContext";
 const reducer = (state, action) => {
@@ -40,6 +52,7 @@ const reducer = (state, action) => {
       showAlert: false,
       alertType: "",
       alertText: "",
+      showCustomTexts: false
     };
   }
   if (action.type === SETUP_USER_BEGIN) {
@@ -224,6 +237,103 @@ const reducer = (state, action) => {
        showAlert: true,
        alertType: "danger",
        alertText: "Update Password Failed! Please try again.",
+     };
+  }
+   if (action.type === GET_CUSTOM_TEXT_BEGIN) {
+     return {
+       ...state,
+       isLoading: true,
+     };
+   }
+   if (action.type === GET_CUSTOM_TEXT_SUCCESS) {
+     return {
+       ...state,
+       isLoading: false,
+       customTexts: action.payload.customTexts,
+     };
+   }
+   if (action.type === GET_CUSTOM_TEXT_ERROR) {
+     return {
+       ...state,
+       isLoading: false,
+       showAlert: true,
+       alertType: "danger",
+       alertText: action.payload.msg,
+     };
+  }
+  if (action.type === POST_CUSTOM_TEXT_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === POST_CUSTOM_TEXT_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showCustomTexts: true,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Text uploaded successfully.",
+    };
+  }
+  if (action.type === POST_CUSTOM_TEXT_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
+    if (action.type === DELETE_CUSTOM_TEXT_BEGIN) {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+    if (action.type === DELETE_CUSTOM_TEXT_SUCCESS) {
+      return {
+        ...state,
+        isLoading: false,
+        showCustomTexts: true,
+        showAlert: true,
+        alertType: "success",
+        alertText: "Text deleted successfully.",
+      };
+    }
+    if (action.type === DELETE_CUSTOM_TEXT_ERROR) {
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertType: "danger",
+        alertText: action.payload.msg,
+      };
+  }
+   if (action.type === UPDATE_CUSTOM_TEXT_BEGIN) {
+     return {
+       ...state,
+       isLoading: true,
+     };
+   }
+   if (action.type === UPDATE_CUSTOM_TEXT_SUCCESS) {
+     return {
+       ...state,
+       isLoading: false,
+       showCustomTexts: true,
+       showAlert: true,
+       alertType: "success",
+       alertText: "Text updated successfully.",
+     };
+   }
+   if (action.type === UPDATE_CUSTOM_TEXT_ERROR) {
+     return {
+       ...state,
+       isLoading: false,
+       showAlert: true,
+       alertType: "danger",
+       alertText: action.payload.msg,
      };
    }
 };

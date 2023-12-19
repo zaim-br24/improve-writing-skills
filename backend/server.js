@@ -50,7 +50,7 @@ if (process.env.NODE_ENV !== "production") {
 app.use(express.json());
 
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/content", textRouter);
+app.use("/api/v1/content", authenticateUser, textRouter);
 
 app.get("*", (req, res) => {
   res.send("page not found");
