@@ -40,10 +40,13 @@ import {
   CLEAR_USER_TEXT,
   USER_TEXT,
   LOGOUT_USER,
+  TOGGLE_CONTENT,
+  NEXT_CUSTOM_TEXT,
 } from "./action";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
 const level = localStorage.getItem("level");
+// const myCustomTexts = localStorage.getItem("myCustomTexts");
 
 const initialState = {
   isLoading: false,
@@ -63,6 +66,8 @@ const initialState = {
   userText: "",
   customTexts: null,
   showCustomTexts: false,
+  myCustomTexts:  false,
+  currentCustomText: 0,
 };
 
 const AppContext = React.createContext();
@@ -171,6 +176,60 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
+  // const practiceMyText = (id) => {
+  //   const myText = state.customTexts.find((text) => text._id === id);
+  //   dispatch({
+  //     type: GET_CONTENT_SUCCESS,
+  //     payload: {
+  //       activeCategory: state.activeCategory,
+  //       generatedText: myText.content,
+  //       audioUrl: myText.audioUrl,
+  //     },
+  //   });
+  //   toggleContent(true);
+  // };
+  const practiceMyText = async (id) => {
+    if (state.customTexts[0] === null) {
+          toggleContent(false);
+    }
+    if (id) {
+      const targetedIndex = state.customTexts.findIndex(
+        (item) => item._id === id
+      );
+      dispatch({
+        type: NEXT_CUSTOM_TEXT,
+        payload: {
+          currentCustomText: targetedIndex,
+        },
+      });
+    }
+
+    const myText = state.customTexts[state.currentCustomText];
+    dispatch({
+      type: GET_CONTENT_SUCCESS,
+      payload: {
+        activeCategory: state.activeCategory,
+        generatedText: myText.content,
+        audioUrl: myText.audioUrl,
+      },
+    });
+    toggleContent(true);
+  };
+  const nextCustomText = () => {
+    let current = state.currentCustomText;
+    const length = state.customTexts.length - 1;
+    if (current >= length) {
+      current = 0;
+    } else {
+      current++;
+    }
+    dispatch({
+      type: NEXT_CUSTOM_TEXT,
+      payload: {
+        currentCustomText: current,
+      },
+    });
+  };
   const getCustomTexts = async () => {
     dispatch({ type: GET_CUSTOM_TEXT_BEGIN });
     try {
@@ -196,10 +255,9 @@ const AppProvider = ({ children }) => {
     dispatch({ type: POST_CUSTOM_TEXT_BEGIN });
     const customText = userCustomText;
     try {
-      const { data } = await authFetch.post(
-        `/content/addCustomText`,
-        {customText}
-      );
+      const { data } = await authFetch.post(`/content/addCustomText`, {
+        customText,
+      });
       dispatch({
         type: POST_CUSTOM_TEXT_SUCCESS,
       });
@@ -233,7 +291,6 @@ const AppProvider = ({ children }) => {
   const updateCustomText = async ({ userCustomText, targetedId }) => {
     const customText = userCustomText;
     const id = targetedId;
-
 
     dispatch({ type: UPDATE_CUSTOM_TEXT_BEGIN });
     try {
@@ -324,6 +381,15 @@ const AppProvider = ({ children }) => {
       },
     });
   };
+  const toggleContent = (isCustomText) => {
+    dispatch({
+      type: TOGGLE_CONTENT,
+      payload: {
+        myCustomTexts: isCustomText,
+      },
+    });
+    localStorage.setItem("myCustomTexts", isCustomText);
+  };
   const toggleMistakes = (mistake) => {
     dispatch({
       type: TOGGLE_MISTAKES,
@@ -413,6 +479,9 @@ const AppProvider = ({ children }) => {
         addCustomText,
         deleteCustomText,
         updateCustomText,
+        toggleContent,
+        practiceMyText,
+        nextCustomText,
       }}
     >
       {children}

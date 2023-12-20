@@ -10,14 +10,14 @@ export default function specialBtn({
 }) {
   return (
     <Link to={link}>
-      <PlayBtn>
-        <span className={className} onClick={handleClick}>
+      <PlayBtn onClick={handleClick}>
+        <span className={className}>
           <>
             {text}
             {icon}
           </>
         </span>
-      </PlayBtn>{" "}
+      </PlayBtn>
     </Link>
   );
 }
@@ -32,7 +32,7 @@ const PlayBtn = styled.button`
   overflow: hidden;
   border-radius: var(--borderRadius-small);
   min-width: 130px;
-  margin-bottom: 1rem;
+  transition: transform 0.2s ease-in-out;
 
   span {
     width: 100%;
@@ -48,13 +48,18 @@ const PlayBtn = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
   }
 
   &:hover span {
     opacity: 0.8;
     box-shadow: var(--shadow-2);
   }
- 
+
+  &:focus span {
+    transform: scale(0.9);
+  }
+
   @media (max-width: 600px) {
     width: 100%;
     border-top: 1px solid var(--grey-50);

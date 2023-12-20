@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Wrapper from "../styles/originalTextContainer";
-import { ButtonRow, Loader } from "../components";
+import { ButtonRow, Loader, Switch, SpecialBtn } from "../components";
 import { useAppContext } from "../context/appContext";
 import { HiEyeOff, HiEye } from "react-icons/hi";
-import { IoReload } from "react-icons/io5";
+import { IoReload, IoArrowForwardOutline } from "react-icons/io5";
 
 export default function originalTextContainer({ placeholder }) {
   const {
@@ -13,14 +13,27 @@ export default function originalTextContainer({ placeholder }) {
     isLoading,
     toggleMistakes,
     clearUserText,
+    myCustomTexts,
+    toggleContent,
+    nextCustomText,
+    currentCustomText,
+    practiceMyText,
+    getCustomTexts,
   } = useAppContext();
   const [hide, setHide] = useState(false);
   useEffect(() => {
-    getContent();
-  }, [activeCategory]);
+    if (!myCustomTexts) {
+      getContent();
+    } else {
+      practiceMyText();
+    }
+  }, [activeCategory, myCustomTexts, currentCustomText]);
 
   const handleGetContent = () => {
-    getContent();
+    if (!myCustomTexts) {
+      getContent();
+    }
+    toggleContent(false);
     setHide(false);
     toggleMistakes(false);
     clearUserText();
@@ -47,11 +60,25 @@ export default function originalTextContainer({ placeholder }) {
       )}
 
       <div className="bottom-bar">
-        {/* {<ButtonRow text="Generate a Text" handleBtnClick={handleGetContent} />} */}
-        <div className="generate-text" onClick={handleGetContent}>
+        {/* <div className="generate-text" onClick={handleGetContent}>
           <span>Generate</span> <IoReload className="generate-icon" />
-        </div>
+        </div> */}
 
+        {myCustomTexts ? (
+          <SpecialBtn
+            className=""
+            text="Next"
+            handleClick={() => nextCustomText()}
+            icon={<IoArrowForwardOutline className="icon" />}
+          />
+        ) : (
+          <SpecialBtn
+            className=""
+            text="Generate"
+            handleClick={handleGetContent}
+            icon={<IoReload className="icon" />}
+          />
+        )}
         {hide ? (
           <span className="show-text" onClick={() => setHide(false)}>
             Hide Text <HiEye />

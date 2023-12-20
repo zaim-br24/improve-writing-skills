@@ -77,11 +77,12 @@ const Wrapper = styled.div`
     border-radius: var(--borderRadius-small);
     background-color: var(--primary-900);
     color: var(--text-grey);
+    cursor: pointer;
+
     &:hover {
       opacity: 0.8;
     }
     .generate-icon {
-      cursor: pointer;
       font-size: 1.2rem;
     }
   }

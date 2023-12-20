@@ -16,7 +16,6 @@ export default function Settings() {
   const [active, setActive] = useState("general");
   const [open, setOpen] = useState(false);
   useEffect(() => {
-    console.log(active);
     const url = window.location.href;
 
     const settingsIndex = url.indexOf("/settings/");

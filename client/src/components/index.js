@@ -17,6 +17,7 @@ import Logo from "./Logo";
 import Checkbox from "./checkbox";
 import SpecialBtn from "./specialBtn";
 import TextareaRow from "./textareaRow";
+import Switch from "./switch";
 
 
 export {
@@ -39,4 +40,5 @@ export {
   Checkbox,
   SpecialBtn,
   TextareaRow,
+  Switch,
 };

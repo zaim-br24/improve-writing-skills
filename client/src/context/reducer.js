@@ -36,6 +36,8 @@ import {
   UPDATE_CUSTOM_TEXT_BEGIN,
   UPDATE_CUSTOM_TEXT_SUCCESS,
   UPDATE_CUSTOM_TEXT_ERROR,
+  TOGGLE_CONTENT,
+  NEXT_CUSTOM_TEXT,
 } from "./action";
 import { initialState } from "./appContext";
 const reducer = (state, action) => {
@@ -52,7 +54,7 @@ const reducer = (state, action) => {
       showAlert: false,
       alertType: "",
       alertText: "",
-      showCustomTexts: false
+      showCustomTexts: false,
     };
   }
   if (action.type === SETUP_USER_BEGIN) {
@@ -81,43 +83,43 @@ const reducer = (state, action) => {
       alertText: action.payload.msg,
     };
   }
-    if (action.type === UPDATE_USER_BEGIN) {
-      return {
-        ...state,
-        isLoading: true,
-      };
-    }
-    if (action.type === UPDATE_USER_SUCCESS) {
-      return {
-        ...state,
-        isLoading: false,
-        user: action.payload.user,
-        token: action.payload.token,
-        showAlert: true,
-        alertType: "success",
-        alertText: "User Updated Successfully!",
-      };
-    }
-    if (action.type === UPDATE_USER_ERROR) {
-      return {
-        ...state,
-        isLoading: false,
-        showAlert: true,
-        alertType: "danger",
-        alertText: "Update User Failed! Please try again.",
-      };
-    }
-    if (action.type === LOGOUT_USER) {
-      return {
-        ...initialState,
-        user: null,
-        token: null,
-        showAlert: true,
-        alertType: "success",
-        alertText: "Logged Out Successfully! See you soon!",
-      };
+  if (action.type === UPDATE_USER_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
   }
-  
+  if (action.type === UPDATE_USER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      user: action.payload.user,
+      token: action.payload.token,
+      showAlert: true,
+      alertType: "success",
+      alertText: "User Updated Successfully!",
+    };
+  }
+  if (action.type === UPDATE_USER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: "Update User Failed! Please try again.",
+    };
+  }
+  if (action.type === LOGOUT_USER) {
+    return {
+      ...initialState,
+      user: null,
+      token: null,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Logged Out Successfully! See you soon!",
+    };
+  }
+
   if (action.type === UPLOAD_CONTENT_BEGIN) {
     return {
       ...state,
@@ -157,7 +159,6 @@ const reducer = (state, action) => {
       generatedText: action.payload.generatedText,
       activeCategory: action.payload.activeCategory,
       audioUrl: action.payload.audioUrl,
-     
     };
   }
   if (action.type === GET_CONTENT_ERROR) {
@@ -195,71 +196,71 @@ const reducer = (state, action) => {
       activeCategory: action.payload.activeCategory,
     };
   }
-    if (action.type === TOGGLE_MISTAKES) {
-      return {
-        ...state,
-        showMistakes: action.payload.showMistakes,
-      };
+  if (action.type === TOGGLE_MISTAKES) {
+    return {
+      ...state,
+      showMistakes: action.payload.showMistakes,
+    };
   }
-     if (action.type === USER_TEXT) {
-       return {
-         ...state,
-         userText: action.payload.userText,
-       };
+  if (action.type === USER_TEXT) {
+    return {
+      ...state,
+      userText: action.payload.userText,
+    };
   }
-   if (action.type === CLEAR_USER_TEXT) {
-     return {
-       ...state,
-       userText: "",
-     };
+  if (action.type === CLEAR_USER_TEXT) {
+    return {
+      ...state,
+      userText: "",
+    };
   }
-   if (action.type === UPDATE_PASSWORD_BEGIN) {
-     return {
-       ...state,
-       isLoading: true,
-     };
-   }
-   if (action.type === UPDATE_PASSWORD_SUCCESS) {
-     return {
-       ...state,
-       isLoading: false,
-       user: action.payload.user,
-       token: action.payload.token,
-       showAlert: true,
-       alertType: "success",
-       alertText: "Password Updated Successfully!",
-     };
-   }
-   if (action.type === UPDATE_PASSWORD_ERROR) {
-     return {
-       ...state,
-       isLoading: false,
-       showAlert: true,
-       alertType: "danger",
-       alertText: "Update Password Failed! Please try again.",
-     };
+  if (action.type === UPDATE_PASSWORD_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
   }
-   if (action.type === GET_CUSTOM_TEXT_BEGIN) {
-     return {
-       ...state,
-       isLoading: true,
-     };
-   }
-   if (action.type === GET_CUSTOM_TEXT_SUCCESS) {
-     return {
-       ...state,
-       isLoading: false,
-       customTexts: action.payload.customTexts,
-     };
-   }
-   if (action.type === GET_CUSTOM_TEXT_ERROR) {
-     return {
-       ...state,
-       isLoading: false,
-       showAlert: true,
-       alertType: "danger",
-       alertText: action.payload.msg,
-     };
+  if (action.type === UPDATE_PASSWORD_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      user: action.payload.user,
+      token: action.payload.token,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Password Updated Successfully!",
+    };
+  }
+  if (action.type === UPDATE_PASSWORD_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: "Update Password Failed! Please try again.",
+    };
+  }
+  if (action.type === GET_CUSTOM_TEXT_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === GET_CUSTOM_TEXT_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      customTexts: action.payload.customTexts,
+    };
+  }
+  if (action.type === GET_CUSTOM_TEXT_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
   }
   if (action.type === POST_CUSTOM_TEXT_BEGIN) {
     return {
@@ -286,56 +287,68 @@ const reducer = (state, action) => {
       alertText: action.payload.msg,
     };
   }
-    if (action.type === DELETE_CUSTOM_TEXT_BEGIN) {
-      return {
-        ...state,
-        isLoading: true,
-      };
-    }
-    if (action.type === DELETE_CUSTOM_TEXT_SUCCESS) {
-      return {
-        ...state,
-        isLoading: false,
-        showCustomTexts: true,
-        showAlert: true,
-        alertType: "success",
-        alertText: "Text deleted successfully.",
-      };
-    }
-    if (action.type === DELETE_CUSTOM_TEXT_ERROR) {
-      return {
-        ...state,
-        isLoading: false,
-        showAlert: true,
-        alertType: "danger",
-        alertText: action.payload.msg,
-      };
+  if (action.type === DELETE_CUSTOM_TEXT_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
   }
-   if (action.type === UPDATE_CUSTOM_TEXT_BEGIN) {
-     return {
-       ...state,
-       isLoading: true,
-     };
-   }
-   if (action.type === UPDATE_CUSTOM_TEXT_SUCCESS) {
-     return {
-       ...state,
-       isLoading: false,
-       showCustomTexts: true,
-       showAlert: true,
-       alertType: "success",
-       alertText: "Text updated successfully.",
-     };
-   }
-   if (action.type === UPDATE_CUSTOM_TEXT_ERROR) {
-     return {
-       ...state,
-       isLoading: false,
-       showAlert: true,
-       alertType: "danger",
-       alertText: action.payload.msg,
-     };
-   }
+  if (action.type === DELETE_CUSTOM_TEXT_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showCustomTexts: true,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Text deleted successfully.",
+    };
+  }
+  if (action.type === DELETE_CUSTOM_TEXT_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
+  if (action.type === UPDATE_CUSTOM_TEXT_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === UPDATE_CUSTOM_TEXT_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showCustomTexts: true,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Text updated successfully.",
+    };
+  }
+  if (action.type === UPDATE_CUSTOM_TEXT_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
+  if (action.type === TOGGLE_CONTENT) {
+    return {
+      ...state,
+      myCustomTexts: action.payload.myCustomTexts,
+    };
+  }
+  if (action.type === NEXT_CUSTOM_TEXT) {
+    return {
+      ...state,
+      currentCustomText: action.payload.currentCustomText,
+    };
+  }
 };
 
 export default reducer;

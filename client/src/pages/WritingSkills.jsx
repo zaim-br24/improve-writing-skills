@@ -66,7 +66,6 @@ export default function WritingSkills() {
               value={userText}
               handleDelete={() => clearUserText("")}
               handleCheckBtn={handleCheckBtn}
-              // showMistakes={showMistakes}
               handleCloseMistakes={handleCloseMistakes}
               handleFixErros={handleFixErros}
             />
