@@ -13,8 +13,8 @@ dotenv.config();
 const videoBucket = process.env.AWS_VIDEOS_BUCKET;
 const thumbnailBucket = process.env.AWS_THUMBNAILS_BUCKET;
 const region = process.env.AWS_BUCKET_REGION;
-const accessKeyId = process.env.AWS_ACCESS_KEY;
-const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+const accessKeyId = process.env.AWS_KEY;
+const secretAccessKey = process.env.AWS_SECRET_KEY;
 
 const s3Client = new S3Client({
   region,
