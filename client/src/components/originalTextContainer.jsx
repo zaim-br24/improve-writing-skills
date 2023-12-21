@@ -19,8 +19,10 @@ export default function originalTextContainer({ placeholder }) {
     currentCustomText,
     practiceMyText,
     getCustomTexts,
+    customTexts,
   } = useAppContext();
   const [hide, setHide] = useState(false);
+
   useEffect(() => {
     if (!myCustomTexts) {
       getContent();

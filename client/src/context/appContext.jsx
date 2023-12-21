@@ -66,7 +66,7 @@ const initialState = {
   userText: "",
   customTexts: null,
   showCustomTexts: false,
-  myCustomTexts:  false,
+  myCustomTexts:false,
   currentCustomText: 0,
 };
 
@@ -176,20 +176,8 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
-  // const practiceMyText = (id) => {
-  //   const myText = state.customTexts.find((text) => text._id === id);
-  //   dispatch({
-  //     type: GET_CONTENT_SUCCESS,
-  //     payload: {
-  //       activeCategory: state.activeCategory,
-  //       generatedText: myText.content,
-  //       audioUrl: myText.audioUrl,
-  //     },
-  //   });
-  //   toggleContent(true);
-  // };
   const practiceMyText = async (id) => {
-    if (state.customTexts[0] === null) {
+    if (state.customTexts === null) {
           toggleContent(false);
     }
     if (id) {
@@ -203,7 +191,6 @@ const AppProvider = ({ children }) => {
         },
       });
     }
-
     const myText = state.customTexts[state.currentCustomText];
     dispatch({
       type: GET_CONTENT_SUCCESS,
@@ -213,7 +200,7 @@ const AppProvider = ({ children }) => {
         audioUrl: myText.audioUrl,
       },
     });
-    toggleContent(true);
+    toggleContent(true)
   };
   const nextCustomText = () => {
     let current = state.currentCustomText;
@@ -388,7 +375,7 @@ const AppProvider = ({ children }) => {
         myCustomTexts: isCustomText,
       },
     });
-    localStorage.setItem("myCustomTexts", isCustomText);
+    // localStorage.setItem("myCustomTexts", isCustomText);
   };
   const toggleMistakes = (mistake) => {
     dispatch({
@@ -405,7 +392,6 @@ const AppProvider = ({ children }) => {
         userText: text,
       },
     });
-    console.log(state.userText);
   };
   const clearUserText = () => {
     dispatch({
@@ -415,10 +401,8 @@ const AppProvider = ({ children }) => {
   // -------- UPDATE USER -------
   const updateUser = async (currentUser) => {
     dispatch({ type: UPDATE_USER_BEGIN });
-
     try {
       const { data } = await authFetch.patch("/auth/updateUser", currentUser);
-      // no token
       const { user, token } = data;
       dispatch({
         type: UPDATE_USER_SUCCESS,
@@ -442,7 +426,6 @@ const AppProvider = ({ children }) => {
         "/auth/updatePassword",
         userPassword
       );
-      // no token
       const { user, token } = data;
       dispatch({
         type: UPDATE_PASSWORD_SUCCESS,

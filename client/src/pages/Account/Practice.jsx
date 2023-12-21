@@ -20,11 +20,12 @@ export default function Practice() {
     customTexts,
     getCustomTexts,
     addCustomText,
-    showCustomTexts,
+    myCustomTexts,
     deleteCustomText,
     updateCustomText,
     toggleContent,
     practiceMyText,
+    showCustomTexts,
   } = useAppContext();
   const [showForm, setShowForm] = useState(false);
   const [confirmAction, setConfirmAction] = useState(false);
@@ -99,7 +100,6 @@ export default function Practice() {
             icon={
               <IoOpen
                 className="icon-btn open"
-                onClick={() => handlOpenToPractice()}
               />
             }
           />

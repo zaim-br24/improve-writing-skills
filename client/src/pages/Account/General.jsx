@@ -6,18 +6,17 @@ import { useAppContext } from "../../context/appContext";
 useAppContext;
 export default function General() {
   const { toggleContent, myCustomTexts} = useAppContext();
-
   return (
     <div>
       <Title>General</Title>
       <Main className="main">
-        <p className="column">
+        {/* <p className="column">
           <Switch
-            // isChecked={myCustomTexts}
-            // handleSwitch={(e) => toggleContent(true)}
+            isChecked={myCustomTexts}
+            handleSwitch={(e) => toggleContent(true)}
           />
           <span>Enable Custom Texts.</span>
-        </p>
+        </p> */}
       </Main>
     </div>
   );

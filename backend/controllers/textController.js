@@ -163,9 +163,11 @@ const addCustomText = async (req, res) => {
 const getCustomTexts = async (req, res) => {
   try {
     const user = await Users.findById(req.user.userId);
-      if (!user) {
-        throw new NotFoundError("User not found when trying to fetch custom texts");
-      }
+    if (!user) {
+      throw new NotFoundError(
+        "User not found when trying to fetch custom texts"
+      );
+    }
     res.status(StatusCodes.OK).json({ customTexts: user.customTexts });
   } catch (error) {
     console.error(error);
@@ -223,7 +225,11 @@ const updateCustomText = async (req, res) => {
         .status(StatusCodes.NOT_FOUND)
         .json({ msg: "Custom text not found" });
     }
+    const audioUrl = await getAudioUrl(customText);
+
     existingCustomText.content = customText;
+    existingCustomText.audioUrl = audioUrl;
+
     await user.save();
 
     res
