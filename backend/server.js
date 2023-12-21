@@ -19,9 +19,21 @@ app.use(
     optionsSuccessStatus: 200,
   })
 );
+//////// --------equivalent of using helmet for "Content-Security-Policy-Report-Only"
+
+// app.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header(
+//     "Content-Security-Policy-Report-Only",
+//     "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://via.placeholder.com data:; media-src 'self' https://pwskills.s3.amazonaws.com; frame-src 'self'"
+//   );
+
+//   next();
+// });
+
 app.use(
   session({
-    secret: "your-secret-key",
+    secret: process.env.SESSION_SECRET_KEY,
     resave: false,
     saveUninitialized: true,
   })
@@ -35,14 +47,32 @@ import authenticateUser from "./middleware/auth.js";
 import authRouter from "./Routers/authRouter.js";
 import textRouter from "./Routers/textRouter.js";
 
-app.use(helmet()); //secure headers
+// app.use(helmet()); //secure headers
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        "script-src": ["'self'"],
+        "style-src": [
+          "'self'",
+          "'unsafe-inline'",
+          "https://fonts.googleapis.com",
+          "https://fonts.gstatic.com",
+        ],
+        "font-src": ["'self'", "https://fonts.gstatic.com"],
+        "img-src": ["'self'", "https://via.placeholder.com", "data:"],
+        "media-src": ["'self'", "https://pwskills.s3.amazonaws.com"],
+        "frame-src": ["'self'"],
+      },
+    },
+  })
+);
 app.use(xss()); //Sanitize the inputs (prevent cross-site-scripting)
 app.use(mongoSanitize()); // prevent mongoDB injections
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// app.get("*", function (request, response) {
-//   response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
-// });
+app.use(express.static(path.join(__dirname, "..", "client", "dist")));
 
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
@@ -52,10 +82,12 @@ app.use(express.json());
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/content", authenticateUser, textRouter);
 
-app.get("*", (req, res) => {
-  res.send("page not found");
+// app.get("*", (req, res) => {
+//   res.send("page not found");
+// });
+app.get("*", function (req, res) {
+  res.sendFile(path.resolve(__dirname, "..", "client", "dist", "index.html"));
 });
-
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 // server listening

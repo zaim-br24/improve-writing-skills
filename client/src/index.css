@@ -9,10 +9,6 @@
   padding: 0;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 html {
   font-size: 100%;
   color: var(--primary-700);
@@ -235,11 +231,11 @@ button:disabled {
   justify-content: space-between;
   gap: 10px;
 }
- .icon {
-    width: 20px;
-    height: 20px;
-    font-weight: 500;
-  }
+.icon {
+  width: 20px;
+  height: 20px;
+  font-weight: 500;
+}
 /* buttons */
 .btn {
   cursor: pointer;
@@ -253,7 +249,6 @@ button:disabled {
   padding: 0.9rem;
   text-transform: capitalize;
   display: inline-block;
-
 }
 .btn:hover {
   background: var(--primary-700);

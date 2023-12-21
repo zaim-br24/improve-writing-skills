@@ -9,7 +9,6 @@ export default function modesBar() {
   const handleClick = (e) => {
     const active = e.target.getAttribute("name");
     setActiveCategory(active);
-    console.log(active);
   };
   useEffect(() => {
     toggleCategory(activeCategory);

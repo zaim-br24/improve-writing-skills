@@ -30,9 +30,8 @@ export default function Settings() {
     }
   }, [active]);
   useEffect(() => {
-    document.title = `${
-      active.charAt(0).toUpperCase() + active.slice(1)
-    } | Talktroop`;
+    // const currentActiveTab =  active.charAt(0).toUpperCase() + active.slice(1);
+    document.title = `${active} | Talktroop`;
   }, [active]);
   const handleSelect = () => {
     setOpen(!open);
@@ -59,7 +58,7 @@ export default function Settings() {
           })}
         </Sidebar>
         <Secondary className="secondary">
-          <div >
+          <div>
             <div className=" link active">
               <Link onClick={handleSelect}>
                 <p>{active}</p>
@@ -92,38 +91,3 @@ export default function Settings() {
   );
 }
 
-//  <div className="secondary">
-//    <ul className="vertical-sidenav account-menu hiring-profile-account-menu open">
-//      <li>
-//        <Link to="/account">General</Link>
-//      </li>
-//      <li>
-//        <Link to="/account/profile">Edit Profile</Link>
-//      </li>
-//      <li className={location.pathname === "/account/password" ? "active" : ""}>
-//        <Link to="/account/password">Password</Link>
-//      </li>
-//      <li>
-//        <Link to="/account/social_profiles">Social Profiles</Link>
-//      </li>
-//      <li>
-//        <Link to="/account/notifications">Email Notifications</Link>
-//      </li>
-//      <li>
-//        <Link to="/account/orders">Billing</Link>
-//      </li>
-//      <li>
-//        <Link to="/account/sessions">Sessions</Link>
-//      </li>
-//      <li>
-//        <Link to="/account/applications">Applications</Link>
-//      </li>
-//      <li>
-//        <Link to="/account/export">Data Export</Link>
-//      </li>
-//      <li className="separator"></li>
-//      <li className="warning">
-//        <Link to="/account/destroy_confirm">Delete Account</Link>
-//      </li>
-//    </ul>
-//  </div>;

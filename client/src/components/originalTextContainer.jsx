@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Wrapper from "../styles/originalTextContainer";
-import { ButtonRow, Loader, Switch, SpecialBtn } from "../components";
+import { Loader, Switch, SpecialBtn } from "../components";
 import { useAppContext } from "../context/appContext";
 import { HiEyeOff, HiEye } from "react-icons/hi";
 import { IoReload, IoArrowForwardOutline } from "react-icons/io5";

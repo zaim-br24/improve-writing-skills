@@ -57,9 +57,9 @@ export default function navbar() {
               {/* <img src={profilePic} /> */}
               {user && user.lastname && (
                 <p className="short-name">
-                  {`${user.lastname.slice(0, 1).toUpperCase()} ${user.firstname
-                    .slice(0, 1)
-                    .toUpperCase()} `}
+                  {`${user.lastname[0]} ${user.firstname[0]
+                    
+                    } `}
                 </p>
               )}
             </Profile>
@@ -72,9 +72,9 @@ export default function navbar() {
                 {user && (
                   <p className="short-name">
                     {`${user.lastname
-                      .toUpperCase()} ${user.firstname
-                      .slice(0, 2)
-                      .toUpperCase()} `}
+                      } ${user.firstname
+                     
+                      } `}
                   </p>
                 )}
               </DropdownItem>
