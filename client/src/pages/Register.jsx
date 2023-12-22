@@ -9,11 +9,10 @@ const initialState = {
   lastname: "",
   email: "",
   password: "",
-  // confirmPassword: "",
   isMember: false,
 };
 
-export default function registerPage() {
+export default function Register() {
   const [values, setValues] = useState(initialState);
   const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(false);
@@ -138,17 +137,6 @@ export default function registerPage() {
           handleChecked={handleChecked}
           isChecked={isChecked}
         />
-        {/* {!values.isMember && (
-          <InputRow
-            placeholder=""
-            required="true"
-            type="password"
-            handleChange={handleChange}
-            text="Confirm Password"
-            value={values.confirmPassword}
-            name="confirmPassword"
-          />
-        )} */}
         <button className="btn" type="submit">
           Submit
         </button>
