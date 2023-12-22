@@ -12,10 +12,10 @@ import crypto from "crypto";
 let generateFileName = (bytes = 32) =>
   crypto.randomBytes(bytes).toString("hex");
 
-const region = process.env.AWS_BUCKET_REGION;
-const accessKeyId = process.env.AWS_KEY;
-const secretAccessKey = process.env.AWS_SECRET_KEY;
-const pollyBucket = process.env.AWS_POLLY_BUCKET;
+const region = process.env.SWA_BUCKET_REGION;
+const accessKeyId = process.env.SWA_KEY;
+const secretAccessKey = process.env.SWA_SECRET_KEY;
+const pollyBucket = process.env.SWA_POLLY_BUCKET;
 
 AWS.config.update({
   accessKeyId: accessKeyId,
