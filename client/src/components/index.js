@@ -1,5 +1,5 @@
 import AudioContainer from "./audioContainer";
-import ButtonRow from "./ButtonRow";
+import ButtonRow from "./buttonRow";
 import LanguageBar from "./languageBar";
 import ModesBar from "./modesBar";
 import Navbar from "./navbar";
