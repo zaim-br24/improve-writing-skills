@@ -92,8 +92,4 @@ const deleteObject = async (filename) => {
   }
 };
 
-// Usage
-// const filenameToDelete = "your-file-name.mp3";
-// deleteObject(filenameToDelete);
-
 export { awsPolly, getObjectSignedUrl, getAudioUrl, deleteObject };
