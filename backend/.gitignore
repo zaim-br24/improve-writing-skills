@@ -6,13 +6,14 @@
 
 populate.js
 data.json
+*.zip
+
 # testing
 /coverage
 
 # production
 /build
 /dist
-utils.zip
 # misc
 .DS_Store
 .env.local  
