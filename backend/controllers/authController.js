@@ -89,8 +89,6 @@ const updateUser = async (req, res) => {
   });
 };
 const updatePassword = async (req, res) => {
-  console.log(req.body);
-
   const { oldPassword, newPassword, confirmPassword } = req.body;
   if (!oldPassword || !newPassword || !confirmPassword) {
     throw new BadRequestError("Please provide all values");

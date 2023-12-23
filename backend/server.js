@@ -15,7 +15,7 @@ import mongoSanitize from "express-mongo-sanitize";
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://master.dr9lxivx2jxox.amplifyapp.com/",
     optionsSuccessStatus: 200,
   })
 );
