@@ -88,6 +88,10 @@ app.use("/api/v1/content", authenticateUser, textRouter);
 app.get("*", function (req, res) {
   res.sendFile(path.resolve(__dirname, "..", "client", "dist", "index.html"));
 });
+
+app.get('/', (req , res) => {
+  res.send("HELLO FROM TALKTOOP")
+})
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 // server listening
