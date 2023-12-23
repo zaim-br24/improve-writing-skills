@@ -11,7 +11,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/api/v1": "https://ipwskill.onrender.com",
+      "/api": "https://backend.onrender.com",
     },
   },
 });
