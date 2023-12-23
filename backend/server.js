@@ -85,9 +85,9 @@ app.use("/api/v1/content", authenticateUser, textRouter);
 // app.get("*", (req, res) => {
 //   res.send("page not found");
 // });
-app.get("*", function (req, res) {
-  res.sendFile(path.resolve(__dirname, "..", "client", "dist", "index.html"));
-});
+// app.get("*", function (req, res) {
+//   res.sendFile(path.resolve(__dirname, "..", "client", "dist", "index.html"));
+// });
 
 app.get('/', (req , res) => {
   res.send("HELLO FROM TALKTOOP")
