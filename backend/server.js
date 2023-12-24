@@ -13,12 +13,7 @@ import helmet from "helmet";
 import xss from "xss-clean";
 import mongoSanitize from "express-mongo-sanitize";
 const app = express();
-app.use(
-  cors({
-    origin: "https://master--improva.netlify.app/",
-    optionsSuccessStatus: 200,
-  })
-);
+app.use(cors());
 //////// --------equivalent of using helmet for "Content-Security-Policy-Report-Only"
 
 // app.use(function (req, res, next) {
@@ -80,7 +75,7 @@ if (process.env.NODE_ENV !== "production") {
 app.use(express.json());
 
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/content",textRouter);
+app.use("/api/v1/content", textRouter);
 
 // app.get("*", (req, res) => {
 //   res.send("page not found");
@@ -89,9 +84,9 @@ app.use("/api/v1/content",textRouter);
 //   res.sendFile(path.resolve(__dirname, "..", "client", "dist", "index.html"));
 // });
 
-app.get('/', (req , res) => {
-  res.send("HELLO FROM TALKTOOP")
-})
+app.get("/", (req, res) => {
+  res.send("HELLO FROM TALKTOOP");
+});
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 // server listening
