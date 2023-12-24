@@ -7,22 +7,21 @@ import {
   deleteCustomText,
   updateCustomText,
 } from "../controllers/textController.js";
-import express from 'express'
+import express from "express";
+import authenticateUser from "../middleware/auth.js";
 
 const router = express.Router();
 
-
-router.route('/addText').post(addText)
+router.route("/addText", authenticateUser).post(addText);
 router.route("/checkValues").post(checkValues);
-router.route("/addCustomText").post(addCustomText);
+router.route("/addCustomText", authenticateUser).post(addCustomText);
 
-router.route("/:id").delete(deleteCustomText).patch(updateCustomText);
-
+router
+  .route("/:id", authenticateUser, authenticateUser)
+  .delete(deleteCustomText)
+  .patch(updateCustomText);
 
 router.route("/getText").get(getText);
-router.route("/getCustomTexts").get(getCustomTexts);
+router.route("/getCustomTexts", authenticateUser).get(getCustomTexts);
 
-
-
-export default router
-
+export default router;

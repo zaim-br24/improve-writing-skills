@@ -11,13 +11,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/api": {
-        target: "https://ipwskill.onrender.com", 
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
-      },
+      "/api": "https://ipwskill.onrender.com",
     },
   },
 });
-
-  
