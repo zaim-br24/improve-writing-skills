@@ -15,7 +15,8 @@ import mongoSanitize from "express-mongo-sanitize";
 const app = express();
 app.use(
   cors({
-    origin: "https://master.dr9lxivx2jxox.amplifyapp.com",
+    origin:
+      "https://6587fa7930feee1dbb925b9d--ubiquitous-bubblegum-6a36a3.netlify.app/",
     optionsSuccessStatus: 200,
   })
 );
