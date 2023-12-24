@@ -11,7 +11,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/api": "https://ipwskill.onrender.com",
+      "/api": "http://localhost:5000/",
     },
   },
 });
