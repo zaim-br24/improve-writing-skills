@@ -66,7 +66,7 @@ const initialState = {
   userText: "",
   customTexts: null,
   showCustomTexts: false,
-  myCustomTexts:false,
+  myCustomTexts: false,
   currentCustomText: 0,
 };
 
@@ -74,15 +74,16 @@ const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const token = state.token;
   const authFetch = axios.create({
     baseURL: "/api/v1",
-    headers: {
-      Authorization: `Bearer ${state.token}`,
-    },
+    // headers: {
+    //   Authorization: `Bearer ${token}`,
+    // },
   });
   authFetch.interceptors.request.use(
     (config) => {
-      // config.headers.common['Authorization'] = `Bearer ${state.token}`
+      config.headers.Authorization = `Bearer ${token}`;
       return config;
     },
     (error) => {
@@ -178,7 +179,7 @@ const AppProvider = ({ children }) => {
   };
   const practiceMyText = async (id) => {
     if (state.customTexts === null) {
-          toggleContent(false);
+      toggleContent(false);
     }
     if (id) {
       const targetedIndex = state.customTexts.findIndex(
@@ -200,7 +201,7 @@ const AppProvider = ({ children }) => {
         audioUrl: myText.audioUrl,
       },
     });
-    toggleContent(true)
+    toggleContent(true);
   };
   const nextCustomText = () => {
     let current = state.currentCustomText;
