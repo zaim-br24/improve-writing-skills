@@ -76,7 +76,7 @@ const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const token = state.token;
   const authFetch = axios.create({
-    baseURL: "/api/v1",
+    baseURL: "https://ipwskill.onrender.com/api/v1",
     // headers: {
     //   Authorization: `Bearer ${token}`,
     // },
@@ -328,7 +328,7 @@ const AppProvider = ({ children }) => {
 
     try {
       const { data } = await axios.post(
-        `/api/v1/auth/${endPoint}`,
+        `https://ipwskill.onrender.com/api/v1/auth/${endPoint}`,
         currentUser
       );
       const { user, token } = data;
