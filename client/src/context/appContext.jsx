@@ -2,6 +2,7 @@ import React, { useReducer, useContext } from "react";
 import { Navigate } from "react-router-dom";
 import reducer from "./reducer";
 import axios from "axios";
+import { _apiUrl } from "../utils";
 import {
   CLEAR_ALERT,
   DISPLAY_ALERT,
@@ -66,7 +67,7 @@ const initialState = {
   userText: "",
   customTexts: null,
   showCustomTexts: false,
-  myCustomTexts: false,
+  myCustomTexts:false,
   currentCustomText: 0,
 };
 
@@ -76,15 +77,15 @@ const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const token = state.token;
   const authFetch = axios.create({
-    baseURL: "/api/v1",
+    baseURL: `${_apiUrl}/api/v1`,
     // headers: {
     //   Authorization: `Bearer ${token}`,
     // },
   });
   authFetch.interceptors.request.use(
     (config) => {
-      config.headers.Authorization = `Bearer ${token}`;
-      return config;
+    config.headers.Authorization = `Bearer ${token}`;
+     return config;
     },
     (error) => {
       return Promise.reject(error);
@@ -179,7 +180,7 @@ const AppProvider = ({ children }) => {
   };
   const practiceMyText = async (id) => {
     if (state.customTexts === null) {
-      toggleContent(false);
+          toggleContent(false);
     }
     if (id) {
       const targetedIndex = state.customTexts.findIndex(
@@ -201,7 +202,7 @@ const AppProvider = ({ children }) => {
         audioUrl: myText.audioUrl,
       },
     });
-    toggleContent(true);
+    toggleContent(true)
   };
   const nextCustomText = () => {
     let current = state.currentCustomText;
@@ -328,7 +329,7 @@ const AppProvider = ({ children }) => {
 
     try {
       const { data } = await axios.post(
-        `/api/v1/auth/${endPoint}`,
+        `${_apiUrl}/api/v1/auth/${endPoint}`,
         currentUser
       );
       const { user, token } = data;
