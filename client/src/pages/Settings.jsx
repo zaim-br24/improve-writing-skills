@@ -27,6 +27,8 @@ export default function Settings() {
       } else {
         setActive(extractedPart);
       }
+    } else {
+      setActive("general");
     }
   }, [active]);
   useEffect(() => {
@@ -61,7 +63,7 @@ export default function Settings() {
           <div>
             <div className=" link active">
               <Link onClick={handleSelect}>
-                <p>{active? active : "General"}</p>
+                <p>{active}</p>
                 <MdCheck className="icon" />
               </Link>
             </div>
@@ -90,4 +92,3 @@ export default function Settings() {
     </Wrapper>
   );
 }
-
