@@ -10,13 +10,13 @@ export default function General() {
     <div>
       <Title>General</Title>
       <Main className="main">
-        {/* <p className="column">
+        <p className="column">
           <Switch
-            isChecked={myCustomTexts}
-            handleSwitch={(e) => toggleContent(true)}
+            // isChecked={myCustomTexts}
+            // handleSwitch={(e) => toggleContent(true)}
           />
           <span>Enable Custom Texts.</span>
-        </p> */}
+        </p>
       </Main>
     </div>
   );

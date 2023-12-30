@@ -61,7 +61,7 @@ export default function Settings() {
           <div>
             <div className=" link active">
               <Link onClick={handleSelect}>
-                <p>{active}</p>
+                <p>{active? active : "General"}</p>
                 <MdCheck className="icon" />
               </Link>
             </div>
