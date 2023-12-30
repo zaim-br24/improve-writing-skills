@@ -24,7 +24,7 @@ const Left = styled.aside`
   @media (max-width: 680px) {
     display: flex;
     flex-direction: column-reverse;
-    height: 40vh;
+    height: 30vh;
   }
 `;
 const Right = styled.aside`
