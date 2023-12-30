@@ -7,7 +7,7 @@ const Wrapper = styled.section`
     position: relative;
   }
   .dashboard-page {
-    margin: 2rem auto;
+    margin: 1rem auto;
     width: 95vw;
     border-radius: var(--borderRadius);
   }
@@ -16,9 +16,9 @@ const Wrapper = styled.section`
       grid-template-columns:  1fr;
     }
     .dashboard-page {
-      margin: 0rem auto;
+      margin: 1rem auto;
       width: 80vw;
-      margin-top: 2rem;
+      margin-top: 1rem;
     }
   }
 `;
