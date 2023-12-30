@@ -30,6 +30,7 @@ export default function Settings() {
     } else {
       setActive("general");
     }
+    console.log(active)
   }, [active]);
   useEffect(() => {
     // const currentActiveTab =  active.charAt(0).toUpperCase() + active.slice(1);
@@ -63,7 +64,7 @@ export default function Settings() {
           <div>
             <div className=" link active">
               <Link onClick={handleSelect}>
-                <p>{active}</p>
+                <p>{active && active}</p>
                 <MdCheck className="icon" />
               </Link>
             </div>
