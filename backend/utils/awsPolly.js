@@ -69,10 +69,10 @@ const getObjectSignedUrl = async (filename) => {
 };
 const getAudioUrl = async (content) => {
   const filename = generateFileName();
-  const pollyBucket = process.env.AWS_POLLY_BUCKET;
+  const pollyBucketStr = "pwskills";
 
   const result = await awsPolly(content, filename);
-  const audioUrl = `https://${pollyBucket}.s3.amazonaws.com/${filename}.mp3`;
+  const audioUrl = `https://${pollyBucketStr}.s3.amazonaws.com/${filename}.mp3`;
   return audioUrl;
 };
 
