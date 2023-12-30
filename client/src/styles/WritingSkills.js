@@ -5,10 +5,11 @@ const Wrapper = styled.div`
 
 `;
 const Editor = styled.div`
+
   @media (min-width: 680px) {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(50%, 1fr));
-    height: 58vh;
+    height: 55vh;
     background-color: var(--white);
     position: relative;
     box-shadow: var(--shadow-2);

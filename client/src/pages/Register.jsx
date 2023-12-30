@@ -9,7 +9,7 @@ const initialState = {
   lastname: "",
   email: "",
   password: "",
-  isMember: false,
+  isMember: true,
 };
 
 export default function Register() {

@@ -67,7 +67,7 @@ const initialState = {
   userText: "",
   customTexts: null,
   showCustomTexts: false,
-  myCustomTexts:false,
+  myCustomTexts: false,
   currentCustomText: 0,
 };
 
@@ -78,14 +78,15 @@ const AppProvider = ({ children }) => {
   const token = state.token;
   const authFetch = axios.create({
     baseURL: `${_apiUrl}/api/v1`,
+    // baseURL: `/api/v1`,
     // headers: {
     //   Authorization: `Bearer ${token}`,
     // },
   });
   authFetch.interceptors.request.use(
     (config) => {
-    config.headers.Authorization = `Bearer ${token}`;
-     return config;
+      config.headers.Authorization = `Bearer ${token}`;
+      return config;
     },
     (error) => {
       return Promise.reject(error);
@@ -110,7 +111,7 @@ const AppProvider = ({ children }) => {
   const clearAlert = () => {
     setTimeout(() => {
       dispatch({ type: CLEAR_ALERT });
-    }, 5000);
+    }, 3000);
   };
   const addUserToLocalStorage = ({ user, token }) => {
     localStorage.setItem("user", JSON.stringify(user));
@@ -180,7 +181,7 @@ const AppProvider = ({ children }) => {
   };
   const practiceMyText = async (id) => {
     if (state.customTexts === null) {
-          toggleContent(false);
+      toggleContent(false);
     }
     if (id) {
       const targetedIndex = state.customTexts.findIndex(
@@ -202,7 +203,8 @@ const AppProvider = ({ children }) => {
         audioUrl: myText.audioUrl,
       },
     });
-    toggleContent(true)
+    toggleContent(true);
+    clearAlert();
   };
   const nextCustomText = () => {
     let current = state.currentCustomText;
@@ -330,6 +332,8 @@ const AppProvider = ({ children }) => {
     try {
       const { data } = await axios.post(
         `${_apiUrl}/api/v1/auth/${endPoint}`,
+        // `/api/v1/auth/${endPoint}`,
+
         currentUser
       );
       const { user, token } = data;
@@ -394,6 +398,7 @@ const AppProvider = ({ children }) => {
         userText: text,
       },
     });
+     clearAlert();
   };
   const clearUserText = () => {
     dispatch({

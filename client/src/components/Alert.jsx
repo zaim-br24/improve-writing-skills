@@ -54,7 +54,7 @@ const AlertContainer = styled.div`
   transform: translateX(-50%);
   padding: 15px 20px;
   border-radius: 5px;
-  animation: ${FadeOut} 5s linear forwards; 
+  animation: ${FadeOut} 3s linear forwards; 
   z-index: 1000;
 `;
 
