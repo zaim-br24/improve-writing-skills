@@ -9,7 +9,7 @@ const Editor = styled.div`
   @media (min-width: 680px) {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(50%, 1fr));
-    height: 55vh;
+    height: 60vh;
     background-color: var(--white);
     position: relative;
     box-shadow: var(--shadow-2);
@@ -29,6 +29,7 @@ const Left = styled.aside`
 `;
 const Right = styled.aside`
   background-color: var(--white);
+  height: 100%;
   @media (max-width: 680px) {
     display: flex;
     flex-direction: column-reverse;
