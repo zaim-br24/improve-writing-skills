@@ -11,6 +11,8 @@ import { ProfilePage, UserProfile } from "./Account";
 import { sidebarLinks } from "../constants";
 import { Link, Outlet } from "react-router-dom";
 import { MdCheck } from "react-icons/md";
+import { CgMenuCheese  } from "react-icons/cg";
+
 
 export default function Settings() {
   const [active, setActive] = useState("general");
@@ -22,7 +24,7 @@ export default function Settings() {
 
     if (settingsIndex !== -1) {
       const extractedPart = url.substring(settingsIndex + "/settings/".length);
-      if (extractedPart == "profile") {
+      if (extractedPart === "profile") {
         setActive("edit profile");
       } else {
         setActive(extractedPart);
@@ -30,7 +32,6 @@ export default function Settings() {
     } else {
       setActive("general");
     }
-    console.log(active)
   }, [active]);
   useEffect(() => {
     // const currentActiveTab =  active.charAt(0).toUpperCase() + active.slice(1);
@@ -64,6 +65,8 @@ export default function Settings() {
           <div>
             <div className=" link active">
               <Link onClick={handleSelect}>
+                <CgMenuCheese  className="icon" />
+
                 <p>{active && active}</p>
                 <MdCheck className="icon" />
               </Link>

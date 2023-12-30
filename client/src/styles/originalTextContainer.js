@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   flex-direction: column;
 
   .original-text-container {
-    height: 85%;
+    height: 100%;
     border-bottom: 1px solid var(--grey-50);
   }
   .original-text {
