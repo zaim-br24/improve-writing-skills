@@ -141,8 +141,8 @@ export default function Register() {
           Submit
         </button>
         <p className="signin" onClick={toggelMember}>
-          Already have an acount ?
-          <a href="#">{values.isMember ? "Sign up" : "Sign in"}</a>{" "}
+          {values.isMember ? "Create new account. " : "Already have an acount ? "}
+          <a href="#">{values.isMember ? "Sign up" : "Sign in"}</a>
         </p>
       </form>
     </Wrapper>
