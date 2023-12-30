@@ -24,7 +24,7 @@ const Left = styled.aside`
   @media (max-width: 680px) {
     display: flex;
     flex-direction: column-reverse;
-    height: 30vh;
+    height: 25vh;
   }
 `;
 const Right = styled.aside`
@@ -33,7 +33,7 @@ const Right = styled.aside`
   @media (max-width: 680px) {
     display: flex;
     flex-direction: column-reverse;
-    height: 30vh;
+    height: 35vh;
   }
 `;
 const Benefits = styled.div`
