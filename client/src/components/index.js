@@ -18,7 +18,7 @@ import Checkbox from "./checkbox";
 import SpecialBtn from "./specialBtn";
 import TextareaRow from "./textareaRow";
 import Switch from "./switch";
-
+import RadioRow from "./RadioRow";
 
 export {
   AudioContainer,
@@ -41,4 +41,5 @@ export {
   SpecialBtn,
   TextareaRow,
   Switch,
+  RadioRow,
 };

@@ -61,7 +61,7 @@ export default function Settings() {
             );
           })}
         </Sidebar>
-        <Secondary className="secondary">
+        <Secondary>
           <div>
             <div className=" link active">
               <Link onClick={handleSelect}>

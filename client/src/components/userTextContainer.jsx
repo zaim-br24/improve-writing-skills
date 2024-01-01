@@ -11,9 +11,15 @@ export default function userTextContainer({
   handleDelete,
   handleCheckBtn,
   handleCloseMistakes,
-  handleFixErros
+  handleFixErros,
 }) {
-  const { mistakes, generatedText, mistakesCount , showMistakes} = useAppContext();
+  const {
+    mistakes,
+    generatedText,
+    mistakesCount,
+    showMistakes,
+    myCustomTexts,
+  } = useAppContext();
   return (
     <Wrapper>
       {value.length > 5 && (
@@ -27,7 +33,7 @@ export default function userTextContainer({
         value={value}
       ></textarea>
       <div className="bottom-bar">
-        {value.length > 5 && (
+        {!!value.length && !myCustomTexts && (
           <ButtonRow
             type="click"
             handleBtnClick={handleCheckBtn}
@@ -40,7 +46,8 @@ export default function userTextContainer({
           <div className="mistakes">
             <div className="mistakes-text">
               <p className={mistakesCount >= 1 ? "error" : "correct"}>
-                {mistakesCount} / {mistakesCount >= 1 ? "Errors" : "Error"}
+                {Math.ceil(mistakesCount)} /
+                {mistakesCount >= 1 ? "Errors" : "Error"}
               </p>
 
               {mistakes && mistakes.length === 0 && (

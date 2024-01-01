@@ -19,6 +19,9 @@ import {
   CHECK_VALUES_BEGIN,
   CHECK_VALUES_SUCCESS,
   CHECK_VALUES_ERROR,
+  GET_MISTAKES_BEGIN,
+  GET_MISTAKES_SUCCESS,
+  GET_MISTAKES_ERROR,
   TOGGLE_CATEGORY,
   TOGGLE_MISTAKES,
   CLEAR_USER_TEXT,
@@ -38,6 +41,9 @@ import {
   UPDATE_CUSTOM_TEXT_ERROR,
   TOGGLE_CONTENT,
   NEXT_CUSTOM_TEXT,
+  DELETE_MISTAKE_SUCCESS,
+  DELETE_MISTAKE_BEGIN,
+  DELETE_MISTAKE_ERROR,
 } from "./action";
 import { initialState } from "./appContext";
 const reducer = (state, action) => {
@@ -55,6 +61,7 @@ const reducer = (state, action) => {
       alertType: "",
       alertText: "",
       showCustomTexts: false,
+      mistakeDeleted: false,
     };
   }
   if (action.type === SETUP_USER_BEGIN) {
@@ -347,6 +354,46 @@ const reducer = (state, action) => {
     return {
       ...state,
       currentCustomText: action.payload.currentCustomText,
+      showMistakes: false,
+    };
+  }
+  if (action.type === GET_MISTAKES_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === GET_MISTAKES_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      allMistakes: action.payload.mistakes,
+      allMistakesCount: action.payload.count,
+    };
+  }
+  if (action.type === GET_MISTAKES_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }
+  if (action.type === DELETE_MISTAKE_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }
+  if (action.type === DELETE_MISTAKE_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      mistakeDeleted: true,
+    };
+  }
+  if (action.type === DELETE_MISTAKE_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
     };
   }
 };

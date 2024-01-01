@@ -87,5 +87,6 @@ const Secondary = styled.div`
   }
   border-radius: var(--borderRadius-small);
   background-color: var(--grey-50);
+  margin-bottom: 0;
 `;
 export { Wrapper, Content, Sidebar, Header, Title, Secondary };

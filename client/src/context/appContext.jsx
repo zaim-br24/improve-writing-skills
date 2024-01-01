@@ -43,6 +43,12 @@ import {
   LOGOUT_USER,
   TOGGLE_CONTENT,
   NEXT_CUSTOM_TEXT,
+  GET_MISTAKES_BEGIN,
+  GET_MISTAKES_SUCCESS,
+  GET_MISTAKES_ERROR,
+  DELETE_MISTAKE_SUCCESS,
+  DELETE_MISTAKE_BEGIN,
+  DELETE_MISTAKE_ERROR,
 } from "./action";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -62,6 +68,8 @@ const initialState = {
   generatedText: "",
   audioUrl: "",
   mistakes: null,
+  allMistakes: null,
+  allMistakesCount: 0,
   mistakesCount: 0,
   showMistakes: false,
   userText: "",
@@ -69,6 +77,7 @@ const initialState = {
   showCustomTexts: false,
   myCustomTexts: false,
   currentCustomText: 0,
+  mistakeDeleted: false,
 };
 
 const AppContext = React.createContext();
@@ -77,8 +86,8 @@ const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const token = state.token;
   const authFetch = axios.create({
-    baseURL: `${_apiUrl}/api/v1`,
-    // baseURL: `/api/v1`,
+    // baseURL: `${_apiUrl}/api/v1`,
+    baseURL: `/api/v1`,
     // headers: {
     //   Authorization: `Bearer ${token}`,
     // },
@@ -124,7 +133,6 @@ const AppProvider = ({ children }) => {
   };
   // ------------ CHECK VALUES ------
   const checkValues = async () => {
-    // const { generatedText: originalSentence, userValue: userSentence } = values;
     const originalSentence = state.generatedText;
     const userSentence = state.userText;
 
@@ -134,6 +142,14 @@ const AppProvider = ({ children }) => {
         originalSentence,
         userSentence,
       });
+      console.log(data.mistakes);
+      if (state.myCustomTexts && data.mistakes) {
+        const result = data.mistakes;
+        await authFetch.post("/content/mistakes/addMistakes", {
+          result,
+        });
+      }
+
       dispatch({
         type: CHECK_VALUES_SUCCESS,
         payload: {
@@ -206,7 +222,10 @@ const AppProvider = ({ children }) => {
     toggleContent(true);
     clearAlert();
   };
-  const nextCustomText = () => {
+  const nextCustomText = async () => {
+    if (state.userText) {
+      checkValues();
+    }
     let current = state.currentCustomText;
     const length = state.customTexts.length - 1;
     if (current >= length) {
@@ -220,6 +239,46 @@ const AppProvider = ({ children }) => {
         currentCustomText: current,
       },
     });
+
+    clearUserText();
+  };
+  const getAllMistakes = async () => {
+    dispatch({ type: GET_MISTAKES_BEGIN });
+    try {
+      const { data } = await authFetch.get("/content/mistakes/getMistakes");
+      dispatch({
+        type: GET_MISTAKES_SUCCESS,
+        payload: {
+          mistakes: data.mistakes,
+          count: data.count,
+        },
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_MISTAKES_ERROR,
+        payload: {
+          msg: error.response.data.msg,
+        },
+      });
+    }
+    clearAlert();
+  };
+  const deleteMistake = async (id) => {
+    dispatch({ type: DELETE_MISTAKE_BEGIN });
+    try {
+    await authFetch.delete(`/content/mistakes/${id}`);
+      dispatch({
+        type: DELETE_MISTAKE_SUCCESS,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELETE_MISTAKE_ERROR,
+        payload: {
+          msg: error.response.data.msg,
+        },
+      });
+    }
+    clearAlert();
   };
   const getCustomTexts = async () => {
     dispatch({ type: GET_CUSTOM_TEXT_BEGIN });
@@ -232,7 +291,6 @@ const AppProvider = ({ children }) => {
         },
       });
     } catch (error) {
-      if (error.response.status === 401) return;
       dispatch({
         type: GET_CUSTOM_TEXT_ERROR,
         payload: {
@@ -331,8 +389,8 @@ const AppProvider = ({ children }) => {
 
     try {
       const { data } = await axios.post(
-        `${_apiUrl}/api/v1/auth/${endPoint}`,
-        // `/api/v1/auth/${endPoint}`,
+        // `${_apiUrl}/api/v1/auth/${endPoint}`,
+        `/api/v1/auth/${endPoint}`,
 
         currentUser
       );
@@ -398,7 +456,7 @@ const AppProvider = ({ children }) => {
         userText: text,
       },
     });
-     clearAlert();
+    clearAlert();
   };
   const clearUserText = () => {
     dispatch({
@@ -472,6 +530,8 @@ const AppProvider = ({ children }) => {
         toggleContent,
         practiceMyText,
         nextCustomText,
+        getAllMistakes,
+        deleteMistake,
       }}
     >
       {children}

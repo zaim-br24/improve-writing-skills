@@ -18,7 +18,6 @@ const addText = async (req, res) => {
 
   try {
     const audioUrl = await getAudioUrl(content);
-
     const updatedContent = await Texts.findOneAndUpdate(
       {},
       {
@@ -83,7 +82,7 @@ const getText = async (req, res) => {
   }
 };
 
-const checkValues = (req, res) => {
+const checkValues = async (req, res) => {
   const { originalSentence, userSentence } = req.body;
   if (!originalSentence || !userSentence) {
     throw new BadRequestError("please provide both values.");
@@ -105,7 +104,7 @@ const checkValues = (req, res) => {
           result.push(currentMistake[y]);
           result.push(nextMistake[y]);
         }
-        i++; // we Skip the next mistake since it has already been processed
+        i++;
       } else if (
         currentMistake &&
         currentMistake.length > 1 &&
@@ -116,10 +115,10 @@ const checkValues = (req, res) => {
         result.push(currentMistake && currentMistake[0]);
       }
     }
-
     res.status(StatusCodes.OK).json({
       mistakes: result,
       count: result.length > 1 ? result.length / 2 : result.length,
+      allMistakes: mistakes,
     });
   } catch (error) {
     console.error(error);
@@ -147,9 +146,6 @@ const addCustomText = async (req, res) => {
       },
       { new: true, upsert: true }
     );
-    // const newCustomText =  user.customTexts.find(
-    //   (item) => item.audioUrl === audioUrl
-    // );
 
     res.status(StatusCodes.OK).json({ msg: "custom text added Successfully" });
   } catch (error) {
@@ -242,7 +238,67 @@ const updateCustomText = async (req, res) => {
       .json({ msg: "Internal Server Error" });
   }
 };
+const addMistakes = async (req, res) => {
+  const { result } = req.body;
+  try {
+    const user = await Users.findById(req.user.userId);
+    for (let i = 0; i < result.length; i += 2) {
+      const newMistake = {
+        mistake: result[i + 1],
+        answer: result[i],
+      };
+      const isDuplicate = user.mistakes.some(
+        (existingMistake) =>
+          existingMistake.mistake.toLocaleLowerCase() ===
+            newMistake.mistake.toLocaleLowerCase() &&
+          existingMistake.answer.toLocaleLowerCase() ===
+            newMistake.answer.toLocaleLowerCase()
+      );
+      if (!isDuplicate) {
+        user.mistakes.push(newMistake);
+      }
+    }
 
+    await user.save();
+    res.status(StatusCodes.OK).json(user.mistakes);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ msg: "Internal Server Error" });
+  }
+};
+
+const getMistakes = async (req, res) => {
+  try {
+    const user = await Users.findById(req.user.userId);
+    res.status(StatusCodes.OK).json({
+      mistakes: user.mistakes,
+      count: user.mistakes.length,
+    });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ msg: "Internal Server Error" });
+  }
+};
+const deleteMistake = async (req, res) => {
+  const { mistakeId } = req.params;
+  try {
+    const user = await Users.findById(req.user.userId);
+    user.mistakes = user.mistakes.filter(
+      (mistake) => mistake._id.toString() !== mistakeId
+    );
+    await user.save();
+    res.status(StatusCodes.OK).json({ msg: "Mistake deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ msg: "Internal Server Error" });
+  }
+};
 export {
   addText,
   getText,
@@ -251,4 +307,7 @@ export {
   getCustomTexts,
   deleteCustomText,
   updateCustomText,
+  addMistakes,
+  getMistakes,
+  deleteMistake,
 };
