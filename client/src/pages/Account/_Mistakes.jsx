@@ -15,16 +15,18 @@ export default function _Mistakes() {
       {!!allMistakes &&
         allMistakes?.map((mistake) => (
           <MistakesCard key={mistake._id}>
-            <MistakeText>{mistake.mistake}</MistakeText>
+            <>
+              <MistakeText>{mistake.mistake}</MistakeText>
+              <span>-</span>
             <AnswerText>{mistake.answer}</AnswerText>
-            <div
-              className="delete"
+            </>
+           
+            <MdDelete
+              className="icon-btn delete"
               onClick={() => {
                 deleteMistake(mistake._id);
               }}
-            >
-              <p>delete</p>
-            </div>
+            />
           </MistakesCard>
         ))}
     </Wrapper>
@@ -36,29 +38,20 @@ const Wrapper = styled.div`
   gap: 10px;
 `;
 const MistakesCard = styled.div`
-  position: relative;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
+  gap: 10px;
   justify-content: center;
-  padding: 0 15px;
+  padding: 15px;
   border: 1px solid var(--grey-50);
   box-shadow: var(--shadow-1);
   border-radius: var(--borderRadius-small);
-
   .delete {
     display: none;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    left: 0;
-    bottom: 0;
-    background-color: var(--red-light);
-    color: var(--red-dark);
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: var(--borderRadius-small);
-    padding: 10px;
+    background-color: var(--grey-50);
+    width: 100%;
+    font-size: 1.2rem;
   }
   &:hover {
     cursor: pointer;
