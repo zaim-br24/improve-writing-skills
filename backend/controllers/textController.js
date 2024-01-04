@@ -129,34 +129,44 @@ const checkValues = async (req, res) => {
 };
 const addCustomText = async (req, res) => {
   const { customText } = req.body;
+  const plans = {
+    free: 3,
+    pro: 20,
+    premium: 40,
+  };
 
   if (!customText) {
-    throw new BadRequestError("Add your text!");
+    return res.status(StatusCodes.BAD_REQUEST).json({ msg: "Add your text!" });
   } else if (customText.length > 150) {
-    throw new BadRequestError("Text too long.");
+    return res.status(StatusCodes.BAD_REQUEST).json({ msg: "Text too long." });
   }
 
   try {
     const audioUrl = await getAudioUrl(customText);
 
-    const user = await Users.findByIdAndUpdate(
-      req.user.userId,
-      {
-        $push: {
-          ["customTexts"]: { content: customText, audioUrl: audioUrl },
-        },
-      },
-      { new: true, upsert: true }
-    );
+    const user = await Users.findOne({ _id: req.user.userId });
+    const plan = user.plan;
 
-    res.status(StatusCodes.OK).json({ msg: "custom text added Successfully" });
+    if (user.customTexts.length >= plans[plan]) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        msg:` You have reached the limit of the ${plan} plan. Please Upgrade Your Plan.`,
+      });
+    }
+
+    user.customTexts.push({ content: customText, audioUrl: audioUrl });
+    await user.save();
+
+    return res
+      .status(StatusCodes.OK)
+      .json({ msg: "Custom text added successfully" });
   } catch (error) {
     console.error(error);
-    res
+    return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ msg: "Internal Server Error" });
   }
 };
+
 
 const getCustomTexts = async (req, res) => {
   try {
@@ -210,11 +220,11 @@ const deleteCustomText = async (req, res) => {
 const updateCustomText = async (req, res) => {
   const { id } = req.params;
   const { customText } = req.body;
-   if (!customText) {
-     throw new BadRequestError("Add your text!");
-   } else if (customText.length > 50) {
-     throw new BadRequestError("Text too long.");
-   }
+  if (!customText) {
+    throw new BadRequestError("Add your text!");
+  } else if (customText.length > 50) {
+    throw new BadRequestError("Text too long.");
+  }
 
   try {
     const user = await Users.findOne({ _id: req.user.userId });

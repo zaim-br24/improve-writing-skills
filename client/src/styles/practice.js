@@ -58,6 +58,18 @@ const Main = styled.main`
   grid-template-columns: repeat(auto-fit, minmax( 200px, 1fr)); */
   gap: 10px;
   margin-top: 1rem;
+  .no-value{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    padding: 1rem;
+    .title{
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+  }
 `;
 const Card = styled.div`
   background-color: var(--grey-50);

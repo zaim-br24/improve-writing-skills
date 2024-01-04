@@ -99,7 +99,7 @@ export default function Practice() {
               )
             }
           />
-          {customTexts?.length && (
+          {!!customTexts?.length && (
             <SpecialBtn
               link="/"
               text="Practice Now"
@@ -146,8 +146,9 @@ export default function Practice() {
       {isLoading && <Loader />}
       <Main>
         {customTexts?.length <= 0 && (
-          <div>
-            <h2 className="title">Add your texts and start practicing</h2>
+          <div className="no-value">
+            <h1 className="title">No Custom Text were Found</h1>
+            <p className="sub-title">Add your texts and start practicing</p>
           </div>
         )}
         {activeRadio === "custom" &&

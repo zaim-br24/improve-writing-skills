@@ -73,6 +73,11 @@ const UserSchema = new mongoose.Schema({
   level: {
     type: String,
   },
+  plan: {
+    type: String,
+    enum: ["free", "pro", "premium"],
+    default: "free"
+  }
 });
 
 // hashing the password

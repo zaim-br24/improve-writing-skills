@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { BadRequestError, UnauthenticatedError } from "../errors/index.js";
 
 const register = async (req, res, next) => {
-  const { firstname, lastname, email, password } = req.body;
+  const { firstname, lastname, email, password, plan} = req.body;
 
   if (!firstname || !lastname || !email || !password) {
     throw new BadRequestError("Please provide all values.");
@@ -24,6 +24,7 @@ const register = async (req, res, next) => {
     lastname,
     email,
     password,
+    plan: plan ? plan: "free"
   });
   //calling the createJWT coming from User schema to create a token (unique key)
   const token = user.createJWT();

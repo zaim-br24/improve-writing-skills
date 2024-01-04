@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function _Vocabulary() {
-  return <div>_vocabulary</div>;
+  return <div></div>;
 }
