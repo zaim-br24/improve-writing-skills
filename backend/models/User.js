@@ -41,6 +41,8 @@ const UserSchema = new mongoose.Schema({
     {
       content: {
         type: String,
+        minlength: 1,
+        maxlength:150,
       },
       audioUrl: {
         type: String,
@@ -65,7 +67,7 @@ const UserSchema = new mongoose.Schema({
       },
       answer: {
         type: String,
-      }
+      },
     },
   ],
   level: {

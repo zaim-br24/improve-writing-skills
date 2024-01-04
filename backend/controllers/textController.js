@@ -132,6 +132,8 @@ const addCustomText = async (req, res) => {
 
   if (!customText) {
     throw new BadRequestError("Add your text!");
+  } else if (customText.length > 150) {
+    throw new BadRequestError("Text too long.");
   }
 
   try {
@@ -208,6 +210,11 @@ const deleteCustomText = async (req, res) => {
 const updateCustomText = async (req, res) => {
   const { id } = req.params;
   const { customText } = req.body;
+   if (!customText) {
+     throw new BadRequestError("Add your text!");
+   } else if (customText.length > 50) {
+     throw new BadRequestError("Text too long.");
+   }
 
   try {
     const user = await Users.findOne({ _id: req.user.userId });

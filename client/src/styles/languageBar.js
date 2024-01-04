@@ -4,6 +4,7 @@ const Wrapper = styled.div`
   /* padding: 0.5rem 0.7rem; */
   display: flex;
   align-items: center;
+  justify-content: space-between;
   .language-btn {
     padding: 10px;
     border-top-right-radius: var(--borderRadius);

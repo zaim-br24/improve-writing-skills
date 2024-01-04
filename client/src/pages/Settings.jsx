@@ -11,8 +11,8 @@ import { ProfilePage, UserProfile } from "./Account";
 import { sidebarLinks } from "../constants";
 import { Link, Outlet } from "react-router-dom";
 import { MdCheck } from "react-icons/md";
-import { CgMenuCheese  } from "react-icons/cg";
-
+import { CgMenuCheese } from "react-icons/cg";
+import { IoArrowBack } from "react-icons/io5";
 
 export default function Settings() {
   const [active, setActive] = useState("general");
@@ -43,6 +43,9 @@ export default function Settings() {
 
   return (
     <Wrapper>
+      <Link className="back-home" to="/">
+        <IoArrowBack className="arrow-back" /> Back Home
+      </Link>
       <Header>
         <UserProfile />
       </Header>
@@ -65,7 +68,7 @@ export default function Settings() {
           <div>
             <div className=" link active">
               <Link onClick={handleSelect}>
-                <CgMenuCheese  className="icon" />
+                <CgMenuCheese className="icon" />
 
                 <p>{active && active}</p>
                 <MdCheck className="icon" />

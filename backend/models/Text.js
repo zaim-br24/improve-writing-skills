@@ -9,6 +9,9 @@ const textSchema = new Schema({
       content: {
         type: String,
         required: true,
+        minlength: 1,
+        maxlength: 4,
+        trim: true,
       },
       audioUrl: {
         type: String,
@@ -19,8 +22,10 @@ const textSchema = new Schema({
     {
       content: {
         type: String,
-        
         required: true,
+        minlength: 3,
+        maxlength: 50,
+        trim: true,
       },
       audioUrl: {
         type: String,
@@ -32,6 +37,9 @@ const textSchema = new Schema({
       content: {
         type: String,
         required: true,
+        minlength: 3,
+        maxlength: 70,
+        trim: true,
       },
       audioUrl: {
         type: String,

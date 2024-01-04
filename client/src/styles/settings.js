@@ -5,7 +5,16 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  .full-container {
+  .back-home{
+    max-width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--grey-200);
+    font-weight: 500;
+    margin: 1rem 0;
+  }
+   .full-container {
     width: 100%;
     display: flex;
     gap: 20px;
@@ -32,7 +41,7 @@ const Wrapper = styled.div`
           color: var(--primary-800);
         }
         @media (max-width: 815px) {
-         padding: 10px;
+          padding: 10px;
         }
       }
     }
