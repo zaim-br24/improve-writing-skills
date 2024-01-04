@@ -3,8 +3,9 @@ import Wrapper from "../styles/languageBar";
 import { SpecialBtn } from ".";
 import { languages } from "../constants";
 import {IoAdd } from "react-icons/io5";
-
+import { useAppContext } from "../context/appContext";
 export default function languageBar() {
+  const {user} = useAppContext()
   return (
     <Wrapper>
       {languages.map((language, index) => {
@@ -18,7 +19,7 @@ export default function languageBar() {
         className="special-btn"
         text="Practice"
         // handleClick={() => nextCustomText()}
-        link="/settings/practice"
+        link={user ? "/settings/practice" : "/register"}
         icon={<IoAdd className="icon" />}
       />
     </Wrapper>
