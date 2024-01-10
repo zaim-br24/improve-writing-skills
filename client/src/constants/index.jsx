@@ -22,19 +22,19 @@ const languages = [
 const benefits = [
   {
     image: writing,
-    title: "Enhanced Writing Skills through Listening",
-    subtitle: "Enhancing Your ability to express ideas coherently in writing.", 
+    title: "Writing and Listening",
+    subtitle: "Enhancing Your ability to express ideas coherently in writing.",
   },
   {
     image: vocabulary,
-    title: "Vocabulary Building through Listening and Writing",
-    subtitle:
-      "Boosting the number of words in your vocabulary and allowing for more complex expressions in written communication.",
+    title: "Vocabulary Building",
+    subtitle: "Improve your vocabulary for better written expression.",
   },
   {
     image: brain,
-    title: "Memorizing Sentences for Real-World Application",
-    subtitle: "Fostering effective written communication in everyday life.",
+    title: "Memorizing Sentences",
+    subtitle:
+      "Memorize sentences for practical application in real-life situations.",
   },
 ];
 

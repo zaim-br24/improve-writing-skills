@@ -202,6 +202,8 @@ const reducer = (state, action) => {
     return {
       ...state,
       activeCategory: action.payload.activeCategory,
+      showMistakes: false,
+      userText: "",
     };
   }
   if (action.type === TOGGLE_MISTAKES) {

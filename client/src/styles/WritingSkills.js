@@ -2,10 +2,8 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   width: 100%;
-
 `;
 const Editor = styled.div`
-
   @media (min-width: 680px) {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(50%, 1fr));
@@ -52,13 +50,16 @@ const Cards = styled.div`
   width: 100%;
   margin: 4rem 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 20px;
   @media (max-width: 680px) {
     gap: 10px;
+    .img {
+      width: 100px;
+    }
   }
   .img {
-    width: 50%;
+    max-width: 120px;
     margin: 0 auto;
   }
 `;
@@ -70,14 +71,15 @@ const Card = styled.div`
   text-align: center;
 
   .name {
-    font-weight: 700;
-    font-size: 1.2rem;
+    font-weight: 600;
+    font-size: 1.1rem;
     color: var(--primary-900);
   }
   .content {
     color: var(--text-grey-dark);
+    font-size: 0.9rem;
   }
-  @media (max-width: 680px) {
+  @media (max-width: 900px) {
     .name {
       font-weight: 600;
       font-size: 1rem;
