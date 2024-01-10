@@ -77,7 +77,7 @@ const Card = styled.div`
   }
   .content {
     color: var(--text-grey-dark);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
   @media (max-width: 900px) {
     .name {

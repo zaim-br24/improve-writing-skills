@@ -34,7 +34,6 @@ const PlayBtn = styled.button`
     border-radius: var(--borderRadius-small);
     padding: 0.6rem 1rem;
     padding-right: 1.2em;
-    width: 100%;
     display: flex;
     align-items: center;
     gap: 12px;

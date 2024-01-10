@@ -38,18 +38,21 @@ export default function AudioContainer() {
         <audio ref={audioRef} key={audioUrl}>
           <source src={audioUrl} type="audio/ogg"></source>
         </audio>
-        <SpecialBtn
-          className={isPlaying ? "special-btn" : ""}
-          text={isPlaying ? "stop": "listen"}
-          handleClick={togglePlay}
-          icon={
-            isPlaying ? (
-              <HiSpeakerWave className="icon" />
+        <PlayBtn onClick={togglePlay}>
+          <span className={isPlaying ? "special-btn" : ""}>
+            {isPlaying ? (
+              <>
+                Stop
+                <HiSpeakerWave className="icon" />
+              </>
             ) : (
-              <IoPlay className="icon" />
-            )
-          }
-        />
+              <>
+                Listen
+                <IoPlay className="icon" />
+              </>
+            )}
+          </span>
+        </PlayBtn>
       </div>
     </Wrapper>
   );
