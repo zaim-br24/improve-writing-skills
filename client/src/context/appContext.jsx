@@ -54,7 +54,7 @@ const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
 const level = localStorage.getItem("level");
 // const myCustomTexts = localStorage.getItem("myCustomTexts");
-
+const production = true;
 const initialState = {
   isLoading: false,
   showAlert: false,
@@ -85,12 +85,9 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const token = state.token;
+
   const authFetch = axios.create({
-    baseURL: `${_apiUrl}/api/v1`,
-    // baseURL: `/api/v1`,
-    // headers: {
-    //   Authorization: `Bearer ${token}`,
-    // },
+    baseURL: production ? `${_apiUrl}/api/v1` : `/api/v1`,
   });
   authFetch.interceptors.request.use(
     (config) => {
@@ -266,7 +263,7 @@ const AppProvider = ({ children }) => {
   const deleteMistake = async (id) => {
     dispatch({ type: DELETE_MISTAKE_BEGIN });
     try {
-    await authFetch.delete(`/content/mistakes/${id}`);
+      await authFetch.delete(`/content/mistakes/${id}`);
       dispatch({
         type: DELETE_MISTAKE_SUCCESS,
       });
@@ -386,14 +383,11 @@ const AppProvider = ({ children }) => {
   // ------- SINUP & SINGIN -------
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
-
+    const baseUrl = production
+      ? `${_apiUrl}/api/v1/auth/${endPoint}`
+      : `/api/v1/auth/${endPoint}`;
     try {
-      const { data } = await axios.post(
-        `${_apiUrl}/api/v1/auth/${endPoint}`,
-        // `/api/v1/auth/${endPoint}`,
-
-        currentUser
-      );
+      const { data } = await axios.post(baseUrl, currentUser);
       const { user, token } = data;
 
       dispatch({

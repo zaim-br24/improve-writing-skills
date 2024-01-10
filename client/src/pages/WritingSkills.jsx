@@ -22,6 +22,7 @@ import {
 } from "../components";
 import { benefits } from "../constants/index";
 import { useAppContext } from "../context/appContext";
+import writing from "../assets/images/writing.svg";
 export default function WritingSkills() {
   const {
     checkValues,
@@ -84,8 +85,9 @@ export default function WritingSkills() {
           {benefits.map((item, index) => {
             return (
               <Card key={index}>
-                <p className="name">{item.name}</p>
-                <p className="content">{item.content}</p>
+                <img className="img" src={item.image} alt="image"></img>
+                <p className="name">{item.title}</p>
+                <p className="content">{item.subtitle}</p>
               </Card>
             );
           })}

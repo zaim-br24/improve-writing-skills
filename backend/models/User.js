@@ -42,7 +42,8 @@ const UserSchema = new mongoose.Schema({
       content: {
         type: String,
         minlength: 1,
-        maxlength:150,
+        maxlength: 150,
+        trim: true,
       },
       audioUrl: {
         type: String,
@@ -76,8 +77,8 @@ const UserSchema = new mongoose.Schema({
   plan: {
     type: String,
     enum: ["free", "pro", "premium"],
-    default: "free"
-  }
+    default: "free",
+  },
 });
 
 // hashing the password

@@ -1,3 +1,7 @@
+import brain from "../assets/images/brain.svg";
+import vocabulary from "../assets/images/vocabulary.svg";
+import writing from "../assets/images/writing.svg";
+
 const levels = [
   {
     level: "beginner",
@@ -17,17 +21,20 @@ const languages = [
 ];
 const benefits = [
   {
-    name: "Enhanced Writing Skills through Listening",
-    content: "Enhancing Your ability to express ideas coherently in writing.",
+    image: writing,
+    title: "Enhanced Writing Skills through Listening",
+    subtitle: "Enhancing Your ability to express ideas coherently in writing.", 
   },
   {
-    name: "Vocabulary Building through Listening and Writing",
-    content:
+    image: vocabulary,
+    title: "Vocabulary Building through Listening and Writing",
+    subtitle:
       "Boosting the number of words in your vocabulary and allowing for more complex expressions in written communication.",
   },
   {
-    name: "Memorizing Sentences for Real-World Application",
-    content: "Fostering effective written communication in everyday life.",
+    image: brain,
+    title: "Memorizing Sentences for Real-World Application",
+    subtitle: "Fostering effective written communication in everyday life.",
   },
 ];
 
@@ -53,6 +60,5 @@ const sidebarLinks = [
     link: "password",
   },
 ];
-
 
 export { levels, languages, benefits, sidebarLinks };

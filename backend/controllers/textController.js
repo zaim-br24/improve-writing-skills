@@ -135,10 +135,11 @@ const addCustomText = async (req, res) => {
     premium: 40,
   };
 
-  if (!customText) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ msg: "Add your text!" });
-  } else if (customText.length > 150) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ msg: "Text too long." });
+  if (!customText || customText.trim() === "") {
+    throw new BadRequestError("Custom text cannot be empty or null.");
+  }
+  if (customText.length > 150) {
+    throw new BadRequestError("text is too long.");
   }
 
   try {
@@ -149,7 +150,7 @@ const addCustomText = async (req, res) => {
 
     if (user.customTexts.length >= plans[plan]) {
       return res.status(StatusCodes.BAD_REQUEST).json({
-        msg:` You have reached the limit of the ${plan} plan. Please Upgrade Your Plan.`,
+        msg: ` You have reached the limit of the ${plan} plan. Please Upgrade Your Plan.`,
       });
     }
 
@@ -163,10 +164,9 @@ const addCustomText = async (req, res) => {
     console.error(error);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ msg: "Internal Server Error" });
+      .json({ msg: "faild to add custom text." });
   }
 };
-
 
 const getCustomTexts = async (req, res) => {
   try {
@@ -213,7 +213,7 @@ const deleteCustomText = async (req, res) => {
     console.error(error);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ msg: "Internal Server Error" });
+      .json({ msg: "faild to delete. try again" });
   }
 };
 

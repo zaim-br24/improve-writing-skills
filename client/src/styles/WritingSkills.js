@@ -55,13 +55,20 @@ const Cards = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   @media (max-width: 680px) {
-  gap: 10px;
+    gap: 10px;
+  }
+  .img {
+    width: 50%;
+    margin: 0 auto;
   }
 `;
 const Card = styled.div`
   background-color: whitesmoke;
   padding: 10px;
   border-radius: var(--borderRadius-small);
+  border: 3px solid var(--yellow-light);
+  text-align: center;
+
   .name {
     font-weight: 700;
     font-size: 1.2rem;

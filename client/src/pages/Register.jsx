@@ -76,7 +76,6 @@ export default function Register() {
     <Wrapper>
       <form className="form" onSubmit={handleSubmit}>
         <div className="logo">
-          {" "}
           <Logo />
         </div>
 

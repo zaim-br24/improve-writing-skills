@@ -43,7 +43,7 @@ export default function navbar() {
         <div>
           {!user ? (
             <Link to="/register">
-              <ButtonRow text="Sign up" />
+              <ButtonRow text="Sign in" />
             </Link>
           ) : (
             <Profile
