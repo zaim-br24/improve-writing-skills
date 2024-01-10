@@ -3,7 +3,7 @@ import { Wrapper, PlayBtn, AddText } from "../styles/audio";
 import { useAppContext } from "../context/appContext";
 import { IoPlay } from "react-icons/io5";
 import { HiSpeakerWave } from "react-icons/hi2";
-import { ButtonRow } from "../components";
+import { SpecialBtn } from "../components";
 
 export default function AudioContainer() {
   const { audioUrl, isLoading, togglePlaying, isPlaying } = useAppContext();
@@ -35,31 +35,21 @@ export default function AudioContainer() {
   return (
     <Wrapper>
       <div className="container-audio">
-        <audio ref={audioRef} key={audioUrl} >
+        <audio ref={audioRef} key={audioUrl}>
           <source src={audioUrl} type="audio/ogg"></source>
         </audio>
-        <PlayBtn onClick={togglePlay}>
-          <span className={isPlaying ? "special-btn" : ""}>
-            {isPlaying ? (
-              <>
-                Stop
-                <HiSpeakerWave className="icon" />
-              </>
+        <SpecialBtn
+          className={isPlaying ? "special-btn" : ""}
+          text={isPlaying ? "stop": "listen"}
+          handleClick={togglePlay}
+          icon={
+            isPlaying ? (
+              <HiSpeakerWave className="icon" />
             ) : (
-              <>
-                Listen
-                <IoPlay className="icon" />
-              </>
-            )}
-          </span>
-        </PlayBtn>
-        {/* <AddText >+</AddText> */}
-        {/* <ButtonRow
-          backgroundColor
-          className="addTextBtn"
-          text="+"
-          type="click"
-        /> */}
+              <IoPlay className="icon" />
+            )
+          }
+        />
       </div>
     </Wrapper>
   );
