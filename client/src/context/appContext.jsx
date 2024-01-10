@@ -49,6 +49,7 @@ import {
   DELETE_MISTAKE_SUCCESS,
   DELETE_MISTAKE_BEGIN,
   DELETE_MISTAKE_ERROR,
+  TOGGLE_PLAYING,
 } from "./action";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -78,6 +79,7 @@ const initialState = {
   myCustomTexts: false,
   currentCustomText: 0,
   mistakeDeleted: false,
+  isPlaying: false,
 };
 
 const AppContext = React.createContext();
@@ -426,6 +428,14 @@ const AppProvider = ({ children }) => {
       },
     });
   };
+  const togglePlaying = (isPlaying) => {
+    dispatch({
+      type: TOGGLE_PLAYING,
+      payload: {
+        isPlaying,
+      },
+    });
+  };
   const toggleContent = (isCustomText) => {
     dispatch({
       type: TOGGLE_CONTENT,
@@ -526,6 +536,7 @@ const AppProvider = ({ children }) => {
         nextCustomText,
         getAllMistakes,
         deleteMistake,
+        togglePlaying,
       }}
     >
       {children}

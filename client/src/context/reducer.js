@@ -44,6 +44,7 @@ import {
   DELETE_MISTAKE_SUCCESS,
   DELETE_MISTAKE_BEGIN,
   DELETE_MISTAKE_ERROR,
+  TOGGLE_PLAYING,
 } from "./action";
 import { initialState } from "./appContext";
 const reducer = (state, action) => {
@@ -395,6 +396,12 @@ const reducer = (state, action) => {
       ...state,
       isLoading: false,
     };
+  }
+  if (action.type === TOGGLE_PLAYING) {
+    return {
+      ...state,
+      isPlaying: action.payload.isPlaying
+    }
   }
 };
 

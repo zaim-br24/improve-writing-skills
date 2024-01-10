@@ -57,4 +57,7 @@ export const CLEAR_USER_TEXT = "CLEAR_USER_TEXT";
 export const USER_TEXT = "USER_TEXT";
 export const TOGGLE_CONTENT = "TOGGLE_CONTENT";
 export const NEXT_CUSTOM_TEXT = "NEXT_CUSTOM_TEXT";
+export const TOGGLE_PLAYING = "TOGGLE_PLAYING";
+
+
 

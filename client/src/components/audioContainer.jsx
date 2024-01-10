@@ -6,14 +6,14 @@ import { HiSpeakerWave } from "react-icons/hi2";
 import { ButtonRow } from "../components";
 
 export default function AudioContainer() {
-  const { audioUrl, isLoading } = useAppContext();
+  const { audioUrl, isLoading, togglePlaying, isPlaying } = useAppContext();
   const audioRef = React.useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  // const [isPlaying, setIsPlaying] = useState(false);
   useEffect(() => {
     const audio = audioRef.current;
 
     const handleEnded = () => {
-      setIsPlaying(false);
+      togglePlaying(false);
     };
     audio.addEventListener("ended", handleEnded);
     return () => {
@@ -24,10 +24,10 @@ export default function AudioContainer() {
   const togglePlay = () => {
     const audio = audioRef.current;
     if (audio.paused || audio.ended) {
-      setIsPlaying(true);
+      togglePlaying(true);
       audio.play();
     } else {
-      setIsPlaying(false);
+      togglePlaying(false);
       audio.pause();
     }
   };

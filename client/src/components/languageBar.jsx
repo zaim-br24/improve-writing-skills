@@ -11,7 +11,7 @@ export default function languageBar() {
       {languages.map((language, index) => {
         return (
           <div className="language-btn" key={index}>
-            {language.name}
+            {language.name + "-(US)"}
           </div>
         );
       })}

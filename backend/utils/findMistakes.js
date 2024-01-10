@@ -2,11 +2,13 @@ import * as diff from "diff";
 import natural from "natural";
 
 const tokenizer = new natural.WordTokenizer();
+const americanStemmer = natural.LancasterStemmer;
+const americanTokenizer = new natural.WordTokenizer();
 
 function findMistakes(originalSentence, userSentence) {
   // Tokenize the sentences
-  const originalTokens = tokenizer.tokenize(originalSentence);
-  const userTokens = tokenizer.tokenize(userSentence);
+  const originalTokens = americanTokenizer.tokenize(originalSentence);
+  const userTokens = americanTokenizer.tokenize(userSentence);
 
   // Create a diff
   const differences = diff.diffArrays(originalTokens, userTokens);
@@ -17,6 +19,7 @@ function findMistakes(originalSentence, userSentence) {
 
   return mistakes;
 }
+
 
 // // Example usage:
 // const originalSentence = "The quick brown fox jumps over the lazy dog.";

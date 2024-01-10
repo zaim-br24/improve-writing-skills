@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Wrapper, MistakesContainer } from "../styles/userTextContainer";
 import { ButtonRow } from "../components";
 import { MdDeleteOutline, MdClose } from "react-icons/md";
@@ -19,13 +19,23 @@ export default function userTextContainer({
     mistakesCount,
     showMistakes,
     myCustomTexts,
+    isPlaying
   } = useAppContext();
+  const textareaRef = useRef(null);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, [isPlaying]);
+
   return (
     <Wrapper>
       {value.length > 5 && (
         <MdDeleteOutline onClick={handleDelete} className="delete-icon" />
       )}
       <textarea
+        ref={textareaRef}
         rows="5"
         cols="50"
         placeholder={placeholder}
@@ -50,7 +60,7 @@ export default function userTextContainer({
                 {mistakesCount >= 1 ? "Errors" : "Error"}
               </p>
 
-              {mistakes && mistakes.length === 0 && (
+              {mistakes && mistakes.length <= 0 && (
                 <p className="correct">well done. No errors were found.</p>
               )}
               {mistakes &&
