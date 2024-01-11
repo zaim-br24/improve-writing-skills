@@ -50,6 +50,7 @@ import {
   DELETE_MISTAKE_BEGIN,
   DELETE_MISTAKE_ERROR,
   TOGGLE_PLAYING,
+  TOGGLE_AUDIO_SPEED,
 } from "./action";
 const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
@@ -80,6 +81,7 @@ const initialState = {
   currentCustomText: 0,
   mistakeDeleted: false,
   isPlaying: false,
+  activeSpeed: 1,
 };
 
 const AppContext = React.createContext();
@@ -453,6 +455,14 @@ const AppProvider = ({ children }) => {
       },
     });
   };
+  const togglePlaySpeed = (activeSpeed) => {
+    dispatch({
+      type: TOGGLE_AUDIO_SPEED,
+      payload: {
+        activeSpeed: activeSpeed,
+      },
+    });
+  };
   const addUserText = (text) => {
     dispatch({
       type: USER_TEXT,
@@ -538,6 +548,7 @@ const AppProvider = ({ children }) => {
         deleteMistake,
         togglePlaying,
         clearAlert,
+        togglePlaySpeed,
       }}
     >
       {children}

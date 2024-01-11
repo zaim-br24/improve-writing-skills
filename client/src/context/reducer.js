@@ -45,6 +45,7 @@ import {
   DELETE_MISTAKE_BEGIN,
   DELETE_MISTAKE_ERROR,
   TOGGLE_PLAYING,
+  TOGGLE_AUDIO_SPEED,
 } from "./action";
 import { initialState } from "./appContext";
 const reducer = (state, action) => {
@@ -405,6 +406,12 @@ const reducer = (state, action) => {
       isPlaying: action.payload.isPlaying
     }
   }
+    if (action.type === TOGGLE_AUDIO_SPEED) {
+      return {
+        ...state,
+        activeSpeed: action.payload.activeSpeed,
+      };
+    }
 };
 
 export default reducer;

@@ -13,8 +13,26 @@ const Wrapper = styled.div`
     overflow: hidden;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    gap: 10px;
     position: relative;
+    .speed-btns {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      .speed-btn {
+        padding: 7px;
+        cursor: pointer;
+        border-radius: var(--borderRadius-small);
+        outline: none;
+        border: none;
+      }
+      .speed-btn.active-speed {
+        background-color: var(--yellow-light);
+        color: var(--yellow-dark);
+      }
+    }
   }
 `;
 
@@ -27,7 +45,7 @@ const PlayBtn = styled.button`
   position: relative;
   overflow: hidden;
   border-radius: var(--borderRadius-small);
-  min-width: 130px;
+  min-width: 140px;
 
   span {
     width: 100%;
@@ -43,7 +61,6 @@ const PlayBtn = styled.button`
     align-items: center;
     justify-content: center;
   }
-
   &:hover span {
     opacity: 0.8;
     box-shadow: var(--shadow-2);
