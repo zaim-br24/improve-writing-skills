@@ -138,7 +138,7 @@ const addCustomText = async (req, res) => {
   if (!customText || customText.trim() === "") {
     throw new BadRequestError("Custom text cannot be empty or null.");
   }
-  if (customText.length > 150) {
+  if (customText.length > 200) {
     throw new BadRequestError("text is too long.");
   }
 

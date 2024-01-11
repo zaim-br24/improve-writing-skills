@@ -57,7 +57,7 @@ export default function navbar() {
               {/* <img src={profilePic} /> */}
               {user && user.lastname && (
                 <p className="short-name">
-                  {`${user.lastname[0]} ${user.firstname[0]} `}
+                  {`${user.firstname[0]} ${user.lastname[0]} `}
                 </p>
               )}
             </Profile>
@@ -70,7 +70,7 @@ export default function navbar() {
                 {user && (
                   <Link className="link" to="/settings">
                     <p className="short-name">
-                      {`${user.lastname} ${user.firstname} `}
+                      {`${user.firstname} ${user.lastname} `}
                     </p>
                   </Link>
                 )}

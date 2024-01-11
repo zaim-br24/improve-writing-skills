@@ -39,7 +39,8 @@ export default function Practice() {
   const [isEdit, setIsEdit] = useState(false);
   const [targetedId, setTargetedId] = useState(null);
   const [activeRadio, setActiveRadio] = useState("custom");
-
+  const [countdown, setCountdown] = useState(0);
+  const [wordLimit, setWordLimit] = useState(200);
   useEffect(() => {
     getCustomTexts();
   }, [showCustomTexts]);
@@ -60,7 +61,13 @@ export default function Practice() {
     setShowForm(false);
   };
   const handleTextareaChange = (e) => {
-    setUserCustomText(e.target.value);
+    const newText = e.target.value;
+
+    if (newText.length <= wordLimit) {
+      setUserCustomText(newText);
+    } else {
+      setUserCustomText(newText.slice(0, wordLimit));
+    }
   };
   const handleDeleteText = (id) => {
     deleteCustomText(id);
@@ -106,7 +113,7 @@ export default function Practice() {
               handleClick={handlOpenToPractice}
               icon={<IoOpen className="icon-btn open" />}
             />
-          ) }
+          )}
         </div>
       )}
 
@@ -135,12 +142,16 @@ export default function Practice() {
             label="Your Text:"
             handleTextareaChange={handleTextareaChange}
             value={userCustomText}
+            countdown={userCustomText.length}
+            wordLimit={wordLimit}
           />
-          <SpecialBtn
-            className="right-btn"
-            text={isEdit ? "Update Text" : "Create Text"}
-            handleClick={handleSubmit}
-          />
+          <div>
+            <SpecialBtn
+              className="right-btn"
+              text={isEdit ? "Update Text" : "Create Text"}
+              handleClick={handleSubmit}
+            />
+          </div>
         </Form>
       )}
       {isLoading && <Loader />}

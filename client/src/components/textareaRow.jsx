@@ -6,10 +6,23 @@ export default function TextareaRow({
   placeholder,
   handleTextareaChange,
   value,
+  countdown,
+  wordLimit
 }) {
   return (
     <Wrapper>
-      {label && <Label>{label}</Label>}
+      {label && (
+        <Label>
+          {label}
+          <span
+            className={
+              countdown === wordLimit ? "danger" : "countdown"
+            }
+          >
+            {countdown}/{wordLimit}
+          </span>
+        </Label>
+      )}
       <Textarea
         rows="3"
         cols="50"
@@ -32,6 +45,12 @@ const Label = styled.label`
   font-size: 1rem;
   font-weight: 600;
   color: var(--primary-800);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .countdown {
+    color: var(--grey-200);
+  }
 `;
 
 const Textarea = styled.textarea`

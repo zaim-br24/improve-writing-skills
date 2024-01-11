@@ -42,7 +42,7 @@ const UserSchema = new mongoose.Schema({
       content: {
         type: String,
         minlength: 1,
-        maxlength: 150,
+        maxlength: 200,
         trim: true,
       },
       audioUrl: {

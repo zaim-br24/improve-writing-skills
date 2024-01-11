@@ -357,6 +357,14 @@ button:disabled {
   color: var(--green-dark);
   background: var(--green-light);
 }
+.danger{
+  color: var(--red-dark);
+
+}
+.success{
+    color: var(--green-dark);
+
+}
 
 /* form */
 .form {

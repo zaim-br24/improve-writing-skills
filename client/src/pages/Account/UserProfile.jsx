@@ -11,9 +11,7 @@ const UserProfile = () => {
         src="https://via.placeholder.com/100"
         alt="Profile picture"
       />
-      <Username>{`${user ? user.lastname : ""} ${
-        user ? user.firstname : ""
-      }`}</Username>
+      <Username>{`${user ? `${user.firstname} ${user.lastname}` : ""} `}</Username>
       {/* <UserBio>
         A self-proclaimed coder from Earth. Here to share and learn new things!
       </UserBio> */}
