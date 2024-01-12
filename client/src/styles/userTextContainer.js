@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   }
   .bottom-bar {
     position: relative;
-    height: 15%;
+    /* height: 15%; */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -58,13 +58,31 @@ const MistakesContainer = styled.div`
   }
 
   .mistakes {
-    padding: 0.5rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
     width: 90%;
     background-color: white;
+    overflow-y: scroll;
+    padding: 0.2rem;
+    scrollbar-width: thin; 
+    scrollbar-color: darkgray lightgray; 
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: darkgray;
+      border-radius: 4px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: gray;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: lightgray;
+      border-radius: 4px;
+    }
 
     .mistakes-action {
       width: 100%;
@@ -77,18 +95,20 @@ const MistakesContainer = styled.div`
     }
     .mistakes-text {
       display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      
+      flex-direction: column;
+      .mistake-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(50%, 50%));
+        overflow-y: auto;
+      }
       .error,
-      .correct{
+      .correct {
         font-size: 1rem;
         font-weight: 500;
         margin: 5px;
         cursor: pointer;
         padding: 5px 0.5rem;
         border-radius: 10px;
-        
       }
       .error {
         background-color: var(--red-light);
@@ -103,7 +123,8 @@ const MistakesContainer = styled.div`
   @media (max-width: 680px) {
     .mistakes {
       .mistakes-text {
-        .error, .correct {
+        .error,
+        .correct {
           font-size: 0.7rem;
         }
       }

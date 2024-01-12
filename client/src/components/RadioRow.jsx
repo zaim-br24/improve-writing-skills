@@ -42,7 +42,7 @@ const Wrapper = styled.div`
   border-radius: var(--borderRadius-small);
   background-color: #eee;
   box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
-  padding: 0.2rem;
+  padding: 0.1rem;
   font-size: 0.9rem;
   margin-bottom: 1rem;
 
@@ -62,7 +62,7 @@ const Wrapper = styled.div`
     justify-content: center;
     border-radius: 0.5rem;
     border: none;
-    padding: 0.4rem 0;
+    padding: 0.3rem 0;
     color: var(--grey-light);
     transition: all 0.15s ease-in-out;
     font-weight: 500;

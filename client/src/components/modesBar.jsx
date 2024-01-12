@@ -3,15 +3,17 @@ import Wrapper from "../styles/modesBar";
 import { levels } from "../constants";
 import { useAppContext } from "../context/appContext";
 export default function modesBar() {
-  const { toggleCategory } = useAppContext();
+  const { toggleCategory, togglePlaying, togglePlaySpeed } = useAppContext();
   const [activeCategory, setActiveCategory] = useState("beginner");
 
   const handleClick = (e) => {
     const active = e.target.getAttribute("name");
     setActiveCategory(active);
+    togglePlaying(false);
   };
   useEffect(() => {
     toggleCategory(activeCategory);
+    togglePlaySpeed(1);
   }, [activeCategory]);
   return (
     <Wrapper>

@@ -19,7 +19,7 @@ export default function userTextContainer({
     mistakesCount,
     showMistakes,
     myCustomTexts,
-    isPlaying
+    isPlaying,
   } = useAppContext();
   const textareaRef = useRef(null);
 
@@ -63,21 +63,23 @@ export default function userTextContainer({
               {mistakes && mistakes.length <= 0 && (
                 <p className="correct">well done. No errors were found.</p>
               )}
-              {mistakes &&
-                mistakes.map((mistake, index) => {
-                  const isEven = index % 2 === 0;
-                  return (
-                    <div key={index}>
-                      <p
-                        className={
-                          isEven && mistakes.length > 1 ? "correct" : "error"
-                        }
-                      >
-                        {mistake}
-                      </p>
-                    </div>
-                  );
-                })}
+              <div className="mistake-row">
+                {mistakes &&
+                  mistakes.map((mistake, index) => {
+                    const isEven = index % 2 === 0;
+                    return (
+                      <div key={index}>
+                        <p
+                          className={
+                            isEven && mistakes.length > 1 ? "correct" : "error"
+                          }
+                        >
+                          {mistake}
+                        </p>
+                      </div>
+                    );
+                  })}
+              </div>
             </div>
             <div className="mistakes-action">
               {mistakes && mistakes.length > 0 && (

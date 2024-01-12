@@ -20,6 +20,7 @@ export default function originalTextContainer({ placeholder }) {
     practiceMyText,
     getCustomTexts,
     customTexts,
+    togglePlaying,
   } = useAppContext();
   const [hide, setHide] = useState(false);
 
@@ -39,6 +40,7 @@ export default function originalTextContainer({ placeholder }) {
     setHide(false);
     toggleMistakes(false);
     clearUserText();
+    togglePlaying(false)
   };
   return (
     <Wrapper>
