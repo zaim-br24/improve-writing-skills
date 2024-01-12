@@ -12,7 +12,7 @@
 html {
   font-size: 100%;
   color: var(--primary-700);
-} /*16px*/
+} 
 
 :root {
   /* colors */
@@ -488,23 +488,22 @@ button:disabled {
     #11998e,
     #38ef7d
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; */
 }
 .violet-gradient {
-  background: #e9ab2682;
+  background: #a47cf3;
   background: linear-gradient(
     -90deg,
-    #e9ab2682 0%,
-    rgba(245, 222, 18, 0.285) 100%
+    #a47cf3 0%,
+    rgba(245, 222, 18, 683fea.285) 100%
   );
   background: -webkit-linear-gradient(
     -90deg,
-    #e9ab2682 0%,
+    #a47cf3 0%,
     rgba(237, 199, 51, 0.088) 100%
   );
 }
-
 .orange-yellow-gradient {
   background: "#f12711";
   background: linear-gradient(90.13deg, #f12711 1.9%, #f5af19 97.5%);

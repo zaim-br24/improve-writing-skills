@@ -56,7 +56,7 @@ const user = localStorage.getItem("user");
 const token = localStorage.getItem("token");
 const level = localStorage.getItem("level");
 // const myCustomTexts = localStorage.getItem("myCustomTexts");
-const production = true;
+const production = false;
 const initialState = {
   isLoading: false,
   showAlert: false,

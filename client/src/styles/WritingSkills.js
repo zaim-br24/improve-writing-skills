@@ -52,10 +52,20 @@ const Cards = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 20px;
+  background-color: var(--primary-200);
+  padding: 10px;
+  border-radius: var(--borderRadius-small);
+
+  .card-container {
+    grid-column: span 1;
+  }
   @media (max-width: 680px) {
     gap: 10px;
     .img {
       width: 100px;
+    }
+    .full-width {
+      grid-column: span 2;
     }
   }
   .img {
@@ -63,11 +73,12 @@ const Cards = styled.div`
     margin: 0 auto;
   }
 `;
+
 const Card = styled.div`
-  background-color: whitesmoke;
+  background-color: white;
   padding: 10px;
   border-radius: var(--borderRadius-small);
-  border: 3px solid var(--yellow-light);
+  border: 3px solid var(--yellow-dark);
   text-align: center;
 
   .name {

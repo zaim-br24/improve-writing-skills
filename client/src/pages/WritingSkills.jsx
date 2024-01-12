@@ -33,7 +33,7 @@ export default function WritingSkills() {
     addUserText,
     userText,
     clearUserText,
-    showAlert
+    showAlert,
   } = useAppContext();
   useEffect(() => {
     document.title = "Improve Your Writing skills";
@@ -55,7 +55,7 @@ export default function WritingSkills() {
   };
   return (
     <Wrapper>
-      {showAlert && <Alert/>}
+      {showAlert && <Alert />}
       <>
         <LanguageBar />
         <ModesBar />
@@ -73,24 +73,25 @@ export default function WritingSkills() {
           </Right>
           <Left>
             <AudioContainer />
-            <OriginalTextContainer
-              placeholder={generatedText}
-            />
+            <OriginalTextContainer placeholder={generatedText} />
           </Left>
         </Editor>
       </>
       <Benefits>
         <Title>Master Sentences for Effective Communication</Title>
-        <Cards>
-          {benefits.map((item, index) => {
-            return (
-              <Card key={index}>
-                <img className="img" src={item.image} alt="image"></img>
-                <p className="name">{item.title}</p>
-                <p className="content">{item.subtitle}</p>
-              </Card>
-            );
-          })}
+        <Cards className="violet-gradient">
+          {benefits.map((item, index) => (
+            <Card
+              key={index}
+              className={
+                index === 2 ? "full-width card-container" : "card-container"
+              }
+            >
+              <img className="img" src={item.image} alt="image"></img>
+              <p className="name">{item.title}</p>
+              <p className="content">{item.subtitle}</p>
+            </Card>
+          ))}
         </Cards>
       </Benefits>
       <Footer></Footer>
