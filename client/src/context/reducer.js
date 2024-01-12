@@ -183,6 +183,8 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: true,
+      mistakes: null,
+      mistakesCount: 0,
     };
   }
   if (action.type === CHECK_VALUES_SUCCESS) {

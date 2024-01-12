@@ -59,13 +59,12 @@ export default function userTextContainer({
                 {Math.ceil(mistakesCount)} /
                 {mistakesCount >= 1 ? "Errors" : "Error"}
               </p>
-
-              {mistakes && mistakes.length <= 0 && (
-                <p className="correct">well done. No errors were found.</p>
-              )}
-              <div className="mistake-row">
-                {mistakes &&
-                  mistakes.map((mistake, index) => {
+              {mistakes && (
+                <div className="mistake-row">
+                  {mistakes.length <= 0 && (
+                    <p className="correct">well done. No errors were found.</p>
+                  )}
+                  {mistakes.map((mistake, index) => {
                     const isEven = index % 2 === 0;
                     return (
                       <div key={index}>
@@ -79,7 +78,8 @@ export default function userTextContainer({
                       </div>
                     );
                   })}
-              </div>
+                </div>
+              )}
             </div>
             <div className="mistakes-action">
               {mistakes && mistakes.length > 0 && (

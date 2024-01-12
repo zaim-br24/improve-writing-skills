@@ -143,7 +143,6 @@ const AppProvider = ({ children }) => {
         originalSentence,
         userSentence,
       });
-      console.log(data.mistakes);
       if (state.myCustomTexts && data.mistakes) {
         const result = data.mistakes;
         await authFetch.post("/content/mistakes/addMistakes", {
